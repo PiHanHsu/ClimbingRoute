@@ -38,7 +38,7 @@
         <!--選擇岩場-->
         <scene sceneID="qmp-ap-dcc">
             <objects>
-                <tableViewController id="r37-nB-aac" sceneMemberID="viewController">
+                <tableViewController id="r37-nB-aac" customClass="RockFieldTableViewController" customModule="ClimbingRoute" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="IQH-dQ-uQF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -70,7 +70,7 @@
         <!--選擇路線-->
         <scene sceneID="qw7-ZC-29r">
             <objects>
-                <tableViewController id="BOk-ET-fzl" sceneMemberID="viewController">
+                <tableViewController id="BOk-ET-fzl" customClass="RoutesTableViewController" customModule="ClimbingRoute" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="PMn-kM-MDt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -105,10 +105,10 @@
             </objects>
             <point key="canvasLocation" x="2455" y="793"/>
         </scene>
-        <!--View Controller-->
+        <!--New Route View Controller-->
         <scene sceneID="gVW-2a-32k">
             <objects>
-                <viewController id="iTi-2E-25m" sceneMemberID="viewController">
+                <viewController id="iTi-2E-25m" customClass="NewRouteViewController" customModule="ClimbingRoute" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eHY-Uz-UsV"/>
                         <viewControllerLayoutGuide type="bottom" id="8si-qc-q7m"/>
@@ -127,10 +127,10 @@
             </objects>
             <point key="canvasLocation" x="3238" y="378"/>
         </scene>
-        <!--View Controller-->
+        <!--Show Route View Controller-->
         <scene sceneID="alj-79-qAW">
             <objects>
-                <viewController id="jgU-wy-0LA" sceneMemberID="viewController">
+                <viewController id="jgU-wy-0LA" customClass="ShowRouteViewController" customModule="ClimbingRoute" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qM2-F3-C87"/>
                         <viewControllerLayoutGuide type="bottom" id="3SA-ee-xkv"/>
