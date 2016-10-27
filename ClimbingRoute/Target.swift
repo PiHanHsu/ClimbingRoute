@@ -22,17 +22,12 @@ class Target: NSObject, UIGestureRecognizerDelegate {
         
         let dragBall = UIPanGestureRecognizer(target: self, action: #selector(self.dragTarget(_:)))
         imageView.addGestureRecognizer(dragBall)
-        //dragBall.delegate = self
         
     }
     
     func dragTarget(_ recognizer: UIPanGestureRecognizer) {
-        print("drag")
         let point = recognizer.location(in: mainView)
         imageView.center.x = point.x
         imageView.center.y = point.y
-    
     }
-
-
 }

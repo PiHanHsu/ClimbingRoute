@@ -12,6 +12,6 @@ class DataSource: NSObject {
    
     static let shareInstance = DataSource()
     
-    let Fields: [Fields]? = nil
+    var Fields = [Field]()
     
 }
