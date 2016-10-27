@@ -10,10 +10,12 @@ import UIKit
 
 class NewRouteViewController: UIViewController {
 
+    var targetArray = [Target]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        view.backgroundColor = UIColor.black
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,7 +23,14 @@ class NewRouteViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
 
+    @IBAction func createTarget(_ sender: AnyObject) {
+        let target = Target()
+        targetArray.append(target)
+        view.addSubview(target.imageView)
+    }
+    
     /*
     // MARK: - Navigation
 
