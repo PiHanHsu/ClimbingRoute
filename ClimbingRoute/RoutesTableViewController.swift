@@ -10,9 +10,14 @@ import UIKit
 
 class RoutesTableViewController: UITableViewController {
 
+    var index: Int = 0
+    //var routes = [Route]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        //routes = DataSource.shareInstance.Fields[index].routes!
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -29,7 +34,7 @@ class RoutesTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

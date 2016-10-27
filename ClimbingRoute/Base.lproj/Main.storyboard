@@ -89,7 +89,7 @@
                                 <connections>
                                     <outlet property="nameLabel" destination="qHw-5Q-4nD" id="2oC-NM-Fcu"/>
                                     <outlet property="routesLabel" destination="k0D-Zk-j4J" id="yVy-CA-PrK"/>
-                                    <segue destination="BOk-ET-fzl" kind="show" id="ukG-Fr-Thd"/>
+                                    <segue destination="BOk-ET-fzl" kind="show" identifier="ShowRoutes" id="ukG-Fr-Thd"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
