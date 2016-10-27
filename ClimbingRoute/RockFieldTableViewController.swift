@@ -40,15 +40,17 @@ class RockFieldTableViewController: UITableViewController {
         return fields.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RockFieldTableViewCell", for: indexPath) as! RockFieldTableViewCell
 
+        cell.nameLabel.text = fields[indexPath.row].name
+        cell.routesLabel.text = "\(fields[indexPath.row].routes!.count)條路線"
         // Configure the cell...
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
