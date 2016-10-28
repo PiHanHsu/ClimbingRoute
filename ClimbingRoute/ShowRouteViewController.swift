@@ -15,6 +15,7 @@ class ShowRouteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black
+        route = DataSource.shareInstance.selectRoute
         displayRoute()
         // Do any additional setup after loading the view.
     }
@@ -25,7 +26,8 @@ class ShowRouteViewController: UIViewController {
     }
     
     @IBAction func quitButton(_ sender: AnyObject) {
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
+        //self.navigationController?.popViewController(animated: true)
     }
     
     func displayRoute() {

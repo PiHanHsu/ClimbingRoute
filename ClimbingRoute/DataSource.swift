@@ -13,5 +13,5 @@ class DataSource: NSObject {
     static let shareInstance = DataSource()
     
     var Fields = [Field]()
-    
+    var selectRoute: Route?
 }
