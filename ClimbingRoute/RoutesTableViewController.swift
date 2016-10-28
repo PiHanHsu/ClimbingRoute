@@ -11,12 +11,12 @@ import UIKit
 class RoutesTableViewController: UITableViewController {
 
     var index: Int = 0
-    //var routes = [Route]()
+    var routes: [Route]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //routes = DataSource.shareInstance.Fields[index].routes!
+        routes = DataSource.shareInstance.Fields[index].routes
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -39,18 +39,24 @@ class RoutesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        if let rows = routes?.count {
+            return rows
+        }else{
+            return 0
+        }
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RouteTableViewCell", for: indexPath) as! RouteTableViewCell
+        
+        cell.createrLabel.text = routes?[indexPath.row].creater
+        cell.difficultyLabel.text = routes?[indexPath.row].difficulty
         // Configure the cell...
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -87,14 +93,17 @@ class RoutesTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "StartClimbing" {
+            let vc = segue.destination as! ShowRouteViewController
+            vc.route = routes![(tableView.indexPathForSelectedRow?.row)!]
+        }
     }
-    */
+    
 
 }

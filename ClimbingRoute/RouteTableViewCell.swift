@@ -10,6 +10,9 @@ import UIKit
 
 class RouteTableViewCell: UITableViewCell {
 
+    @IBOutlet var createrLabel: UILabel!
+    @IBOutlet var difficultyLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

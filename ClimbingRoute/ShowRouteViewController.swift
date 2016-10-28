@@ -10,15 +10,28 @@ import UIKit
 
 class ShowRouteViewController: UIViewController {
 
+    var route: Route?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = UIColor.black
+        displayRoute()
         // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func quitButton(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func displayRoute() {
+        for target in (route?.targets)! {
+            view.addSubview(target.imageView)
+        }
     }
     
 
