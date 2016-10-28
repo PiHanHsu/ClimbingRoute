@@ -14,6 +14,7 @@ class LoginViewController: UIViewController {
 
     let mainFrame = UIApplication.shared.keyWindow?.bounds
     
+   
     //let ref = FIRDatabase.database().reference()
     
     override func viewDidLoad() {
@@ -27,7 +28,8 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func fbLogin(sender: AnyObject) {
-                let facebookLogin = FBSDKLoginManager()
+               // let facebookLogin = FBSDKLoginManager()
+        
         
 //        facebookLogin.logIn(withReadPermissions: ["email"], from: self, handler: {
 //            (facebookresult, facebookError) -> Void in
