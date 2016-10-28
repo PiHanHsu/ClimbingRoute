@@ -22,7 +22,6 @@
 		E8DBD4161DC0B0F800E3DC82 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DBD4151DC0B0F800E3DC82 /* LoginViewController.swift */; };
 		E8DBD4181DC0B15C00E3DC82 /* RockFieldTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DBD4171DC0B15C00E3DC82 /* RockFieldTableViewController.swift */; };
 		E8DBD41A1DC0B17100E3DC82 /* RoutesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DBD4191DC0B17100E3DC82 /* RoutesTableViewController.swift */; };
-		E8DBD41C1DC0B18800E3DC82 /* NewRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DBD41B1DC0B18800E3DC82 /* NewRouteViewController.swift */; };
 		E8DBD41E1DC0B19C00E3DC82 /* ShowRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DBD41D1DC0B19C00E3DC82 /* ShowRouteViewController.swift */; };
 		E8DBD4201DC0B26B00E3DC82 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DBD41F1DC0B26B00E3DC82 /* Target.swift */; };
 /* End PBXBuildFile section */
@@ -45,7 +44,6 @@
 		E8DBD4151DC0B0F800E3DC82 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E8DBD4171DC0B15C00E3DC82 /* RockFieldTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RockFieldTableViewController.swift; sourceTree = "<group>"; };
 		E8DBD4191DC0B17100E3DC82 /* RoutesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutesTableViewController.swift; sourceTree = "<group>"; };
-		E8DBD41B1DC0B18800E3DC82 /* NewRouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRouteViewController.swift; sourceTree = "<group>"; };
 		E8DBD41D1DC0B19C00E3DC82 /* ShowRouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowRouteViewController.swift; sourceTree = "<group>"; };
 		E8DBD41F1DC0B26B00E3DC82 /* Target.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,7 +106,6 @@
 				E8DBD4151DC0B0F800E3DC82 /* LoginViewController.swift */,
 				E8DBD4171DC0B15C00E3DC82 /* RockFieldTableViewController.swift */,
 				E8DBD4191DC0B17100E3DC82 /* RoutesTableViewController.swift */,
-				E8DBD41B1DC0B18800E3DC82 /* NewRouteViewController.swift */,
 				E8DBD41D1DC0B19C00E3DC82 /* ShowRouteViewController.swift */,
 				E84E5CA31DC30D740084ABF2 /* LandscapeNavigationController.swift */,
 				E84E5CA51DC31FFD0084ABF2 /* PortraitNavigationController.swift */,
@@ -201,7 +198,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8DBD4161DC0B0F800E3DC82 /* LoginViewController.swift in Sources */,
-				E8DBD41C1DC0B18800E3DC82 /* NewRouteViewController.swift in Sources */,
 				E8DBD4041DC0A9F200E3DC82 /* ViewController.swift in Sources */,
 				E84E5CA41DC30D740084ABF2 /* LandscapeNavigationController.swift in Sources */,
 				E84E5CA21DC2028E0084ABF2 /* RouteTableViewCell.swift in Sources */,

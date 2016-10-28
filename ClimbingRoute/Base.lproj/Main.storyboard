@@ -153,7 +153,7 @@
                     <navigationItem key="navigationItem" title="選擇路線" id="aOL-f6-dWt">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="aHN-F0-hWa">
                             <connections>
-                                <segue destination="iTi-2E-25m" kind="show" id="fKn-UA-P0J"/>
+                                <segue destination="If2-57-gSF" kind="show" identifier="CreateRoute" id="tvl-7e-yLV"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -161,38 +161,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HRw-hd-5wd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2453.5999999999999" y="792.95352323838085"/>
-        </scene>
-        <!--New Route View Controller-->
-        <scene sceneID="gVW-2a-32k">
-            <objects>
-                <viewController id="iTi-2E-25m" customClass="NewRouteViewController" customModule="ClimbingRoute" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="eHY-Uz-UsV"/>
-                        <viewControllerLayoutGuide type="bottom" id="8si-qc-q7m"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="0Ol-Xy-Alv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9pQ-ai-ct2">
-                                <frame key="frameInset" minX="298" minY="81" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Create"/>
-                                <connections>
-                                    <action selector="createTarget:" destination="iTi-2E-25m" eventType="touchUpInside" id="2Mp-ac-Toi"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="f91-pG-bDb">
-                        <barButtonItem key="leftBarButtonItem" title="取消" id="edH-uj-cWK"/>
-                        <barButtonItem key="rightBarButtonItem" title="儲存" id="mJl-vb-djL"/>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vJg-lg-zNl" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3238" y="378"/>
         </scene>
         <!--Show Route View Controller-->
         <scene sceneID="alj-79-qAW">
@@ -205,7 +173,19 @@
                     <view key="view" contentMode="scaleToFill" id="n2U-Vu-g7B">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QFn-pa-KJZ">
+                                <state key="normal" title="Create"/>
+                                <connections>
+                                    <action selector="createButtonPressed:" destination="jgU-wy-0LA" eventType="touchUpInside" id="QKv-aw-UaS"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="QFn-pa-KJZ" secondAttribute="trailing" constant="20" id="i7W-kV-2PD"/>
+                            <constraint firstItem="QFn-pa-KJZ" firstAttribute="top" secondItem="qM2-F3-C87" secondAttribute="bottom" constant="20" id="kkM-gP-TDE"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="gcZ-tc-MBR">
                         <barButtonItem key="leftBarButtonItem" title="離開" id="QBJ-7t-JYg">
@@ -213,12 +193,20 @@
                                 <action selector="quitButton:" destination="jgU-wy-0LA" id="xij-lq-Miq"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="完攀" id="8g6-o8-ldU"/>
+                        <barButtonItem key="rightBarButtonItem" title="完攀" id="8g6-o8-ldU">
+                            <connections>
+                                <action selector="doneButtonPressed:" destination="jgU-wy-0LA" id="Eou-RS-PgH"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="createButton" destination="QFn-pa-KJZ" id="iJg-FI-Kgr"/>
+                        <outlet property="doneBarButton" destination="8g6-o8-ldU" id="OMJ-33-feE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YFv-rV-n60" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4176.8000000000002" y="1039.4302848575712"/>
+            <point key="canvasLocation" x="3990" y="793"/>
         </scene>
         <!--Portrait Navigation Controller-->
         <scene sceneID="qGE-5f-CNH">
@@ -254,7 +242,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LUc-Cp-Wq0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3237.5999999999999" y="1039.4302848575712"/>
+            <point key="canvasLocation" x="3250" y="793"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="tvl-7e-yLV"/>
+    </inferredMetricsTieBreakers>
 </document>

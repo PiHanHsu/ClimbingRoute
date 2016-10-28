@@ -11,13 +11,26 @@ import UIKit
 class ShowRouteViewController: UIViewController {
 
     var route: Route?
+    var isEditMode = false
+    var targetArray = [Target]()
+    
+    @IBOutlet var doneBarButton: UIBarButtonItem!
+    @IBOutlet var createButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black
-        route = DataSource.shareInstance.selectRoute
-        displayRoute()
-        // Do any additional setup after loading the view.
+        
+        if isEditMode {
+           createButton.isHidden = false
+           doneBarButton.title = "儲存"
+        }
+        
+        if route != nil {
+            displayRoute()
+        }
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,7 +40,46 @@ class ShowRouteViewController: UIViewController {
     
     @IBAction func quitButton(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)
-        //self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func doneButtonPressed(_ sender: AnyObject) {
+        if isEditMode {
+          let alert = UIAlertController(title: "儲存此路線", message: nil, preferredStyle: .actionSheet)
+          let okAction = UIAlertAction(title: "儲存完離開", style: .default, handler: { (UIAlertAction) in
+             self.dismiss(animated: true, completion: nil)
+          })
+            
+          let continueAction = UIAlertAction(title: "儲存完繼續新增路線", style: .default, handler: { (UIAlertAction) in
+                
+           })
+            
+          let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            
+          alert.addAction(okAction)
+          alert.addAction(continueAction)
+            alert.addAction(cancelAction)
+            
+          present(alert, animated: true, completion: nil)
+            
+        }else {
+            let alert = UIAlertController(title: "給這條路線一個評分吧！", message: nil, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
+                
+            })
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    
+    @IBAction func createButtonPressed(_ sender: AnyObject) {
+        let target = Target()
+        targetArray.append(target)
+        view.addSubview(target.imageView)
     }
     
     func displayRoute() {

@@ -53,7 +53,7 @@ class RoutesTableViewController: UITableViewController {
     
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        DataSource.shareInstance.selectRoute = routes?[indexPath.row]
+        //DataSource.shareInstance.selectRoute = routes?[indexPath.row]
     }
     /*
     // Override to support conditional editing of the table view.
@@ -94,13 +94,19 @@ class RoutesTableViewController: UITableViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        
-//        if segue.identifier == "StartClimbing" {
-//            let vc = segue.destination as! ShowRouteViewController
-//            vc.route = routes![(tableView.indexPathForSelectedRow?.row)!]
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "StartClimbing" {
+            let nav = segue.destination as! LandscapeNavigationController
+            let vc = nav.topViewController as! ShowRouteViewController
+            
+            vc.route = routes![(tableView.indexPathForSelectedRow?.row)!]
+        }else if segue.identifier == "CreateRoute" {
+            let nav = segue.destination as! LandscapeNavigationController
+            let vc = nav.topViewController as! ShowRouteViewController
+            vc.isEditMode = true
+        }
+    }
     
 
 }
