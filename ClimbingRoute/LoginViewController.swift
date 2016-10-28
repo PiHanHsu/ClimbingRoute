@@ -14,21 +14,18 @@ class LoginViewController: UIViewController {
 
     let mainFrame = UIApplication.shared.keyWindow?.bounds
     
-   
-    //let ref = FIRDatabase.database().reference()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let childRouteRef = self.ref.child("Trainer").childByAutoId()
+//        let ref = FIRDatabase.database().reference()
+//        let childRouteRef = ref.child("Trainer").childByAutoId()
 //        let value = ["trainer": "tester"]
-//        childRouteRef.updateChildValues(value)
+//        childRouteRef.setValue(value)
         createFakeData()
     
     }
     
     @IBAction func fbLogin(sender: AnyObject) {
-               // let facebookLogin = FBSDKLoginManager()
+        let facebookLogin = FBSDKLoginManager()
         
         
 //        facebookLogin.logIn(withReadPermissions: ["email"], from: self, handler: {
@@ -46,7 +43,7 @@ class LoginViewController: UIViewController {
 //                
 //            }
 //        })
-        
+//        
     }
 
 
