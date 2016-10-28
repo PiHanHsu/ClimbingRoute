@@ -83,7 +83,16 @@
                             <outlet property="delegate" destination="r37-nB-aac" id="zLW-Hx-n6q"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="選擇岩場" id="UmK-ls-dtg"/>
+                    <navigationItem key="navigationItem" title="選擇岩場" id="UmK-ls-dtg">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="tw3-ew-Msd">
+                            <connections>
+                                <action selector="addFieldButtonPressed:" destination="r37-nB-aac" id="F2T-Sq-Rhn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="addFieldBarButton" destination="tw3-ew-Msd" id="MzT-6z-zW5"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jSs-hW-CTt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
