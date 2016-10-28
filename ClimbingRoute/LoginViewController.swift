@@ -20,6 +20,17 @@ class LoginViewController: UIViewController {
 //        let childRouteRef = ref.child("Trainer").childByAutoId()
 //        let value = ["trainer": "tester"]
 //        childRouteRef.setValue(value)
+        
+        let loginButton = FBSDKLoginButton()
+        //        loginButton.readPermissions = ["public_profile", "email", "user_friends"]
+        loginButton.center = self.view.center
+        self.view.addSubview(loginButton)
+        
+        if (FBSDKAccessToken.current() != nil) {
+            print("FB Logined")
+            print("FB Token: \(FBSDKAccessToken.current().tokenString)")
+        }
+
         createFakeData()
     
     }
