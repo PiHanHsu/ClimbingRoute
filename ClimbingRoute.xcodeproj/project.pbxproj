@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4EA679A8D2CCD539B99C3D04 /* Pods_ClimbingRoute.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29118A65ADE0A88C48DFF4A3 /* Pods_ClimbingRoute.framework */; };
 		E84E5C991DC1F0C30084ABF2 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E5C981DC1F0C30084ABF2 /* Route.swift */; };
 		E84E5C9B1DC1F0D30084ABF2 /* Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E5C9A1DC1F0D30084ABF2 /* Field.swift */; };
 		E84E5C9D1DC1F25F0084ABF2 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E5C9C1DC1F25F0084ABF2 /* DataSource.swift */; };
@@ -14,6 +15,10 @@
 		E84E5CA21DC2028E0084ABF2 /* RouteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E5CA11DC2028E0084ABF2 /* RouteTableViewCell.swift */; };
 		E84E5CA41DC30D740084ABF2 /* LandscapeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E5CA31DC30D740084ABF2 /* LandscapeNavigationController.swift */; };
 		E84E5CA61DC31FFD0084ABF2 /* PortraitNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E5CA51DC31FFD0084ABF2 /* PortraitNavigationController.swift */; };
+		E84E5CA91DC32F760084ABF2 /* CosmosDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E5CA81DC32F760084ABF2 /* CosmosDistrib.swift */; };
+		E84E5CAB1DC332390084ABF2 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E84E5CAA1DC332390084ABF2 /* Bolts.framework */; };
+		E84E5CAD1DC332550084ABF2 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E84E5CAC1DC332550084ABF2 /* FBSDKCoreKit.framework */; };
+		E84E5CAF1DC332640084ABF2 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E84E5CAE1DC332640084ABF2 /* FBSDKLoginKit.framework */; };
 		E8DBD4021DC0A9F200E3DC82 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DBD4011DC0A9F200E3DC82 /* AppDelegate.swift */; };
 		E8DBD4041DC0A9F200E3DC82 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DBD4031DC0A9F200E3DC82 /* ViewController.swift */; };
 		E8DBD4071DC0A9F200E3DC82 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8DBD4051DC0A9F200E3DC82 /* Main.storyboard */; };
@@ -27,6 +32,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		29118A65ADE0A88C48DFF4A3 /* Pods_ClimbingRoute.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ClimbingRoute.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		62256B87BD6FEF04CEC7A689 /* Pods-ClimbingRoute.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClimbingRoute.release.xcconfig"; path = "Pods/Target Support Files/Pods-ClimbingRoute/Pods-ClimbingRoute.release.xcconfig"; sourceTree = "<group>"; };
+		AA9C34FE93792426AC05219C /* Pods-ClimbingRoute.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClimbingRoute.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ClimbingRoute/Pods-ClimbingRoute.debug.xcconfig"; sourceTree = "<group>"; };
 		E84E5C981DC1F0C30084ABF2 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		E84E5C9A1DC1F0D30084ABF2 /* Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Field.swift; sourceTree = "<group>"; };
 		E84E5C9C1DC1F25F0084ABF2 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
@@ -34,6 +42,10 @@
 		E84E5CA11DC2028E0084ABF2 /* RouteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteTableViewCell.swift; sourceTree = "<group>"; };
 		E84E5CA31DC30D740084ABF2 /* LandscapeNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandscapeNavigationController.swift; sourceTree = "<group>"; };
 		E84E5CA51DC31FFD0084ABF2 /* PortraitNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PortraitNavigationController.swift; sourceTree = "<group>"; };
+		E84E5CA81DC32F760084ABF2 /* CosmosDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CosmosDistrib.swift; sourceTree = "<group>"; };
+		E84E5CAA1DC332390084ABF2 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		E84E5CAC1DC332550084ABF2 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		E84E5CAE1DC332640084ABF2 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		E8DBD3FE1DC0A9F200E3DC82 /* ClimbingRoute.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClimbingRoute.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8DBD4011DC0A9F200E3DC82 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8DBD4031DC0A9F200E3DC82 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -53,12 +65,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EA679A8D2CCD539B99C3D04 /* Pods_ClimbingRoute.framework in Frameworks */,
+				E84E5CAD1DC332550084ABF2 /* FBSDKCoreKit.framework in Frameworks */,
+				E84E5CAF1DC332640084ABF2 /* FBSDKLoginKit.framework in Frameworks */,
+				E84E5CAB1DC332390084ABF2 /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		707741C4067A9258FDA32F7E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E84E5CAC1DC332550084ABF2 /* FBSDKCoreKit.framework */,
+				E84E5CAA1DC332390084ABF2 /* Bolts.framework */,
+				29118A65ADE0A88C48DFF4A3 /* Pods_ClimbingRoute.framework */,
+				E84E5CAE1DC332640084ABF2 /* FBSDKLoginKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E84E5C9E1DC2025E0084ABF2 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -68,11 +95,21 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		E84E5CA71DC32E060084ABF2 /* 3rd Party */ = {
+			isa = PBXGroup;
+			children = (
+				E84E5CA81DC32F760084ABF2 /* CosmosDistrib.swift */,
+			);
+			name = "3rd Party";
+			sourceTree = "<group>";
+		};
 		E8DBD3F51DC0A9F200E3DC82 = {
 			isa = PBXGroup;
 			children = (
 				E8DBD4001DC0A9F200E3DC82 /* ClimbingRoute */,
 				E8DBD3FF1DC0A9F200E3DC82 /* Products */,
+				FB7B82422F4A15ABD1A47E50 /* Pods */,
+				707741C4067A9258FDA32F7E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,6 +124,7 @@
 		E8DBD4001DC0A9F200E3DC82 /* ClimbingRoute */ = {
 			isa = PBXGroup;
 			children = (
+				E84E5CA71DC32E060084ABF2 /* 3rd Party */,
 				E84E5C9E1DC2025E0084ABF2 /* View */,
 				E8DBD4141DC0B0C600E3DC82 /* Model */,
 				E8DBD4131DC0B0B900E3DC82 /* Controller */,
@@ -124,6 +162,15 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		FB7B82422F4A15ABD1A47E50 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AA9C34FE93792426AC05219C /* Pods-ClimbingRoute.debug.xcconfig */,
+				62256B87BD6FEF04CEC7A689 /* Pods-ClimbingRoute.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -131,9 +178,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E8DBD4101DC0A9F200E3DC82 /* Build configuration list for PBXNativeTarget "ClimbingRoute" */;
 			buildPhases = (
+				F00AD0AF781CEFD1C1E8D9E1 /* [CP] Check Pods Manifest.lock */,
 				E8DBD3FA1DC0A9F200E3DC82 /* Sources */,
 				E8DBD3FB1DC0A9F200E3DC82 /* Frameworks */,
 				E8DBD3FC1DC0A9F200E3DC82 /* Resources */,
+				2D43078AD968B705F8DDA578 /* [CP] Embed Pods Frameworks */,
+				DEA81A44A95264B8DD828074 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -157,6 +207,7 @@
 					E8DBD3FD1DC0A9F200E3DC82 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 9DK2B8E236;
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -192,6 +243,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2D43078AD968B705F8DDA578 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ClimbingRoute/Pods-ClimbingRoute-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DEA81A44A95264B8DD828074 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ClimbingRoute/Pods-ClimbingRoute-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F00AD0AF781CEFD1C1E8D9E1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E8DBD3FA1DC0A9F200E3DC82 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -205,6 +304,7 @@
 				E8DBD41E1DC0B19C00E3DC82 /* ShowRouteViewController.swift in Sources */,
 				E84E5CA61DC31FFD0084ABF2 /* PortraitNavigationController.swift in Sources */,
 				E84E5CA01DC2027F0084ABF2 /* RockFieldTableViewCell.swift in Sources */,
+				E84E5CA91DC32F760084ABF2 /* CosmosDistrib.swift in Sources */,
 				E8DBD4021DC0A9F200E3DC82 /* AppDelegate.swift in Sources */,
 				E8DBD4181DC0B15C00E3DC82 /* RockFieldTableViewController.swift in Sources */,
 				E8DBD4201DC0B26B00E3DC82 /* Target.swift in Sources */,
@@ -331,9 +431,14 @@
 		};
 		E8DBD4111DC0A9F200E3DC82 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA9C34FE93792426AC05219C /* Pods-ClimbingRoute.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9DK2B8E236;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ClimbingRoute/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pihanhsu.ClimbingRoute;
@@ -344,9 +449,14 @@
 		};
 		E8DBD4121DC0A9F200E3DC82 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62256B87BD6FEF04CEC7A689 /* Pods-ClimbingRoute.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9DK2B8E236;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ClimbingRoute/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pihanhsu.ClimbingRoute;
