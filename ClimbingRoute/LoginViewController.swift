@@ -14,13 +14,39 @@ class LoginViewController: UIViewController {
 
     let mainFrame = UIApplication.shared.keyWindow?.bounds
     
+    //let ref = FIRDatabase.database().reference()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-     
+        
+//        let childRouteRef = self.ref.child("Trainer").childByAutoId()
+//        let value = ["trainer": "tester"]
+//        childRouteRef.updateChildValues(value)
         createFakeData()
     
     }
+    
+    @IBAction func fbLogin(sender: AnyObject) {
+                let facebookLogin = FBSDKLoginManager()
+        
+//        facebookLogin.logIn(withReadPermissions: ["email"], from: self, handler: {
+//            (facebookresult, facebookError) -> Void in
+//            
+//            if facebookError != nil {
+//                print("FaceBook login failed. Error: \(facebookError)")
+//                
+//            }else if (facebookresult?.isCancelled)!{
+//                print("Facebook login was cancelled.")
+//                
+//            }else {
+//                let accessToken = FBSDKAccessToken.current().tokenString
+//                print(accessToken)
+//                
+//            }
+//        })
+        
+    }
+
 
     func createFakeData() {
         //create Fake Data for testing

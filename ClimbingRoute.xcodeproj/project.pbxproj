@@ -48,6 +48,7 @@
 		E84E5CAC1DC332550084ABF2 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		E84E5CAE1DC332640084ABF2 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		E84E5CB01DC3349A0084ABF2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E84E5CB21DC357300084ABF2 /* ClimbingRoute.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClimbingRoute.entitlements; sourceTree = "<group>"; };
 		E8DBD3FE1DC0A9F200E3DC82 /* ClimbingRoute.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClimbingRoute.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8DBD4011DC0A9F200E3DC82 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8DBD4031DC0A9F200E3DC82 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -126,6 +127,7 @@
 		E8DBD4001DC0A9F200E3DC82 /* ClimbingRoute */ = {
 			isa = PBXGroup;
 			children = (
+				E84E5CB21DC357300084ABF2 /* ClimbingRoute.entitlements */,
 				E84E5CA71DC32E060084ABF2 /* 3rd Party */,
 				E84E5C9E1DC2025E0084ABF2 /* View */,
 				E8DBD4141DC0B0C600E3DC82 /* Model */,
@@ -212,6 +214,11 @@
 						DevelopmentTeam = 9DK2B8E236;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -438,6 +445,7 @@
 			baseConfigurationReference = AA9C34FE93792426AC05219C /* Pods-ClimbingRoute.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ClimbingRoute/ClimbingRoute.entitlements;
 				DEVELOPMENT_TEAM = 9DK2B8E236;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -456,6 +464,7 @@
 			baseConfigurationReference = 62256B87BD6FEF04CEC7A689 /* Pods-ClimbingRoute.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ClimbingRoute/ClimbingRoute.entitlements;
 				DEVELOPMENT_TEAM = 9DK2B8E236;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

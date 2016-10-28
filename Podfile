@@ -5,6 +5,7 @@ target 'ClimbingRoute' do
   use_frameworks!
   pod 'Firebase'
   pod 'Firebase/Auth'
+  pod 'Firebase/Database'
   pod 'SwiftyJSON', git: 'https://github.com/BaiduHiDeviOS/SwiftyJSON.git', branch: 'swift3'
  
 end
