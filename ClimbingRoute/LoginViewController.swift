@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FBSDKLoginKit
 
 class LoginViewController: UIViewController {
 
@@ -15,17 +17,10 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+     
         createFakeData()
-        print("Fileds: \(DataSource.shareInstance.Fields.count)")
-        print("Routes: \(DataSource.shareInstance.Fields[0].routes?.count)")
-        
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
+    }
 
     func createFakeData() {
         //create Fake Data for testing

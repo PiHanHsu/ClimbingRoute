@@ -24,7 +24,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Log in"/>
                                 <connections>
-                                    <segue destination="r37-nB-aac" kind="show" id="0nM-oj-9hq"/>
+                                    <segue destination="r37-nB-aac" kind="show" identifier="SelectField" id="0nM-oj-9hq"/>
                                 </connections>
                             </button>
                         </subviews>
