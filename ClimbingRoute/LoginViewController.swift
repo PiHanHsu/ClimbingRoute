@@ -10,20 +10,21 @@ import UIKit
 import Firebase
 import FBSDKLoginKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
 
     let mainFrame = UIApplication.shared.keyWindow?.bounds
+    var firebaseUser: FIRUser?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let ref = FIRDatabase.database().reference()
-//        let childRouteRef = ref.child("Trainer").childByAutoId()
-//        let value = ["trainer": "tester"]
-//        childRouteRef.setValue(value)
+        if FBSDKAccessToken.current() != nil {
+            loginFirebase()
+        }
         
         let loginButton = FBSDKLoginButton()
-        //        loginButton.readPermissions = ["public_profile", "email", "user_friends"]
+        loginButton.readPermissions = ["public_profile", "email", "user_friends"]
         loginButton.center = self.view.center
+        loginButton.delegate = self
         self.view.addSubview(loginButton)
         
         if (FBSDKAccessToken.current() != nil) {
@@ -35,29 +36,38 @@ class LoginViewController: UIViewController {
     
     }
     
-    @IBAction func fbLogin(sender: AnyObject) {
-        let facebookLogin = FBSDKLoginManager()
+    public func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
         
+        loginFirebase()
         
-//        facebookLogin.logIn(withReadPermissions: ["email"], from: self, handler: {
-//            (facebookresult, facebookError) -> Void in
-//            
-//            if facebookError != nil {
-//                print("FaceBook login failed. Error: \(facebookError)")
-//                
-//            }else if (facebookresult?.isCancelled)!{
-//                print("Facebook login was cancelled.")
-//                
-//            }else {
-//                let accessToken = FBSDKAccessToken.current().tokenString
-//                print(accessToken)
-//                
-//            }
-//        })
-//        
     }
+    
 
+    public func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+        
+    }
+    
+    func loginFirebase() {
+        if FBSDKAccessToken.current() != nil {
+            let fbToken = FBSDKAccessToken.current().tokenString
+            let fireCredential = FIRFacebookAuthProvider.credential(withAccessToken: fbToken!)
+            FIRAuth.auth()?.signIn(with: fireCredential, completion: {
+                (user, error) in
+                print("error: \(error?.localizedDescription)")
+                print("Uid: \(user?.uid)")
+                print("Name: \(user?.displayName)")
+                
+                DataSource.shareInstance.firebaseUser = user
+                self.performSegue(withIdentifier: "SelectField", sender: self)
+                
+            })
+        } else {
+            //
+        }
 
+    }
+    
+ 
     func createFakeData() {
         //create Fake Data for testing
         let field1 = Field(name: "紅石")

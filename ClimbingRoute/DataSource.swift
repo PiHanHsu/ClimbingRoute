@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class DataSource: NSObject {
    
@@ -14,4 +15,6 @@ class DataSource: NSObject {
     
     var Fields = [Field]()
     var selectRoute: Route?
+    var firebaseUser: FIRUser?
+
 }
