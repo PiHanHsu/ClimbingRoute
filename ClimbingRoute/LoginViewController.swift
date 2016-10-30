@@ -32,6 +32,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             print("FB Token: \(FBSDKAccessToken.current().tokenString)")
         }
 
+        
         //createFakeData()
     
     }
@@ -59,7 +60,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 
                 DataSource.shareInstance.firebaseUser = user
                 self.performSegue(withIdentifier: "SelectField", sender: self)
-                
+             DataSource.shareInstance.loadDataFromFirebase()   
             })
         } else {
             //
@@ -98,6 +99,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         }
         
         
-        DataSource.shareInstance.Fields = fieldsArray
+        DataSource.shareInstance.fields = fieldsArray
     }
 }

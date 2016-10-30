@@ -16,7 +16,7 @@ class RoutesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        routes = DataSource.shareInstance.Fields[index].routes
+        routes = DataSource.shareInstance.fields[index].routes
         
     }
 

@@ -20,26 +20,35 @@ class RockFieldTableViewController: UITableViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        fields = DataSource.shareInstance.Fields
+        //fields = DataSource.shareInstance.fields
         firebaseUser = DataSource.shareInstance.firebaseUser
         self.navigationItem.rightBarButtonItem = nil
         
         if let user = firebaseUser {
-            print(user.uid)
+            // not allow other user to add Field
             if user.uid == "eY77TbUZgaO0L17lDyqi1vQHpU12" {
                self.navigationItem.rightBarButtonItem = addFieldBarButton
             }
         }
-        
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: Notification.Name("FinishLoadingFieldData"), object: nil)
+
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("FinishLoadingFieldData"), object: nil);
+    }
+    
+    func reloadData() {
+        print("ready to reload data!! ")
+        fields = DataSource.shareInstance.fields
+        tableView.reloadData()
+    }
     
     @IBAction func addFieldButtonPressed(_ sender: AnyObject) {
         let alertController = UIAlertController(title: "新增岩場", message: nil, preferredStyle: .alert)
@@ -53,19 +62,18 @@ class RockFieldTableViewController: UITableViewController {
             let fieldInfo = ["name": name] as [String : Any]
             newField.setValue(fieldInfo)
             
-            self.ref.child("Field").observeSingleEvent(of: .value, with: { (snapshot) in
-                for child in snapshot.children {
-                    let childSnapshot = snapshot.childSnapshot(forPath: (child as AnyObject).key)
-                    let fieldId = childSnapshot.key
-                    let value = childSnapshot.value as? NSDictionary
-                    let name = value?["name"] as! String
-                    
-                    let field = Field(name: name)
-                    DataSource.shareInstance.Fields.append(field)
-                }
-                self.fields = DataSource.shareInstance.Fields
-                self.tableView.reloadData()
-            })
+//            self.ref.child("Field").observeSingleEvent(of: .value, with: { (snapshot) in
+//                for child in snapshot.children {
+//                    let childSnapshot = snapshot.childSnapshot(forPath: (child as AnyObject).key)
+//                    let value = childSnapshot.value as? NSDictionary
+//                    let name = value?["name"] as! String
+//                    
+//                    let field = Field(name: name)
+//                    DataSource.shareInstance.fields.append(field)
+//                }
+//                self.fields = DataSource.shareInstance.fields
+//                self.tableView.reloadData()
+//            })
             
         })
         
