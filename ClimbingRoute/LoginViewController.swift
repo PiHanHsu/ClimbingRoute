@@ -32,7 +32,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             print("FB Token: \(FBSDKAccessToken.current().tokenString)")
         }
 
-        createFakeData()
+        //createFakeData()
     
     }
     

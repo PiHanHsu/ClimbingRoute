@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SwiftyJSON
 
 class RockFieldTableViewController: UITableViewController {
     
@@ -43,9 +44,6 @@ class RockFieldTableViewController: UITableViewController {
     @IBAction func addFieldButtonPressed(_ sender: AnyObject) {
         let alertController = UIAlertController(title: "新增岩場", message: nil, preferredStyle: .alert)
         
-        let save = UIAlertAction(title: "Save", style: .default) { (UIAlertAction) in
-            print("save")
-        }
         let saveAction = UIAlertAction(title: "Save", style: .default, handler: {
             alert -> Void in
             
@@ -54,7 +52,20 @@ class RockFieldTableViewController: UITableViewController {
             let newField = self.ref.child("Field").childByAutoId()
             let fieldInfo = ["name": name] as [String : Any]
             newField.setValue(fieldInfo)
-            print("save")
+            
+            self.ref.child("Field").observeSingleEvent(of: .value, with: { (snapshot) in
+                for child in snapshot.children {
+                    let childSnapshot = snapshot.childSnapshot(forPath: (child as AnyObject).key)
+                    let fieldId = childSnapshot.key
+                    let value = childSnapshot.value as? NSDictionary
+                    let name = value?["name"] as! String
+                    
+                    let field = Field(name: name)
+                    DataSource.shareInstance.Fields.append(field)
+                }
+                self.fields = DataSource.shareInstance.Fields
+                self.tableView.reloadData()
+            })
             
         })
         
@@ -95,10 +106,12 @@ class RockFieldTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RockFieldTableViewCell", for: indexPath) as! RockFieldTableViewCell
 
         cell.nameLabel.text = fields[indexPath.row].name
-        cell.routesLabel.text = "\(fields[indexPath.row].routes!.count)條路線"
-        // Configure the cell...
-
-        return cell
+        if let routeNumber = fields[indexPath.row].routes?.count {
+            cell.routesLabel.text = "\(routeNumber)條路線"
+        }else {
+            cell.routesLabel.text = "0 條路線"
+        }
+                return cell
     }
     
 
