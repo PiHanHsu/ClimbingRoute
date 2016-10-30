@@ -15,6 +15,7 @@ class DataSource: NSObject {
     
     var fields = [Field]()
     var selectRoute: Route?
+    var selectField: Field?
     var firebaseUser: FIRUser?
 
     let ref = FIRDatabase.database().reference()
