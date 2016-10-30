@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,10 +19,20 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="er0-48-8KL">
+                                <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="er0-48-8KL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6S4-qz-rvP"/>
+                            <constraint firstItem="er0-48-8KL" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.85" id="9Lp-CO-w4j"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="mwT-iU-FoC"/>
                     <connections>
+                        <outlet property="indicator" destination="er0-48-8KL" id="TgY-PW-QiV"/>
                         <segue destination="r37-nB-aac" kind="show" identifier="SelectField" id="UYl-dK-Ct7"/>
                     </connections>
                 </viewController>
@@ -64,7 +75,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="k0D-Zk-j4J" secondAttribute="trailing" constant="8" id="6pu-O8-p2f"/>
-                                        <constraint firstItem="qHw-5Q-4nD" firstAttribute="leading" secondItem="tgY-lF-1E5" secondAttribute="leadingMargin" id="DGk-l9-G8L"/>
+                                        <constraint firstItem="qHw-5Q-4nD" firstAttribute="leading" secondItem="tgY-lF-1E5" secondAttribute="leadingMargin" constant="7" id="DGk-l9-G8L"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="k0D-Zk-j4J" secondAttribute="bottom" constant="3" id="M3z-my-qCC"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="qHw-5Q-4nD" secondAttribute="bottom" constant="3" id="Qlt-EU-eeu"/>
                                         <constraint firstItem="k0D-Zk-j4J" firstAttribute="top" secondItem="tgY-lF-1E5" secondAttribute="topMargin" constant="4" id="UYF-9k-y2O"/>
@@ -111,7 +122,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ghq-DI-DZj" id="7zI-TG-y01">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                    <frame key="frameInset" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gm-oh-IRq">

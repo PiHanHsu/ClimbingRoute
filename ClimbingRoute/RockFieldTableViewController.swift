@@ -17,19 +17,30 @@ class RockFieldTableViewController: UITableViewController {
     var fields = [Field]()
     var firebaseUser: FIRUser?
     let ref = FIRDatabase.database().reference()
+    let indicator = UIActivityIndicatorView()
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        //fields = DataSource.shareInstance.fields
+        
+        // not allow other user to add Field
         firebaseUser = DataSource.shareInstance.firebaseUser
         self.navigationItem.rightBarButtonItem = nil
-        
         if let user = firebaseUser {
-            // not allow other user to add Field
             if user.uid == "eY77TbUZgaO0L17lDyqi1vQHpU12" {
-               self.navigationItem.rightBarButtonItem = addFieldBarButton
+                self.navigationItem.rightBarButtonItem = addFieldBarButton
             }
         }
+
+        // set up indicator
+        indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
+        indicator.color = UIColor.gray
+        indicator.center = view.center
+        indicator.startAnimating()
+        view.addSubview(indicator)
+        
+        //add footerView
+        tableView.tableFooterView = UIView(frame: .zero)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,9 +56,10 @@ class RockFieldTableViewController: UITableViewController {
     }
     
     func reloadData() {
-        print("ready to reload data!! ")
         fields = DataSource.shareInstance.fields
+        indicator.stopAnimating()
         tableView.reloadData()
+        
     }
     
     @IBAction func addFieldButtonPressed(_ sender: AnyObject) {

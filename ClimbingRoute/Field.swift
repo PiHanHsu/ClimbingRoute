@@ -10,9 +10,11 @@ import UIKit
 
 class Field: NSObject {
     var name: String
+    var fieldId: String
     var routes: [Route]? = nil
     
-    init(name: String) {
+    init(fieldId: String, name: String) {
+        self.fieldId = fieldId
         self.name = name
     }
     

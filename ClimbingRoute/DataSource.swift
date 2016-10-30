@@ -28,11 +28,13 @@ class DataSource: NSObject {
         self.ref.child("Field").observe(.value, with: { (snapshot) in
             self.fields.removeAll()
             for child in snapshot.children {
+                
                 let childSnapshot = snapshot.childSnapshot(forPath: (child as AnyObject).key)
+                let fieldId = childSnapshot.key
                 let value = childSnapshot.value as? NSDictionary
                 let name = value?["name"] as! String
                 
-                let field = Field(name: name)
+                let field = Field(fieldId: fieldId, name: name)
                 self.fields.append(field)
             }
             NotificationCenter.default.post(name: Notification.Name(rawValue: "FinishLoadingFieldData"), object: nil)

@@ -18,6 +18,9 @@ class RoutesTableViewController: UITableViewController {
         
         routes = DataSource.shareInstance.fields[index].routes
         
+        //add footerView
+        tableView.tableFooterView = UIView(frame: .zero)
+        
     }
 
     override func didReceiveMemoryWarning() {
