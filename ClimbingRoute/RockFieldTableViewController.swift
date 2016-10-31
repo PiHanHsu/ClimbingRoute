@@ -74,19 +74,6 @@ class RockFieldTableViewController: UITableViewController {
             let fieldInfo = ["name": name] as [String : Any]
             newField.setValue(fieldInfo)
             
-//            self.ref.child("Field").observeSingleEvent(of: .value, with: { (snapshot) in
-//                for child in snapshot.children {
-//                    let childSnapshot = snapshot.childSnapshot(forPath: (child as AnyObject).key)
-//                    let value = childSnapshot.value as? NSDictionary
-//                    let name = value?["name"] as! String
-//                    
-//                    let field = Field(name: name)
-//                    DataSource.shareInstance.fields.append(field)
-//                }
-//                self.fields = DataSource.shareInstance.fields
-//                self.tableView.reloadData()
-//            })
-            
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: {
@@ -104,20 +91,13 @@ class RockFieldTableViewController: UITableViewController {
         
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return fields.count
     }
 
@@ -126,11 +106,12 @@ class RockFieldTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RockFieldTableViewCell", for: indexPath) as! RockFieldTableViewCell
 
         cell.nameLabel.text = fields[indexPath.row].name
-        if let routeNumber = fields[indexPath.row].routes?.count {
-            cell.routesLabel.text = "\(routeNumber)條路線"
-        }else {
-            cell.routesLabel.text = "0 條路線"
-        }
+        cell.routesLabel.text = "\(fields[indexPath.row].routes.count)條路線"
+//        if let routeNumber = fields[indexPath.row].routes?.count {
+//            
+//        }else {
+//            cell.routesLabel.text = "0 條路線"
+//        }
                 return cell
     }
     

@@ -11,7 +11,7 @@ import UIKit
 class Field: NSObject {
     var name: String
     var fieldId: String
-    var routes: [Route]? = nil
+    var routes = [Route]()
     
     init(fieldId: String, name: String) {
         self.fieldId = fieldId

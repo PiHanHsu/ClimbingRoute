@@ -41,4 +41,39 @@ class DataSource: NSObject {
             NotificationCenter.default.post(name: Notification.Name(rawValue: "FinishLoadingFieldData"), object: nil)
         })
     }
+    
+    func loadingRouteFromFirebase(filedId: String) {
+        guard firebaseUser != nil else {
+            return
+        }
+
+        self.ref.child("Route").child(filedId).observe(.value, with: { (snapshot) in
+            if let field = self.selectField {
+                for child in snapshot.children {
+                    
+                    let childSnapshot = snapshot.childSnapshot(forPath: (child as AnyObject).key)
+                    //let routeId = childSnapshot.key
+                    let value = childSnapshot.value as? NSDictionary
+                    let creater = value?["creater"] as! String
+                    let difficulty = value?["difficulty"] as! String
+                    let path = value?["path"] as! [String]
+                    var targets = [Target]()
+                    for center in path {
+                        let targetCenter = CGPointFromString(center)
+                        let target = Target(targetCenter: targetCenter)
+                        targets.append(target)
+                    }
+                    
+                    let route = Route(creater: creater, difficulty: difficulty, targets: targets)
+                    
+                    field.routes.append(route)
+                    //self.selectField!.routes = routes
+                }
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "FinishLoadingRouteData"), object: nil)
+            }
+        })
+        
+        
+    }
+    
 }

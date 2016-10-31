@@ -12,31 +12,52 @@ class RoutesTableViewController: UITableViewController {
 
     var index: Int = 0
     var routes: [Route]?
+    let indicator = UIActivityIndicatorView()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        routes = DataSource.shareInstance.fields[index].routes
+        DataSource.shareInstance.loadingRouteFromFirebase(filedId: DataSource.shareInstance.fields[index].fieldId)
+        //routes = DataSource.shareInstance.fields[index].routes
+        
+        // set up indicator
+        indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
+        indicator.color = UIColor.gray
+        indicator.center = view.center
+        indicator.startAnimating()
+        view.addSubview(indicator)
         
         //add footerView
         tableView.tableFooterView = UIView(frame: .zero)
         
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: Notification.Name("FinishLoadingRouteData"), object: nil)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name("FinishLoadingRouteData"), object: nil);
+    }
+    
+    func reloadData() {
+        routes = DataSource.shareInstance.fields[index].routes
+        indicator.stopAnimating()
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         if let rows = routes?.count {
             return rows
         }else{

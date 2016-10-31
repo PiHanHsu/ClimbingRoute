@@ -133,11 +133,10 @@ class ShowRouteViewController: UIViewController {
                 routeRef.setValue(routeInfo)
             }
         }
-
     }
     
     @IBAction func createButtonPressed(_ sender: AnyObject) {
-        let target = Target()
+        let target = Target(targetCenter: nil)
         targetArray.append(target)
         view.addSubview(target.imageView)
     }
