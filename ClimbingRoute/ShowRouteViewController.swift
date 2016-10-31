@@ -17,6 +17,8 @@ class ShowRouteViewController: UIViewController {
     let ref = FIRDatabase.database().reference()
     var currentField: Field?
     var currentUser: FIRUser?
+    var pickerData = [String]()
+    var difficulty: String?
     
     @IBOutlet var doneBarButton: UIBarButtonItem!
     @IBOutlet var createButton: UIButton!
@@ -36,6 +38,9 @@ class ShowRouteViewController: UIViewController {
             displayRoute()
         }
         
+        //set pickerData
+        pickerData = ["v0","v1","v2","v3","v4","v5","v6","v7","v8","v9","v10","v11","v12","v13","v14","v15"]
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,36 +54,28 @@ class ShowRouteViewController: UIViewController {
     
     @IBAction func doneButtonPressed(_ sender: AnyObject) {
         if isEditMode {
-          let alert = UIAlertController(title: "儲存此路線", message: nil, preferredStyle: .actionSheet)
-          let okAction = UIAlertAction(title: "儲存完離開", style: .default, handler: { (UIAlertAction) in
+          let alert = UIAlertController(title: "設定難度", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: .alert)
+            //Create a frame (placeholder/wrapper) for the picker and then create the picker
             
-            var path = [String]()
-            for target in self.targetArray {
-                let center = NSStringFromCGPoint(target.imageView.center)
-                path.append(center)
-            }
+            let pickerFrame = CGRect(x: 15, y: 52, width: 240, height: 150)
+            let picker: UIPickerView = UIPickerView(frame: pickerFrame)
             
-            let fieldId = self.currentField?.fieldId
+            //set the pickers datasource and delegate
+            picker.delegate = self
+            picker.dataSource = self
             
-            let routeRef = self.ref.child("Route").child(fieldId!).childByAutoId()
+            //Add the picker to the alert controller
+            alert.view.addSubview(picker)
             
-            if let name = self.currentUser?.displayName {
-                let routeInfo = ["creater" : name, "path" : path] as [String : Any]
-                routeRef.setValue(routeInfo)
-            }
-             self.dismiss(animated: true, completion: nil)
-          })
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
+                self.difficulty = self.pickerData[picker.selectedRow(inComponent: 0)]
+                self.saveRoute()
+            })
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
             
-          let continueAction = UIAlertAction(title: "儲存完繼續新增路線", style: .default, handler: { (UIAlertAction) in
-                
-           })
-            
-          let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-            
-          alert.addAction(okAction)
-          alert.addAction(continueAction)
-          alert.addAction(cancelAction)
-            
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+
           present(alert, animated: true, completion: nil)
             
         }else {
@@ -95,6 +92,49 @@ class ShowRouteViewController: UIViewController {
         }
     }
     
+    func saveRoute() {
+        let alert = UIAlertController(title: "儲存此路線", message: nil, preferredStyle: .actionSheet)
+        let okAction = UIAlertAction(title: "儲存完離開", style: .default, handler: { (UIAlertAction) in
+            self.saveRouteToFireBase()
+            self.dismiss(animated: true, completion: nil)
+        })
+        
+        let continueAction = UIAlertAction(title: "儲存完繼續新增路線", style: .default, handler: { (UIAlertAction) in
+            self.saveRouteToFireBase()
+            for target in self.targetArray{
+                target.imageView.removeFromSuperview()
+            }
+            self.targetArray.removeAll()
+        })
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        
+        alert.addAction(okAction)
+        alert.addAction(continueAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func saveRouteToFireBase() {
+        var path = [String]()
+        for target in self.targetArray {
+            let center = NSStringFromCGPoint(target.imageView.center)
+            path.append(center)
+        }
+        
+        let fieldId = self.currentField?.fieldId
+        
+        let routeRef = self.ref.child("Route").child(fieldId!).childByAutoId()
+        
+        if let name = self.currentUser?.displayName {
+            if let difficulty = self.difficulty {
+                let routeInfo = ["creater" : name, "difficulty" : difficulty, "path" : path] as [String : Any]
+                routeRef.setValue(routeInfo)
+            }
+        }
+
+    }
     
     @IBAction func createButtonPressed(_ sender: AnyObject) {
         let target = Target()
@@ -118,5 +158,24 @@ class ShowRouteViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+
+}
+
+
+extension ShowRouteViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+       return 16
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        let difficulty = pickerData[row]
+        return difficulty
+            
+        }
 
 }
