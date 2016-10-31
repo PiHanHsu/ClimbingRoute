@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="mVz-3W-9tk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="mVz-3W-9tk">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -122,7 +122,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ghq-DI-DZj" id="7zI-TG-y01">
-                                    <frame key="frameInset" width="375" height="44"/>
+                                    <frame key="frameInset" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gm-oh-IRq">
@@ -133,18 +133,21 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="V0-1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="msr-pR-pbr">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="V0-1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="msr-pR-pbr">
+                                            <frame key="frameInset" minX="286" minY="11" width="80" height="20"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="50" id="po8-Y3-v6z"/>
+                                                <constraint firstAttribute="width" constant="80" id="po8-Y3-v6z"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g9L-K7-uJa" customClass="CosmosView" customModule="ClimbingRoute" customModuleProvider="target">
-                                            <frame key="frameInset" minX="229" minY="9" width="125" height="25"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g9L-K7-uJa" customClass="CosmosView" customModule="ClimbingRoute" customModuleProvider="target">
+                                            <frame key="frameInset" minX="286" minY="31" width="80" height="12"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="12" id="RNM-fM-ORC"/>
+                                            </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
                                                     <integer key="value" value="0"/>
@@ -156,18 +159,19 @@
                                                     <real key="value" value="3"/>
                                                 </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="starSize">
-                                                    <real key="value" value="25"/>
+                                                    <real key="value" value="12"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="6Gm-oh-IRq" firstAttribute="leading" secondItem="7zI-TG-y01" secondAttribute="leadingMargin" id="06S-q4-6P8"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="msr-pR-pbr" secondAttribute="bottom" constant="3" id="6QU-d1-Boq"/>
-                                        <constraint firstItem="msr-pR-pbr" firstAttribute="top" secondItem="7zI-TG-y01" secondAttribute="topMargin" constant="3" id="8wK-er-49X"/>
-                                        <constraint firstItem="msr-pR-pbr" firstAttribute="leading" secondItem="6Gm-oh-IRq" secondAttribute="trailing" constant="20" id="LuG-Xq-rfz"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="6Gm-oh-IRq" secondAttribute="bottom" constant="3" id="XfZ-sh-0QI"/>
-                                        <constraint firstItem="6Gm-oh-IRq" firstAttribute="top" secondItem="7zI-TG-y01" secondAttribute="topMargin" constant="3" id="xv2-50-btt"/>
+                                        <constraint firstItem="6Gm-oh-IRq" firstAttribute="leading" secondItem="7zI-TG-y01" secondAttribute="leadingMargin" constant="7" id="06S-q4-6P8"/>
+                                        <constraint firstItem="msr-pR-pbr" firstAttribute="centerY" secondItem="7zI-TG-y01" secondAttribute="centerY" id="8sT-Fu-6rx"/>
+                                        <constraint firstItem="g9L-K7-uJa" firstAttribute="width" secondItem="msr-pR-pbr" secondAttribute="width" id="CY7-HY-UWa"/>
+                                        <constraint firstItem="msr-pR-pbr" firstAttribute="trailing" secondItem="7zI-TG-y01" secondAttribute="trailingMargin" id="DZQ-N0-Fne"/>
+                                        <constraint firstItem="g9L-K7-uJa" firstAttribute="top" secondItem="msr-pR-pbr" secondAttribute="bottom" id="Ide-4I-BQR"/>
+                                        <constraint firstItem="g9L-K7-uJa" firstAttribute="centerX" secondItem="msr-pR-pbr" secondAttribute="centerX" id="RS7-M3-1my"/>
+                                        <constraint firstItem="6Gm-oh-IRq" firstAttribute="centerY" secondItem="7zI-TG-y01" secondAttribute="centerY" id="jmu-YH-jVp"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>

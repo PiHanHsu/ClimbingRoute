@@ -14,12 +14,10 @@ class RoutesTableViewController: UITableViewController {
     var routes: [Route]?
     let indicator = UIActivityIndicatorView()
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         DataSource.shareInstance.loadingRouteFromFirebase(filedId: DataSource.shareInstance.fields[index].fieldId)
-        //routes = DataSource.shareInstance.fields[index].routes
         
         // set up indicator
         indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
