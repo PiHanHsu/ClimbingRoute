@@ -82,10 +82,16 @@ class RoutesTableViewController: UITableViewController {
             cell.createrLabel.text = routes[indexPath.row].creater
             cell.difficultyLabel.text = routes[indexPath.row].difficulty
             cell.ratingView.rating = routes[indexPath.row].rating
+            cell.editButton.isHidden = true
         case 1:
             cell.createrLabel.text = myRoutes[indexPath.row].creater
             cell.difficultyLabel.text = myRoutes[indexPath.row].difficulty
             cell.ratingView.rating = myRoutes[indexPath.row].rating
+            cell.editButton.isHidden = false
+            cell.editButton.layer.borderWidth = 1.0
+            cell.editButton.layer.borderColor = UIColor.blue.cgColor
+            cell.editButton.layer.cornerRadius = 5.0
+
         default:
             break
         }

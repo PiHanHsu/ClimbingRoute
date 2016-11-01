@@ -144,7 +144,7 @@
                                 <rect key="frame" x="0.0" y="141" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ghq-DI-DZj" id="7zI-TG-y01">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                    <frame key="frameInset" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gm-oh-IRq">
@@ -155,8 +155,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="V0-1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="msr-pR-pbr">
-                                            <frame key="frameInset" minX="286" minY="11" width="80" height="20"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="V0-1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="msr-pR-pbr">
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="80" id="po8-Y3-v6z"/>
                                             </constraints>
@@ -164,8 +163,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g9L-K7-uJa" customClass="CosmosView" customModule="ClimbingRoute" customModuleProvider="target">
-                                            <frame key="frameInset" minX="286" minY="31" width="80" height="12"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g9L-K7-uJa" customClass="CosmosView" customModule="ClimbingRoute" customModuleProvider="target">
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="12" id="RNM-fM-ORC"/>
@@ -185,20 +183,29 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CZD-qJ-A0K">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="70" id="ubX-EI-h3X"/>
+                                            </constraints>
+                                            <state key="normal" title="編輯路線"/>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="6Gm-oh-IRq" firstAttribute="leading" secondItem="7zI-TG-y01" secondAttribute="leadingMargin" constant="7" id="06S-q4-6P8"/>
                                         <constraint firstItem="msr-pR-pbr" firstAttribute="centerY" secondItem="7zI-TG-y01" secondAttribute="centerY" id="8sT-Fu-6rx"/>
                                         <constraint firstItem="g9L-K7-uJa" firstAttribute="width" secondItem="msr-pR-pbr" secondAttribute="width" id="CY7-HY-UWa"/>
-                                        <constraint firstItem="msr-pR-pbr" firstAttribute="trailing" secondItem="7zI-TG-y01" secondAttribute="trailingMargin" id="DZQ-N0-Fne"/>
                                         <constraint firstItem="g9L-K7-uJa" firstAttribute="top" secondItem="msr-pR-pbr" secondAttribute="bottom" id="Ide-4I-BQR"/>
+                                        <constraint firstItem="CZD-qJ-A0K" firstAttribute="leading" secondItem="6Gm-oh-IRq" secondAttribute="trailing" constant="10" id="KpI-2M-dAE"/>
                                         <constraint firstItem="g9L-K7-uJa" firstAttribute="centerX" secondItem="msr-pR-pbr" secondAttribute="centerX" id="RS7-M3-1my"/>
+                                        <constraint firstItem="CZD-qJ-A0K" firstAttribute="centerY" secondItem="7zI-TG-y01" secondAttribute="centerY" id="Vvb-kN-rL1"/>
                                         <constraint firstItem="6Gm-oh-IRq" firstAttribute="centerY" secondItem="7zI-TG-y01" secondAttribute="centerY" id="jmu-YH-jVp"/>
+                                        <constraint firstItem="msr-pR-pbr" firstAttribute="trailing" secondItem="7zI-TG-y01" secondAttribute="trailingMargin" id="n0x-sR-qVZ"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="createrLabel" destination="6Gm-oh-IRq" id="PTt-0E-0TP"/>
                                     <outlet property="difficultyLabel" destination="msr-pR-pbr" id="QhJ-6s-8d7"/>
+                                    <outlet property="editButton" destination="CZD-qJ-A0K" id="kyP-qb-ILg"/>
                                     <outlet property="ratingView" destination="g9L-K7-uJa" id="Wsb-Kd-4rx"/>
                                     <segue destination="If2-57-gSF" kind="show" identifier="StartClimbing" id="UWU-Ud-E8l"/>
                                 </connections>
