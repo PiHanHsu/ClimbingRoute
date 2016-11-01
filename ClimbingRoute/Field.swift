@@ -11,11 +11,17 @@ import UIKit
 class Field: NSObject {
     var name: String
     var fieldId: String
-    var routes = [Route]()
+    var routesCount: Int
+    var routes = [Route]() {
+        willSet(newValue) {
+           self.routesCount = newValue.count
+        }
+    }
     
     init(fieldId: String, name: String) {
         self.fieldId = fieldId
         self.name = name
+        self.routesCount = 0
     }
     
 }

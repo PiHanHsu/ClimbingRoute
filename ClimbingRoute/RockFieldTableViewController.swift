@@ -46,6 +46,8 @@ class RockFieldTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        //reload for new route count
+        tableView.reloadData()
         NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: Notification.Name("FinishLoadingFieldData"), object: nil)
 
     }
@@ -71,7 +73,7 @@ class RockFieldTableViewController: UITableViewController {
             let textField = alertController.textFields![0] as UITextField
             let name = textField.text!
             let newField = self.ref.child("Field").childByAutoId()
-            let fieldInfo = ["name": name] as [String : Any]
+            let fieldInfo = ["name": name, "routesCount" : 0] as [String : Any]
             newField.setValue(fieldInfo)
             
         })
@@ -106,12 +108,7 @@ class RockFieldTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RockFieldTableViewCell", for: indexPath) as! RockFieldTableViewCell
 
         cell.nameLabel.text = fields[indexPath.row].name
-        cell.routesLabel.text = "\(fields[indexPath.row].routes.count)條路線"
-//        if let routeNumber = fields[indexPath.row].routes?.count {
-//            
-//        }else {
-//            cell.routesLabel.text = "0 條路線"
-//        }
+        cell.routesLabel.text = "\(fields[indexPath.row].routesCount) 條路線"
                 return cell
     }
     

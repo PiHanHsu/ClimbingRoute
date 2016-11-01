@@ -37,8 +37,10 @@ class DataSource: NSObject {
                 let fieldId = childSnapshot.key
                 let value = childSnapshot.value as? NSDictionary
                 let name = value?["name"] as! String
+                let routesCount = value?["routesCount"] as! Int
                 
                 let field = Field(fieldId: fieldId, name: name)
+                field.routesCount = routesCount
                 self.fields.append(field)
             }
             NotificationCenter.default.post(name: Notification.Name(rawValue: "FinishLoadingFieldData"), object: nil)
@@ -53,6 +55,7 @@ class DataSource: NSObject {
         self.ref.child("Route").child(filedId).observe(.value, with: { (snapshot) in
             if let field = self.selectField {
                 field.routes.removeAll()
+                print("loading routes")
                 for child in snapshot.children {
                     
                     let childSnapshot = snapshot.childSnapshot(forPath: (child as AnyObject).key)
@@ -75,9 +78,17 @@ class DataSource: NSObject {
                     route.rating = rating
                     field.routes.append(route)
                 }
-                NotificationCenter.default.post(name: Notification.Name(rawValue: "FinishLoadingRouteData"), object: nil)
+                print("count after loading routes: \(field.routes.count)")
+                self.updateRoutesCountToFirebase(field: field)
             }
         })
+    }
+    
+    func updateRoutesCountToFirebase(field: Field) {
+        let fieldRef = ref.child("Field").child(field.fieldId)
+        let routesCount = ["routesCount" : field.routes.count] as [String : Any]
+        fieldRef.updateChildValues(routesCount)
+       NotificationCenter.default.post(name: Notification.Name(rawValue: "FinishLoadingRouteData"), object: nil)
     }
  
     func updateRatingDataToRoute(field: Field, route: Route) {

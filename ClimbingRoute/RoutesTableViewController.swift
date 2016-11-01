@@ -11,7 +11,7 @@ import UIKit
 class RoutesTableViewController: UITableViewController {
 
     var index: Int = 0
-    var routes: [Route]?
+    var routes = [Route]()
     let indicator = UIActivityIndicatorView()
 
     override func viewDidLoad() {
@@ -33,20 +33,21 @@ class RoutesTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        //tableView.reloadData()
         NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: Notification.Name("FinishLoadingRouteData"), object: nil)
-        
+
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: Notification.Name("FinishLoadingRouteData"), object: nil);
     }
     
     func reloadData() {
-        routes = DataSource.shareInstance.fields[index].routes
+        routes = DataSource.shareInstance.selectField!.routes
         indicator.stopAnimating()
         tableView.reloadData()
+        print("routes: \(routes.count)")
     }
 
     // MARK: - Table view data source
@@ -56,20 +57,16 @@ class RoutesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let rows = routes?.count {
-            return rows
-        }else{
-            return 0
-        }
+        return routes.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RouteTableViewCell", for: indexPath) as! RouteTableViewCell
         
-        cell.createrLabel.text = routes?[indexPath.row].creater
-        cell.difficultyLabel.text = routes?[indexPath.row].difficulty
-        cell.ratingView.rating = (routes?[indexPath.row].rating)!
+        cell.createrLabel.text = routes[indexPath.row].creater
+        cell.difficultyLabel.text = routes[indexPath.row].difficulty
+        cell.ratingView.rating = routes[indexPath.row].rating
         
         return cell
     }
@@ -123,7 +120,7 @@ class RoutesTableViewController: UITableViewController {
             let nav = segue.destination as! LandscapeNavigationController
             let vc = nav.topViewController as! ShowRouteViewController
             
-            vc.route = routes![(tableView.indexPathForSelectedRow?.row)!]
+            vc.route = routes[(tableView.indexPathForSelectedRow?.row)!]
         }else if segue.identifier == "CreateRoute" {
             let nav = segue.destination as! LandscapeNavigationController
             let vc = nav.topViewController as! ShowRouteViewController
