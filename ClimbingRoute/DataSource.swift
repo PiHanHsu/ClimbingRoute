@@ -52,7 +52,7 @@ class DataSource: NSObject {
                 for child in snapshot.children {
                     
                     let childSnapshot = snapshot.childSnapshot(forPath: (child as AnyObject).key)
-                    //let routeId = childSnapshot.key
+                    let routeId = childSnapshot.key
                     let value = childSnapshot.value as? NSDictionary
                     let creater = value?["creater"] as! String
                     let difficulty = value?["difficulty"] as! String
@@ -65,15 +65,50 @@ class DataSource: NSObject {
                     }
                     
                     let route = Route(creater: creater, difficulty: difficulty, targets: targets)
-                    
+                    route.routeId = routeId
                     field.routes.append(route)
-                    //self.selectField!.routes = routes
                 }
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "FinishLoadingRouteData"), object: nil)
             }
         })
+    }
+ 
+    func updateRatingDataToRoute(field: Field, route: Route) {
+        var starArray = [Double]()
         
-        
+        ref.child("Rating").child(route.routeId!).observe(.value, with: { (snapshot) in
+            for child in snapshot.children {
+                let childSnapshot = snapshot.childSnapshot(forPath: (child as AnyObject).key)
+                let ratingValue = childSnapshot.value as? NSDictionary
+                let star = ratingValue?["stars"] as! Double
+                starArray.append(Double(star))
+            }
+            route.rating = starArray.average
+            self.writeRatingToFireBase(field: field, route: route)
+        })
+    
     }
     
+    func writeRatingToFireBase(field: Field, route: Route) {
+        guard route.rating != nil else{
+            return
+        }
+        let routeRef = ref.child("Route").child(field.fieldId).child(route.routeId!)
+        let updateRating = ["rating": route.rating!] as [String : Any]
+        routeRef.updateChildValues(updateRating)
+        print("rating: \(route.rating!)")
+    }
+    
+    
+}
+
+extension Array where Element: FloatingPoint {
+    /// Returns the sum of all elements in the array
+    var total: Element {
+        return reduce(0, +)
+    }
+    /// Returns the average of all elements in the array
+    var average: Element {
+        return isEmpty ? 0 : total / Element(count)
+    }
 }

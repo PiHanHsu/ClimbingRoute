@@ -18,13 +18,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if FBSDKAccessToken.current() != nil {
-            print("FB login")
-            indicator.startAnimating()
-            loginFirebase()
-        }else{
-            indicator.isHidden = true
-        }
+        
         
         let loginButton = FBSDKLoginButton()
         loginButton.readPermissions = ["public_profile", "email", "user_friends"]
@@ -36,6 +30,16 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if FBSDKAccessToken.current() != nil {
+            print("FB login")
+            indicator.isHidden = false
+            indicator.startAnimating()
+            loginFirebase()
+        }else{
+            indicator.isHidden = true
+        }
+    }
     public func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
         
         loginFirebase()
@@ -44,7 +48,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
 
     public func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
-        
+         indicator.isHidden = true
     }
     
     func loginFirebase() {

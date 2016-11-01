@@ -29,6 +29,8 @@ class ShowRouteViewController: UIViewController {
         currentUser = DataSource.shareInstance.firebaseUser
         currentField = DataSource.shareInstance.selectField
         
+        
+        
         if isEditMode {
            createButton.isHidden = false
            doneBarButton.title = "儲存"
@@ -79,12 +81,25 @@ class ShowRouteViewController: UIViewController {
           present(alert, animated: true, completion: nil)
             
         }else {
-            let alert = UIAlertController(title: "給這條路線一個評分吧！", message: nil, preferredStyle: .alert)
+            let alert = UIAlertController(title: "給這條路線一個評分吧！", message: "\n\n\n", preferredStyle: .alert)
+            let ratingView = CosmosView(frame: CGRect(x: 60, y: 70, width: 210, height: 30))
+            ratingView.starSize = 25
+            
             let okAction = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
+                
+                let ratingRef = self.ref.child("Rating").child(self.route!.routeId!).childByAutoId()
+                
+                let stars = ratingView.rating
+                let rating = ["name" : self.currentUser!.uid,"stars" : stars] as [String : Any]
+                
+                ratingRef.setValue(rating)
+                DataSource.shareInstance.updateRatingDataToRoute(field: self.currentField!, route: self.route!)
+                self.dismiss(animated: true, completion: nil)
                 
             })
             let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
             
+            alert.view.addSubview(ratingView)
             alert.addAction(okAction)
             alert.addAction(cancelAction)
             

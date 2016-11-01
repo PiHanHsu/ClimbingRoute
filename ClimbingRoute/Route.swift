@@ -10,9 +10,10 @@ import UIKit
 
 class Route: NSObject {
 
+    var routeId: String?
     let creater: String
     let difficulty: String
-    let rating: Double? = nil
+    var rating: Double? 
     var targets: [Target]?
     
     init(creater: String, difficulty: String, targets: [Target]?) {
