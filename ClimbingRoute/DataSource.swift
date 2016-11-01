@@ -49,6 +49,7 @@ class DataSource: NSObject {
 
         self.ref.child("Route").child(filedId).observe(.value, with: { (snapshot) in
             if let field = self.selectField {
+                field.routes.removeAll()
                 for child in snapshot.children {
                     
                     let childSnapshot = snapshot.childSnapshot(forPath: (child as AnyObject).key)
@@ -57,6 +58,7 @@ class DataSource: NSObject {
                     let creater = value?["creater"] as! String
                     let difficulty = value?["difficulty"] as! String
                     let path = value?["path"] as! [String]
+                    let rating = value?["rating"] as! Double
                     var targets = [Target]()
                     for center in path {
                         let targetCenter = CGPointFromString(center)
@@ -66,6 +68,7 @@ class DataSource: NSObject {
                     
                     let route = Route(creater: creater, difficulty: difficulty, targets: targets)
                     route.routeId = routeId
+                    route.rating = rating
                     field.routes.append(route)
                 }
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "FinishLoadingRouteData"), object: nil)
@@ -90,13 +93,10 @@ class DataSource: NSObject {
     }
     
     func writeRatingToFireBase(field: Field, route: Route) {
-        guard route.rating != nil else{
-            return
-        }
+        
         let routeRef = ref.child("Route").child(field.fieldId).child(route.routeId!)
-        let updateRating = ["rating": route.rating!] as [String : Any]
+        let updateRating = ["rating": route.rating] as [String : Any]
         routeRef.updateChildValues(updateRating)
-        print("rating: \(route.rating!)")
     }
     
     

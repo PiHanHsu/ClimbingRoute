@@ -122,7 +122,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ghq-DI-DZj" id="7zI-TG-y01">
-                                    <frame key="frameInset" width="375" height="43.5"/>
+                                    <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gm-oh-IRq">
@@ -177,6 +177,7 @@
                                 <connections>
                                     <outlet property="createrLabel" destination="6Gm-oh-IRq" id="PTt-0E-0TP"/>
                                     <outlet property="difficultyLabel" destination="msr-pR-pbr" id="QhJ-6s-8d7"/>
+                                    <outlet property="ratingView" destination="g9L-K7-uJa" id="Wsb-Kd-4rx"/>
                                     <segue destination="If2-57-gSF" kind="show" identifier="StartClimbing" id="UWU-Ud-E8l"/>
                                 </connections>
                             </tableViewCell>

@@ -12,6 +12,7 @@ class RouteTableViewCell: UITableViewCell {
 
     @IBOutlet var createrLabel: UILabel!
     @IBOutlet var difficultyLabel: UILabel!
+    @IBOutlet var ratingView: CosmosView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

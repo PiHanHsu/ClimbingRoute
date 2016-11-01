@@ -69,7 +69,8 @@ class RoutesTableViewController: UITableViewController {
         
         cell.createrLabel.text = routes?[indexPath.row].creater
         cell.difficultyLabel.text = routes?[indexPath.row].difficulty
-    
+        cell.ratingView.rating = (routes?[indexPath.row].rating)!
+        
         return cell
     }
     

@@ -144,7 +144,7 @@ class ShowRouteViewController: UIViewController {
         
         if let name = self.currentUser?.displayName {
             if let difficulty = self.difficulty {
-                let routeInfo = ["creater" : name, "difficulty" : difficulty, "path" : path] as [String : Any]
+                let routeInfo = ["creater" : name, "difficulty" : difficulty, "path" : path, "rating" : 0.0] as [String : Any]
                 routeRef.setValue(routeInfo)
             }
         }
