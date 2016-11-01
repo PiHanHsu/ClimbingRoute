@@ -117,9 +117,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="md3-vh-xUY">
+                            <rect key="frame" x="0.0" y="64" width="375" height="49"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rTD-v5-QKJ">
+                                    <segments>
+                                        <segment title="所有路線"/>
+                                        <segment title="我的路線"/>
+                                    </segments>
+                                    <connections>
+                                        <action selector="selectRouteSegement:" destination="BOk-ET-fzl" eventType="valueChanged" id="0im-pa-SaH"/>
+                                    </connections>
+                                </segmentedControl>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="rTD-v5-QKJ" secondAttribute="trailing" constant="8" id="QbH-Mf-uFQ"/>
+                                <constraint firstItem="rTD-v5-QKJ" firstAttribute="leading" secondItem="md3-vh-xUY" secondAttribute="leading" constant="8" id="cuh-6M-uh0"/>
+                                <constraint firstItem="rTD-v5-QKJ" firstAttribute="centerY" secondItem="md3-vh-xUY" secondAttribute="centerY" id="uoR-wi-ifh"/>
+                                <constraint firstItem="rTD-v5-QKJ" firstAttribute="centerX" secondItem="md3-vh-xUY" secondAttribute="centerX" id="wXw-2K-uTa"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RouteTableViewCell" id="ghq-DI-DZj" customClass="RouteTableViewCell" customModule="ClimbingRoute" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="141" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ghq-DI-DZj" id="7zI-TG-y01">
                                     <frame key="frameInset" width="375" height="43"/>
@@ -194,6 +216,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="routeSegmentedControl" destination="rTD-v5-QKJ" id="cuo-rT-Q2P"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HRw-hd-5wd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -283,6 +308,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="tvl-7e-yLV"/>
+        <segue reference="UWU-Ud-E8l"/>
     </inferredMetricsTieBreakers>
 </document>

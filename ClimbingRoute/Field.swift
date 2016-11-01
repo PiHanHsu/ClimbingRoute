@@ -12,6 +12,7 @@ class Field: NSObject {
     var name: String
     var fieldId: String
     var routesCount: Int
+    var myRoutes = [Route]()
     var routes = [Route]() {
         willSet(newValue) {
            self.routesCount = newValue.count

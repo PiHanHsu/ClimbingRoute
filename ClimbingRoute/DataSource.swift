@@ -19,7 +19,7 @@ class DataSource: NSObject {
     var firebaseUser: FIRUser?
     let mainWidth = UIScreen.main.bounds.width
     let mainHeight = UIScreen.main.bounds.height
-    
+    //var myRoutes = [Route]()
     
     let ref = FIRDatabase.database().reference()
     
@@ -77,12 +77,17 @@ class DataSource: NSObject {
                     route.routeId = routeId
                     route.rating = rating
                     field.routes.append(route)
+                    if creater == self.firebaseUser?.displayName! {
+                        field.myRoutes.append(route)
+                    }
                 }
                 print("count after loading routes: \(field.routes.count)")
                 self.updateRoutesCountToFirebase(field: field)
             }
         })
     }
+    
+    
     
     func updateRoutesCountToFirebase(field: Field) {
         let fieldRef = ref.child("Field").child(field.fieldId)

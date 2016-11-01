@@ -12,12 +12,16 @@ class RoutesTableViewController: UITableViewController {
 
     var index: Int = 0
     var routes = [Route]()
+    var myRoutes = [Route]()
     let indicator = UIActivityIndicatorView()
 
+    @IBOutlet var routeSegmentedControl: UISegmentedControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         DataSource.shareInstance.loadingRouteFromFirebase(filedId: DataSource.shareInstance.fields[index].fieldId)
+        
         
         // set up indicator
         indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
@@ -45,6 +49,7 @@ class RoutesTableViewController: UITableViewController {
     
     func reloadData() {
         routes = DataSource.shareInstance.selectField!.routes
+        myRoutes = DataSource.shareInstance.selectField!.myRoutes
         indicator.stopAnimating()
         tableView.reloadData()
         print("routes: \(routes.count)")
@@ -57,16 +62,34 @@ class RoutesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return routes.count
+        switch routeSegmentedControl.selectedSegmentIndex {
+        case 0:
+            return routes.count
+        case 1:
+            return myRoutes.count
+        default:
+            return 0
+        }
+
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RouteTableViewCell", for: indexPath) as! RouteTableViewCell
         
-        cell.createrLabel.text = routes[indexPath.row].creater
-        cell.difficultyLabel.text = routes[indexPath.row].difficulty
-        cell.ratingView.rating = routes[indexPath.row].rating
+        switch routeSegmentedControl.selectedSegmentIndex {
+        case 0:
+            cell.createrLabel.text = routes[indexPath.row].creater
+            cell.difficultyLabel.text = routes[indexPath.row].difficulty
+            cell.ratingView.rating = routes[indexPath.row].rating
+        case 1:
+            cell.createrLabel.text = myRoutes[indexPath.row].creater
+            cell.difficultyLabel.text = myRoutes[indexPath.row].difficulty
+            cell.ratingView.rating = myRoutes[indexPath.row].rating
+        default:
+            break
+        }
+       
         
         return cell
     }
@@ -75,6 +98,20 @@ class RoutesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //DataSource.shareInstance.selectRoute = routes?[indexPath.row]
     }
+    
+    
+    @IBAction func selectRouteSegement(_ sender: AnyObject) {
+        
+        switch routeSegmentedControl.selectedSegmentIndex {
+        case 0:
+            tableView.reloadData()
+        case 1:
+            tableView.reloadData()
+        default:
+            break
+        }
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
