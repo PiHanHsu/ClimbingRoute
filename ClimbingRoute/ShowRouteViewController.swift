@@ -134,7 +134,8 @@ class ShowRouteViewController: UIViewController {
     func saveRouteToFireBase() {
         var path = [String]()
         for target in self.targetArray {
-            let center = NSStringFromCGPoint(target.imageView.center)
+            let scaleCenter = DataSource.shareInstance.convertPointToScale(point: target.imageView.center)
+            let center = NSStringFromCGPoint(scaleCenter)
             path.append(center)
         }
         

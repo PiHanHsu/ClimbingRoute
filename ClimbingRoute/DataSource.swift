@@ -17,7 +17,10 @@ class DataSource: NSObject {
     var selectRoute: Route?
     var selectField: Field?
     var firebaseUser: FIRUser?
-
+    let mainWidth = UIScreen.main.bounds.width
+    let mainHeight = UIScreen.main.bounds.height
+    
+    
     let ref = FIRDatabase.database().reference()
     
     func loadDataFromFirebase() {
@@ -62,7 +65,8 @@ class DataSource: NSObject {
                     var targets = [Target]()
                     for center in path {
                         let targetCenter = CGPointFromString(center)
-                        let target = Target(targetCenter: targetCenter)
+                        let pointCenter = self.convertScaleToPoint(point: targetCenter)
+                        let target = Target(targetCenter: pointCenter)
                         targets.append(target)
                     }
                     
@@ -97,6 +101,16 @@ class DataSource: NSObject {
         let routeRef = ref.child("Route").child(field.fieldId).child(route.routeId!)
         let updateRating = ["rating": route.rating] as [String : Any]
         routeRef.updateChildValues(updateRating)
+    }
+    
+    func convertPointToScale(point: CGPoint) -> CGPoint {
+        
+        return CGPoint(x: point.x / mainHeight, y: point.y / mainWidth)
+    }
+    
+    func convertScaleToPoint(point: CGPoint) -> CGPoint {
+       
+        return CGPoint(x: point.x * mainHeight, y: point.y * mainWidth)
     }
     
     

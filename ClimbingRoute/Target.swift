@@ -15,6 +15,7 @@ class Target: NSObject, UIGestureRecognizerDelegate {
     let mainView = UIApplication.shared.keyWindow?.superview
     let mainFrame = UIApplication.shared.keyWindow?.bounds
     
+
     init(targetCenter: CGPoint?){
        super.init()
         
@@ -39,4 +40,7 @@ class Target: NSObject, UIGestureRecognizerDelegate {
         imageView.center.x = point.x
         imageView.center.y = point.y
     }
+    
+    
+
 }
