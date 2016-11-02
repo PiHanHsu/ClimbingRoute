@@ -12,6 +12,7 @@ import Firebase
 class ShowRouteViewController: UIViewController {
 
     var route: Route?
+    var isCreateMode = false
     var isEditMode = false
     var targetArray = [Target]()
     let ref = FIRDatabase.database().reference()
@@ -29,11 +30,14 @@ class ShowRouteViewController: UIViewController {
         currentUser = DataSource.shareInstance.firebaseUser
         currentField = DataSource.shareInstance.selectField
         
-        
-        
-        if isEditMode {
+        if isCreateMode{
            createButton.isHidden = false
            doneBarButton.title = "儲存"
+        }else if isEditMode {
+           createButton.isHidden = false
+           targetArray = route!.targets!
+           difficulty = route!.difficulty
+           doneBarButton.title = "更新"
         }
         
         if route != nil {
@@ -55,7 +59,7 @@ class ShowRouteViewController: UIViewController {
     }
     
     @IBAction func doneButtonPressed(_ sender: AnyObject) {
-        if isEditMode {
+        if isCreateMode {
           let alert = UIAlertController(title: "設定難度", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: .alert)
             //Create a frame (placeholder/wrapper) for the picker and then create the picker
             
@@ -80,6 +84,34 @@ class ShowRouteViewController: UIViewController {
 
           present(alert, animated: true, completion: nil)
             
+        }else if isEditMode{
+            let alert = UIAlertController(title: "更新難度", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: .alert)
+            //Create a frame (placeholder/wrapper) for the picker and then create the picker
+            
+            let pickerFrame = CGRect(x: 15, y: 52, width: 240, height: 150)
+            let picker: UIPickerView = UIPickerView(frame: pickerFrame)
+            
+            //set the pickers datasource and delegate
+            picker.delegate = self
+            picker.dataSource = self
+            
+            //Add the picker to the alert controller
+            alert.view.addSubview(picker)
+            if let difficultyNumber = Int((route?.difficulty.replacingOccurrences(of: "v", with: ""))!){
+                 picker.selectRow(difficultyNumber, inComponent: 0, animated: true)
+            }
+            
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
+                self.difficulty = self.pickerData[picker.selectedRow(inComponent: 0)]
+                self.updateRoute()
+                self.dismiss(animated: true, completion: nil)
+            })
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true, completion: nil)
         }else {
             let alert = UIAlertController(title: "給這條路線一個評分吧！", message: "\n\n\n", preferredStyle: .alert)
             let ratingView = CosmosView(frame: CGRect(x: 60, y: 70, width: 210, height: 30))
@@ -108,27 +140,62 @@ class ShowRouteViewController: UIViewController {
     }
     
     func saveRoute() {
-        let alert = UIAlertController(title: "儲存此路線", message: nil, preferredStyle: .actionSheet)
-        let okAction = UIAlertAction(title: "儲存完離開", style: .default, handler: { (UIAlertAction) in
-            self.saveRouteToFireBase()
-            self.dismiss(animated: true, completion: nil)
-        })
+        var title = ""
         
-        let continueAction = UIAlertAction(title: "儲存完繼續新增路線", style: .default, handler: { (UIAlertAction) in
-            self.saveRouteToFireBase()
-            for target in self.targetArray{
-                target.imageView.removeFromSuperview()
-            }
-            self.targetArray.removeAll()
-        })
-        
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-        
-        alert.addAction(okAction)
-        alert.addAction(continueAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
+        if isCreateMode{
+            let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+            title = "儲存此路線"
+            
+            let okAction = UIAlertAction(title: "儲存完離開", style: .default, handler: { (UIAlertAction) in
+                self.saveRouteToFireBase()
+                self.dismiss(animated: true, completion: nil)
+            })
+            
+            let continueAction = UIAlertAction(title: "儲存完繼續新增路線", style: .default, handler: { (UIAlertAction) in
+                self.saveRouteToFireBase()
+                for target in self.targetArray{
+                    target.imageView.removeFromSuperview()
+                }
+                self.targetArray.removeAll()
+            })
+            
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            
+            alert.addAction(okAction)
+            alert.addAction(continueAction)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true, completion: nil)
+            
+        }else{
+            let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+            title = "更新此路線"
+            let okAction = UIAlertAction(title: "儲存完離開", style: .default, handler: { (UIAlertAction) in
+                //self.saveRouteToFireBase()
+                self.dismiss(animated: true, completion: nil)
+            })
+            
+            
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true, completion: nil)
+
+        }
+    }
+    
+    func updateRoute() {
+        var path = [String]()
+        for target in self.targetArray {
+            let scaleCenter = DataSource.shareInstance.convertPointToScale(point: target.imageView.center)
+            let center = NSStringFromCGPoint(scaleCenter)
+            path.append(center)
+        }
+        let routeRef = self.ref.child("Route").child(currentField!.fieldId).child(route!.routeId!)
+        let routeInfo = ["difficulty" : difficulty!, "path" : path,] as [String : Any]
+        routeRef.updateChildValues(routeInfo)
     }
     
     func saveRouteToFireBase() {

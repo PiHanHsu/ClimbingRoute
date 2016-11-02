@@ -91,7 +91,8 @@ class RoutesTableViewController: UITableViewController {
             cell.editButton.layer.borderWidth = 1.0
             cell.editButton.layer.borderColor = UIColor.blue.cgColor
             cell.editButton.layer.cornerRadius = 5.0
-
+            cell.editButton.tag = indexPath.row
+            cell.editButton.addTarget(self, action: #selector(self.editButtonPressed), for: .touchUpOutside)
         default:
             break
         }
@@ -153,21 +154,25 @@ class RoutesTableViewController: UITableViewController {
     }
     */
 
-    
+    func editButtonPressed(_ sender: AnyObject) {
+        performSegue(withIdentifier: "EditRoute", sender: sender)
+    }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        let nav = segue.destination as! LandscapeNavigationController
+        let vc = nav.topViewController as! ShowRouteViewController
+    
         if segue.identifier == "StartClimbing" {
-            let nav = segue.destination as! LandscapeNavigationController
-            let vc = nav.topViewController as! ShowRouteViewController
-            
             vc.route = routes[(tableView.indexPathForSelectedRow?.row)!]
         }else if segue.identifier == "CreateRoute" {
-            let nav = segue.destination as! LandscapeNavigationController
-            let vc = nav.topViewController as! ShowRouteViewController
+            vc.isCreateMode = true
+        }else if segue.identifier == "EditRoute" {
             vc.isEditMode = true
+            let editButton = sender as! UIButton
+            vc.route = myRoutes[editButton.tag]
         }
     }
     

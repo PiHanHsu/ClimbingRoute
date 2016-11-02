@@ -55,7 +55,7 @@ class DataSource: NSObject {
         self.ref.child("Route").child(filedId).observe(.value, with: { (snapshot) in
             if let field = self.selectField {
                 field.routes.removeAll()
-                print("loading routes")
+                field.myRoutes.removeAll()
                 for child in snapshot.children {
                     
                     let childSnapshot = snapshot.childSnapshot(forPath: (child as AnyObject).key)
@@ -81,7 +81,6 @@ class DataSource: NSObject {
                         field.myRoutes.append(route)
                     }
                 }
-                print("count after loading routes: \(field.routes.count)")
                 self.updateRoutesCountToFirebase(field: field)
             }
         })

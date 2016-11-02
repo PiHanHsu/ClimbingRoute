@@ -124,7 +124,7 @@
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rTD-v5-QKJ">
                                     <segments>
                                         <segment title="所有路線"/>
-                                        <segment title="我的路線"/>
+                                        <segment title="編輯我的路線"/>
                                     </segments>
                                     <connections>
                                         <action selector="selectRouteSegement:" destination="BOk-ET-fzl" eventType="valueChanged" id="0im-pa-SaH"/>
@@ -144,13 +144,10 @@
                                 <rect key="frame" x="0.0" y="141" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ghq-DI-DZj" id="7zI-TG-y01">
-                                    <frame key="frameInset" width="375" height="43.5"/>
+                                    <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gm-oh-IRq">
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="150" id="4Bx-Fc-q5q"/>
-                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -188,6 +185,9 @@
                                                 <constraint firstAttribute="width" constant="70" id="ubX-EI-h3X"/>
                                             </constraints>
                                             <state key="normal" title="編輯路線"/>
+                                            <connections>
+                                                <segue destination="If2-57-gSF" kind="show" identifier="EditRoute" id="qkj-SN-3Ae"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
@@ -315,6 +315,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="UWU-Ud-E8l"/>
+        <segue reference="qkj-SN-3Ae"/>
     </inferredMetricsTieBreakers>
 </document>
