@@ -20,6 +20,7 @@ class ShowRouteViewController: UIViewController {
     var currentUser: FIRUser?
     var pickerData = [String]()
     var difficulty: String?
+    var haveRated = false
     
     @IBOutlet var doneBarButton: UIBarButtonItem!
     @IBOutlet var createButton: UIButton!
@@ -42,6 +43,7 @@ class ShowRouteViewController: UIViewController {
         
         if route != nil {
             displayRoute()
+            checkHaveRated()
         }
         
         //set pickerData
@@ -113,30 +115,64 @@ class ShowRouteViewController: UIViewController {
             
             present(alert, animated: true, completion: nil)
         }else {
-            let alert = UIAlertController(title: "給這條路線一個評分吧！", message: "\n\n\n", preferredStyle: .alert)
-            let ratingView = CosmosView(frame: CGRect(x: 60, y: 70, width: 210, height: 30))
-            ratingView.starSize = 25
-            
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
-                
-                let ratingRef = self.ref.child("Rating").child(self.route!.routeId!).childByAutoId()
-                
-                let stars = ratingView.rating
-                let rating = ["name" : self.currentUser!.uid,"stars" : stars] as [String : Any]
-                
-                ratingRef.setValue(rating)
-                DataSource.shareInstance.updateRatingDataToRoute(field: self.currentField!, route: self.route!)
+            if self.haveRated {
                 self.dismiss(animated: true, completion: nil)
+            }else{
+                let alert = UIAlertController(title: "給這條路線一個評分吧！", message: "\n\n\n", preferredStyle: .alert)
+                let ratingView = CosmosView(frame: CGRect(x: 60, y: 70, width: 210, height: 30))
+                ratingView.starSize = 25
                 
-            })
-            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-            
-            alert.view.addSubview(ratingView)
-            alert.addAction(okAction)
-            alert.addAction(cancelAction)
-            
-            present(alert, animated: true, completion: nil)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
+                    
+                    let ratingRef = self.ref.child("Rating").child(self.route!.routeId!).childByAutoId()
+                    
+                    let stars = ratingView.rating
+                    let rating = ["name" : self.currentUser!.uid,"stars" : stars] as [String : Any]
+                    
+                    ratingRef.setValue(rating)
+                    DataSource.shareInstance.updateRatingDataToRoute(field: self.currentField!, route: self.route!)
+                    self.dismiss(animated: true, completion: nil)
+                    
+                })
+                let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+                
+                alert.view.addSubview(ratingView)
+                alert.addAction(okAction)
+                alert.addAction(cancelAction)
+                
+                present(alert, animated: true, completion: nil)
+ 
+            }
         }
+    }
+    
+    func checkHaveRated() {
+        
+        ref.child("Rating").child(route!.routeId!).observe(.value, with: { (snapshot) in
+            for child in snapshot.children {
+                let childSnapshot = snapshot.childSnapshot(forPath: (child as AnyObject).key)
+                let value = childSnapshot.value as? NSDictionary
+                let userId = value?["name"] as? String
+                if self.currentUser!.uid == userId {
+                    print("find")
+                    self.haveRated = true
+                }
+            }
+            print("not find!!")
+        })
+        
+               /*
+        let rateRef = ref.child("Rating").child(route!.routeId!)
+        rateRef.queryOrdered(byChild: "name").queryEqual(toValue: currentUser!.uid).observe(.value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            if value != nil {
+                print("value: \(value)")
+                print("find!!")
+                return
+            }
+        })
+        print("not find")
+ */
     }
     
     func saveRoute() {
