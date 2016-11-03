@@ -22,6 +22,7 @@ class RockFieldTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.isHidden = false
         // not allow other user to add Field
         firebaseUser = DataSource.shareInstance.firebaseUser
         self.navigationItem.rightBarButtonItem = nil

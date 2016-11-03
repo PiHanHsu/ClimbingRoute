@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -23,11 +24,27 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="er0-48-8KL">
                                 <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appName" translatesAutoresizingMaskIntoConstraints="NO" id="ILU-2u-Gtt">
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ILU-2u-Gtt" secondAttribute="height" multiplier="143:45" id="w9h-Tt-1ak"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appIcon" translatesAutoresizingMaskIntoConstraints="NO" id="AON-fF-b6L">
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="AON-fF-b6L" secondAttribute="height" multiplier="1:1" id="SPO-yZ-6Zc"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="AON-fF-b6L" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.3" id="2Ue-di-9Ud"/>
                             <constraint firstItem="er0-48-8KL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6S4-qz-rvP"/>
-                            <constraint firstItem="er0-48-8KL" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.85" id="9Lp-CO-w4j"/>
+                            <constraint firstItem="er0-48-8KL" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="1.2" id="9Lp-CO-w4j"/>
+                            <constraint firstItem="ILU-2u-Gtt" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.45" id="H8V-nh-g4j"/>
+                            <constraint firstItem="AON-fF-b6L" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.5" id="X1R-JF-2oV"/>
+                            <constraint firstItem="ILU-2u-Gtt" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.85" id="j9y-r3-tnJ"/>
+                            <constraint firstItem="AON-fF-b6L" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="leY-y5-2Qs"/>
+                            <constraint firstItem="ILU-2u-Gtt" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rHc-La-eK7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="mwT-iU-FoC"/>
@@ -53,7 +70,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Kld-yo-FXF" id="tgY-lF-1E5">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                    <frame key="frameInset" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="岩場名稱" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHw-5Q-4nD">
@@ -144,7 +161,7 @@
                                 <rect key="frame" x="0.0" y="141" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ghq-DI-DZj" id="7zI-TG-y01">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                    <frame key="frameInset" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gm-oh-IRq">
@@ -184,6 +201,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="70" id="ubX-EI-h3X"/>
                                             </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                             <state key="normal" title="編輯路線"/>
                                             <connections>
                                                 <segue destination="If2-57-gSF" kind="show" identifier="EditRoute" id="qkj-SN-3Ae"/>
@@ -314,6 +332,10 @@
             <point key="canvasLocation" x="3250" y="793"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="appIcon" width="16" height="16"/>
+        <image name="appName" width="16" height="16"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="qkj-SN-3Ae"/>
     </inferredMetricsTieBreakers>

@@ -19,10 +19,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.isHidden = true
         
         let loginButton = FBSDKLoginButton()
         loginButton.readPermissions = ["public_profile", "email", "user_friends"]
-        loginButton.center = self.view.center
+        loginButton.center = CGPoint(x: view.center.x, y: view.center.y * 1.5)
         loginButton.delegate = self
         self.view.addSubview(loginButton)
         
