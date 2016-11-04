@@ -10,10 +10,11 @@ import UIKit
 import Firebase
 
 class ShowRouteViewController: UIViewController {
-
+    
     var route: Route?
     var isCreateMode = false
     var isEditMode = false
+    var isPlayingMode = false
     var targetArray = [Target]()
     let ref = FIRDatabase.database().reference()
     var currentField: Field?
@@ -22,6 +23,7 @@ class ShowRouteViewController: UIViewController {
     var difficulty: String?
     var haveRated = false
     
+    @IBOutlet var cancelBarButton: UIBarButtonItem!
     @IBOutlet var doneBarButton: UIBarButtonItem!
     @IBOutlet var createButton: UIButton!
     
@@ -32,37 +34,45 @@ class ShowRouteViewController: UIViewController {
         currentField = DataSource.shareInstance.selectField
         
         if isCreateMode{
-           createButton.isHidden = false
-           doneBarButton.title = "儲存"
+            createButton.isHidden = false
+            doneBarButton.title = "儲存"
         }else if isEditMode {
-           createButton.isHidden = false
-           targetArray = route!.targets!
-           difficulty = route!.difficulty
-           doneBarButton.title = "更新"
-        }
-        
-        if route != nil {
+            displayRoute()
+            createButton.isHidden = false
+            targetArray = route!.targets!
+            difficulty = route!.difficulty
+            doneBarButton.title = "更新"
+        }else {
             displayRoute()
             checkHaveRated()
+            doneBarButton.title = "完攀"
+            cancelBarButton.title = "下次再試"
         }
+        
         
         //set pickerData
         pickerData = ["v0","v1","v2","v3","v4","v5","v6","v7","v8","v9","v10","v11","v12","v13","v14","v15"]
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     @IBAction func quitButton(_ sender: AnyObject) {
-        self.dismiss(animated: true, completion: nil)
+        
+        if isPlayingMode {
+            showRatingAlert()
+        }else {
+            self.dismiss(animated: true, completion: nil)
+        }
+        
     }
     
     @IBAction func doneButtonPressed(_ sender: AnyObject) {
         if isCreateMode {
-          let alert = UIAlertController(title: "設定難度", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: .alert)
+            let alert = UIAlertController(title: "設定難度", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: .alert)
             //Create a frame (placeholder/wrapper) for the picker and then create the picker
             
             let pickerFrame = CGRect(x: 15, y: 52, width: 240, height: 150)
@@ -83,8 +93,8 @@ class ShowRouteViewController: UIViewController {
             
             alert.addAction(okAction)
             alert.addAction(cancelAction)
-
-          present(alert, animated: true, completion: nil)
+            
+            present(alert, animated: true, completion: nil)
             
         }else if isEditMode{
             let alert = UIAlertController(title: "更新難度", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: .alert)
@@ -100,7 +110,7 @@ class ShowRouteViewController: UIViewController {
             //Add the picker to the alert controller
             alert.view.addSubview(picker)
             if let difficultyNumber = Int((route?.difficulty.replacingOccurrences(of: "v", with: ""))!){
-                 picker.selectRow(difficultyNumber, inComponent: 0, animated: true)
+                picker.selectRow(difficultyNumber, inComponent: 0, animated: true)
             }
             
             let okAction = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
@@ -115,34 +125,11 @@ class ShowRouteViewController: UIViewController {
             
             present(alert, animated: true, completion: nil)
         }else {
-            if self.haveRated {
-                self.dismiss(animated: true, completion: nil)
-            }else{
-                let alert = UIAlertController(title: "給這條路線一個評分吧！", message: "\n\n\n", preferredStyle: .alert)
-                let ratingView = CosmosView(frame: CGRect(x: 60, y: 70, width: 210, height: 30))
-                ratingView.starSize = 25
-                
-                let okAction = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
-                    
-                    let ratingRef = self.ref.child("Rating").child(self.route!.routeId!).childByAutoId()
-                    
-                    let stars = ratingView.rating
-                    let rating = ["name" : self.currentUser!.uid,"stars" : stars] as [String : Any]
-                    
-                    ratingRef.setValue(rating)
-                    DataSource.shareInstance.updateRatingDataToRoute(field: self.currentField!, route: self.route!)
-                    self.dismiss(animated: true, completion: nil)
-                    
-                })
-                let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-                
-                alert.view.addSubview(ratingView)
-                alert.addAction(okAction)
-                alert.addAction(cancelAction)
-                
-                present(alert, animated: true, completion: nil)
- 
-            }
+            
+            let finishRef = self.ref.child("FinishedRoute").child(currentUser!.uid)
+            let routeFinised = [route!.routeId! : true] as [String : Any]
+            finishRef.updateChildValues(routeFinised)
+            self.showRatingAlert()
         }
     }
     
@@ -154,25 +141,59 @@ class ShowRouteViewController: UIViewController {
                 let value = childSnapshot.value as? NSDictionary
                 let userId = value?["name"] as? String
                 if self.currentUser!.uid == userId {
-                    print("find")
+                    //print("find")
                     self.haveRated = true
                 }
             }
-            print("not find!!")
+            //print("not find!!")
         })
         
-               /*
-        let rateRef = ref.child("Rating").child(route!.routeId!)
-        rateRef.queryOrdered(byChild: "name").queryEqual(toValue: currentUser!.uid).observe(.value, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            if value != nil {
-                print("value: \(value)")
-                print("find!!")
-                return
-            }
-        })
-        print("not find")
- */
+        /*
+         let rateRef = ref.child("Rating").child(route!.routeId!)
+         rateRef.queryOrdered(byChild: "name").queryEqual(toValue: currentUser!.uid).observe(.value, with: { (snapshot) in
+         let value = snapshot.value as? NSDictionary
+         if value != nil {
+         print("value: \(value)")
+         print("find!!")
+         return
+         }
+         })
+         print("not find")
+         */
+    }
+    
+    func showRatingAlert() {
+        
+        if haveRated {
+            dismiss(animated: true, completion: nil)
+        }else{
+            let alert = UIAlertController(title: "給這條路線一個評分吧！", message: "\n\n\n", preferredStyle: .alert)
+            let ratingView = CosmosView(frame: CGRect(x: 60, y: 70, width: 210, height: 30))
+            ratingView.starSize = 25
+            
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
+                
+                let ratingRef = self.ref.child("Rating").child(self.route!.routeId!).childByAutoId()
+                
+                let stars = ratingView.rating
+                let rating = ["name" : self.currentUser!.uid,"stars" : stars] as [String : Any]
+                
+                ratingRef.setValue(rating)
+                DataSource.shareInstance.updateRatingDataToRoute(field: self.currentField!, route: self.route!)
+                self.dismiss(animated: true, completion: nil)
+                
+            })
+            
+            let cancelAction = UIAlertAction(title: "下次再評分", style: .default, handler: { alertAction in
+                self.dismiss(animated: true, completion: nil)
+            })
+            
+            alert.view.addSubview(ratingView)
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true, completion: nil)
+        }
     }
     
     func saveRoute() {
@@ -218,7 +239,7 @@ class ShowRouteViewController: UIViewController {
             alert.addAction(cancelAction)
             
             present(alert, animated: true, completion: nil)
-
+            
         }
     }
     
@@ -266,17 +287,17 @@ class ShowRouteViewController: UIViewController {
         }
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 
@@ -286,14 +307,14 @@ extension ShowRouteViewController: UIPickerViewDelegate, UIPickerViewDataSource 
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-       return 16
+        return 16
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         let difficulty = pickerData[row]
         return difficulty
-            
-        }
-
+        
+    }
+    
 }

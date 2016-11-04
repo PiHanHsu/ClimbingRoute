@@ -15,6 +15,7 @@ class Route: NSObject {
     let difficulty: String
     var rating: Double
     var targets: [Target]?
+    var finished = false
     
     init(creater: String, difficulty: String, targets: [Target]?) {
         self.creater = creater

@@ -13,6 +13,7 @@ class RoutesTableViewController: UITableViewController {
     var index: Int = 0
     var routes = [Route]()
     var myRoutes = [Route]()
+    var finishRoutes = [Route]()
     let indicator = UIActivityIndicatorView()
 
     @IBOutlet var routeSegmentedControl: UISegmentedControl!
@@ -21,7 +22,6 @@ class RoutesTableViewController: UITableViewController {
         super.viewDidLoad()
         
         DataSource.shareInstance.loadingRouteFromFirebase(filedId: DataSource.shareInstance.fields[index].fieldId)
-        
         
         // set up indicator
         indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
@@ -37,7 +37,7 @@ class RoutesTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //tableView.reloadData()
+        reloadData()
         NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: Notification.Name("FinishLoadingRouteData"), object: nil)
 
     }
@@ -50,9 +50,19 @@ class RoutesTableViewController: UITableViewController {
     func reloadData() {
         routes = DataSource.shareInstance.selectField!.routes
         myRoutes = DataSource.shareInstance.selectField!.myRoutes
+        let finishRoutesArray = DataSource.shareInstance.finishRoutes
+        
+        finishRoutes.removeAll()
+        for route in routes {
+            if finishRoutesArray.contains(route.routeId!) {
+                route.finished = true
+                finishRoutes.append(route)
+            }
+        }
+        
         indicator.stopAnimating()
         tableView.reloadData()
-        print("routes: \(routes.count)")
+        
     }
 
     // MARK: - Table view data source
@@ -67,6 +77,8 @@ class RoutesTableViewController: UITableViewController {
             return routes.count
         case 1:
             return myRoutes.count
+        case 2:
+            return finishRoutes.count
         default:
             return 0
         }
@@ -77,12 +89,24 @@ class RoutesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RouteTableViewCell", for: indexPath) as! RouteTableViewCell
         
+        cell.accessoryView = UIView(frame: CGRect(x: 0, y: 0, width: 24, height: cell.frame.height))
+        let checkImageView = UIImageView(frame: CGRect(x: 4, y: (cell.frame.height - 16) / 2, width: 16, height: 16))
+        cell.accessoryView?.addSubview(checkImageView)
+        
+        let editButton = UIButton()
         switch routeSegmentedControl.selectedSegmentIndex {
         case 0:
             cell.createrLabel.text = routes[indexPath.row].creater
             cell.difficultyLabel.text = routes[indexPath.row].difficulty
             cell.ratingView.rating = routes[indexPath.row].rating
             cell.editButton.isHidden = true
+            
+            if routes[indexPath.row].finished {
+                checkImageView.image = UIImage(named: "checkmark")
+            }else {
+                checkImageView.image = UIImage(named: "")
+            }
+            
         case 1:
             cell.createrLabel.text = myRoutes[indexPath.row].creater
             cell.difficultyLabel.text = myRoutes[indexPath.row].difficulty
@@ -93,6 +117,15 @@ class RoutesTableViewController: UITableViewController {
             cell.editButton.layer.cornerRadius = 5.0
             cell.editButton.tag = indexPath.row
             cell.editButton.addTarget(self, action: #selector(self.editButtonPressed), for: .touchUpOutside)
+            checkImageView.image = UIImage(named: "")
+            
+        case 2:
+            cell.createrLabel.text = finishRoutes[indexPath.row].creater
+            cell.difficultyLabel.text = finishRoutes[indexPath.row].difficulty
+            cell.ratingView.rating = finishRoutes[indexPath.row].rating
+            cell.editButton.isHidden = true
+            checkImageView.image = UIImage(named: "checkmark")
+
         default:
             break
         }
@@ -109,14 +142,8 @@ class RoutesTableViewController: UITableViewController {
     
     @IBAction func selectRouteSegement(_ sender: AnyObject) {
         
-        switch routeSegmentedControl.selectedSegmentIndex {
-        case 0:
-            tableView.reloadData()
-        case 1:
-            tableView.reloadData()
-        default:
-            break
-        }
+        tableView.reloadData()
+        
     }
     
     /*
@@ -167,6 +194,7 @@ class RoutesTableViewController: UITableViewController {
     
         if segue.identifier == "StartClimbing" {
             vc.route = routes[(tableView.indexPathForSelectedRow?.row)!]
+            vc.isPlayingMode = true
         }else if segue.identifier == "CreateRoute" {
             vc.isCreateMode = true
         }else if segue.identifier == "EditRoute" {

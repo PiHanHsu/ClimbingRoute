@@ -14,12 +14,12 @@ class DataSource: NSObject {
     static let shareInstance = DataSource()
     
     var fields = [Field]()
+    var finishRoutes = [String]()
     var selectRoute: Route?
     var selectField: Field?
     var firebaseUser: FIRUser?
     let mainWidth = UIScreen.main.bounds.width
     let mainHeight = UIScreen.main.bounds.height
-    //var myRoutes = [Route]()
     
     let ref = FIRDatabase.database().reference()
     
@@ -45,6 +45,8 @@ class DataSource: NSObject {
             }
             NotificationCenter.default.post(name: Notification.Name(rawValue: "FinishLoadingFieldData"), object: nil)
         })
+        
+        loadingFinishRouteFromFirebase()
     }
     
     func loadingRouteFromFirebase(filedId: String) {
@@ -86,8 +88,6 @@ class DataSource: NSObject {
         })
     }
     
-    
-    
     func updateRoutesCountToFirebase(field: Field) {
         let fieldRef = ref.child("Field").child(field.fieldId)
         let routesCount = ["routesCount" : field.routes.count] as [String : Any]
@@ -116,6 +116,16 @@ class DataSource: NSObject {
         let routeRef = ref.child("Route").child(field.fieldId).child(route.routeId!)
         let updateRating = ["rating": route.rating] as [String : Any]
         routeRef.updateChildValues(updateRating)
+    }
+    
+    func loadingFinishRouteFromFirebase() {
+        ref.child("FinishedRoute").child(firebaseUser!.uid).observe(.value, with: { snapshot in
+            
+            let value = snapshot.value as? NSDictionary
+            let finishRoute = value as? Dictionary<String, Any>
+            self.finishRoutes = [String](finishRoute!.keys)
+            
+        })
     }
     
     func convertPointToScale(point: CGPoint) -> CGPoint {
