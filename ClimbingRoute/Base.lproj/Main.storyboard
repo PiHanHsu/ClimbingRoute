@@ -209,26 +209,13 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CZD-qJ-A0K">
-                                            <rect key="frame" x="67" y="6" width="70" height="32"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="70" id="ubX-EI-h3X"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                            <state key="normal" title="編輯路線"/>
-                                            <connections>
-                                                <segue destination="If2-57-gSF" kind="show" identifier="EditRoute" id="qkj-SN-3Ae"/>
-                                            </connections>
-                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="6Gm-oh-IRq" firstAttribute="leading" secondItem="7zI-TG-y01" secondAttribute="leadingMargin" constant="7" id="06S-q4-6P8"/>
                                         <constraint firstItem="msr-pR-pbr" firstAttribute="centerY" secondItem="7zI-TG-y01" secondAttribute="centerY" id="8sT-Fu-6rx"/>
                                         <constraint firstItem="g9L-K7-uJa" firstAttribute="width" secondItem="msr-pR-pbr" secondAttribute="width" id="CY7-HY-UWa"/>
                                         <constraint firstItem="g9L-K7-uJa" firstAttribute="top" secondItem="msr-pR-pbr" secondAttribute="bottom" id="Ide-4I-BQR"/>
-                                        <constraint firstItem="CZD-qJ-A0K" firstAttribute="leading" secondItem="6Gm-oh-IRq" secondAttribute="trailing" constant="10" id="KpI-2M-dAE"/>
                                         <constraint firstItem="g9L-K7-uJa" firstAttribute="centerX" secondItem="msr-pR-pbr" secondAttribute="centerX" id="RS7-M3-1my"/>
-                                        <constraint firstItem="CZD-qJ-A0K" firstAttribute="centerY" secondItem="7zI-TG-y01" secondAttribute="centerY" id="Vvb-kN-rL1"/>
                                         <constraint firstItem="6Gm-oh-IRq" firstAttribute="centerY" secondItem="7zI-TG-y01" secondAttribute="centerY" id="jmu-YH-jVp"/>
                                         <constraint firstItem="msr-pR-pbr" firstAttribute="trailing" secondItem="7zI-TG-y01" secondAttribute="trailingMargin" id="n0x-sR-qVZ"/>
                                     </constraints>
@@ -236,7 +223,6 @@
                                 <connections>
                                     <outlet property="createrLabel" destination="6Gm-oh-IRq" id="PTt-0E-0TP"/>
                                     <outlet property="difficultyLabel" destination="msr-pR-pbr" id="QhJ-6s-8d7"/>
-                                    <outlet property="editButton" destination="CZD-qJ-A0K" id="kyP-qb-ILg"/>
                                     <outlet property="ratingView" destination="g9L-K7-uJa" id="Wsb-Kd-4rx"/>
                                     <segue destination="If2-57-gSF" kind="show" identifier="StartClimbing" id="UWU-Ud-E8l"/>
                                 </connections>
@@ -358,6 +344,6 @@
         <image name="appName" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qkj-SN-3Ae"/>
+        <segue reference="tvl-7e-yLV"/>
     </inferredMetricsTieBreakers>
 </document>

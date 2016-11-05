@@ -96,13 +96,11 @@ class RoutesTableViewController: UITableViewController {
         let checkImageView = UIImageView(frame: CGRect(x: 4, y: (cell.frame.height - 16) / 2, width: 16, height: 16))
         cell.accessoryView?.addSubview(checkImageView)
         
-        let editButton = UIButton()
         switch routeSegmentedControl.selectedSegmentIndex {
         case 0:
             cell.createrLabel.text = routes[indexPath.row].creater
             cell.difficultyLabel.text = routes[indexPath.row].difficulty
             cell.ratingView.rating = routes[indexPath.row].rating
-            cell.editButton.isHidden = true
             
             if routes[indexPath.row].finished {
                 checkImageView.image = UIImage(named: "checkmark")
@@ -114,19 +112,13 @@ class RoutesTableViewController: UITableViewController {
             cell.createrLabel.text = unfinishRoutes[indexPath.row].creater
             cell.difficultyLabel.text = unfinishRoutes[indexPath.row].difficulty
             cell.ratingView.rating = unfinishRoutes[indexPath.row].rating
-            cell.editButton.isHidden = true
-            cell.editButton.layer.borderWidth = 1.0
-            cell.editButton.layer.borderColor = UIColor.blue.cgColor
-            cell.editButton.layer.cornerRadius = 5.0
-            cell.editButton.tag = indexPath.row
-            cell.editButton.addTarget(self, action: #selector(self.editButtonPressed), for: .touchUpOutside)
+        
             checkImageView.image = UIImage(named: "")
             
         case 2:
             cell.createrLabel.text = finishRoutes[indexPath.row].creater
             cell.difficultyLabel.text = finishRoutes[indexPath.row].difficulty
             cell.ratingView.rating = finishRoutes[indexPath.row].rating
-            cell.editButton.isHidden = true
             checkImageView.image = UIImage(named: "checkmark")
 
         default:
@@ -200,10 +192,6 @@ class RoutesTableViewController: UITableViewController {
             vc.isPlayingMode = true
         }else if segue.identifier == "CreateRoute" {
             vc.isCreateMode = true
-        }else if segue.identifier == "EditRoute" {
-            vc.isEditMode = true
-            let editButton = sender as! UIButton
-            vc.route = myRoutes[editButton.tag]
         }
     }
     
