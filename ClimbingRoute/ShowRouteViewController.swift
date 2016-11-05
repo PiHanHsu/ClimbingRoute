@@ -9,6 +9,12 @@
 import UIKit
 import Firebase
 
+enum showRouteMode {
+    case create
+    case edit
+    case playing
+}
+
 class ShowRouteViewController: UIViewController {
     
     var route: Route?
@@ -26,6 +32,7 @@ class ShowRouteViewController: UIViewController {
     @IBOutlet var cancelBarButton: UIBarButtonItem!
     @IBOutlet var doneBarButton: UIBarButtonItem!
     @IBOutlet var createButton: UIButton!
+    @IBOutlet var editBarButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +40,7 @@ class ShowRouteViewController: UIViewController {
         currentUser = DataSource.shareInstance.firebaseUser
         currentField = DataSource.shareInstance.selectField
         
-        if isCreateMode{
+        if isCreateMode {
             createButton.isHidden = false
             doneBarButton.title = "儲存"
         }else if isEditMode {
@@ -43,6 +50,11 @@ class ShowRouteViewController: UIViewController {
             difficulty = route!.difficulty
             doneBarButton.title = "更新"
         }else {
+            if route?.creater == currentUser?.displayName {
+               navigationItem.rightBarButtonItems = [doneBarButton, editBarButton]
+               
+            }
+            
             displayRoute()
             checkHaveRated()
             doneBarButton.title = "完攀"
@@ -60,10 +72,28 @@ class ShowRouteViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    @IBAction func editButtonPressed(_ sender: Any) {
+        isEditMode = true
+        isPlayingMode = false
+        self.title = "編輯模式"
+        navigationItem.rightBarButtonItems = [doneBarButton]
+        createButton.isHidden = false
+        cancelBarButton.title = "取消編輯"
+        doneBarButton.title = "更新"
+    }
+    
     @IBAction func quitButton(_ sender: AnyObject) {
         
         if isPlayingMode {
             showRatingAlert()
+        }else if isEditMode{
+            isEditMode = false
+            isPlayingMode = true
+            self.title = ""
+            navigationItem.rightBarButtonItems = [doneBarButton, editBarButton]
+            cancelBarButton.title = "下次再試"
+            doneBarButton.title = "完攀"
         }else {
             self.dismiss(animated: true, completion: nil)
         }

@@ -14,6 +14,7 @@ class RoutesTableViewController: UITableViewController {
     var routes = [Route]()
     var myRoutes = [Route]()
     var finishRoutes = [Route]()
+    var unfinishRoutes = [Route]()
     let indicator = UIActivityIndicatorView()
 
     @IBOutlet var routeSegmentedControl: UISegmentedControl!
@@ -57,6 +58,8 @@ class RoutesTableViewController: UITableViewController {
             if finishRoutesArray.contains(route.routeId!) {
                 route.finished = true
                 finishRoutes.append(route)
+            }else {
+                unfinishRoutes.append(route)
             }
         }
         
@@ -76,7 +79,7 @@ class RoutesTableViewController: UITableViewController {
         case 0:
             return routes.count
         case 1:
-            return myRoutes.count
+            return unfinishRoutes.count
         case 2:
             return finishRoutes.count
         default:
@@ -108,10 +111,10 @@ class RoutesTableViewController: UITableViewController {
             }
             
         case 1:
-            cell.createrLabel.text = myRoutes[indexPath.row].creater
-            cell.difficultyLabel.text = myRoutes[indexPath.row].difficulty
-            cell.ratingView.rating = myRoutes[indexPath.row].rating
-            cell.editButton.isHidden = false
+            cell.createrLabel.text = unfinishRoutes[indexPath.row].creater
+            cell.difficultyLabel.text = unfinishRoutes[indexPath.row].difficulty
+            cell.ratingView.rating = unfinishRoutes[indexPath.row].rating
+            cell.editButton.isHidden = true
             cell.editButton.layer.borderWidth = 1.0
             cell.editButton.layer.borderColor = UIColor.blue.cgColor
             cell.editButton.layer.cornerRadius = 5.0
