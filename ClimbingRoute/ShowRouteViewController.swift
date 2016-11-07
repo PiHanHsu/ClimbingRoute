@@ -76,6 +76,9 @@ class ShowRouteViewController: UIViewController {
     @IBAction func editButtonPressed(_ sender: Any) {
         isEditMode = true
         isPlayingMode = false
+        
+        targetArray = route!.targets!
+        
         self.title = "編輯模式"
         navigationItem.rightBarButtonItems = [doneBarButton]
         createButton.isHidden = false

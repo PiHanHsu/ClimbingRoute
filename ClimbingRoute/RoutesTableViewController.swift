@@ -54,6 +54,7 @@ class RoutesTableViewController: UITableViewController {
         let finishRoutesArray = DataSource.shareInstance.finishRoutes
         
         finishRoutes.removeAll()
+        unfinishRoutes.removeAll()
         for route in routes {
             if finishRoutesArray.contains(route.routeId!) {
                 route.finished = true
