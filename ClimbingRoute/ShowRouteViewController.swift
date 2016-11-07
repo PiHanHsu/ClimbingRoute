@@ -33,6 +33,7 @@ class ShowRouteViewController: UIViewController {
     @IBOutlet var doneBarButton: UIBarButtonItem!
     @IBOutlet var createButton: UIButton!
     @IBOutlet var editBarButton: UIBarButtonItem!
+    @IBOutlet var setDifficultyBarButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +44,7 @@ class ShowRouteViewController: UIViewController {
         if isCreateMode {
             createButton.isHidden = false
             doneBarButton.title = "儲存"
+            navigationItem.rightBarButtonItems = [doneBarButton, setDifficultyBarButton]
         }else if isEditMode {
             displayRoute()
             createButton.isHidden = false
@@ -51,7 +53,7 @@ class ShowRouteViewController: UIViewController {
             doneBarButton.title = "更新"
         }else {
             if route?.creater == currentUser?.displayName {
-               navigationItem.rightBarButtonItems = [doneBarButton, editBarButton]
+               //navigationItem.rightBarButtonItems = [doneBarButton, editBarButton]
                
             }
             
@@ -94,7 +96,7 @@ class ShowRouteViewController: UIViewController {
             isEditMode = false
             isPlayingMode = true
             self.title = ""
-            navigationItem.rightBarButtonItems = [doneBarButton, editBarButton]
+            //navigationItem.rightBarButtonItems = [doneBarButton, editBarButton]
             cancelBarButton.title = "下次再試"
             doneBarButton.title = "完攀"
         }else {
@@ -105,58 +107,29 @@ class ShowRouteViewController: UIViewController {
     
     @IBAction func doneButtonPressed(_ sender: AnyObject) {
         if isCreateMode {
-            let alert = UIAlertController(title: "設定難度", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: .alert)
-            //Create a frame (placeholder/wrapper) for the picker and then create the picker
-            
-            let pickerFrame = CGRect(x: 15, y: 52, width: 240, height: 150)
-            let picker: UIPickerView = UIPickerView(frame: pickerFrame)
-            
-            //set the pickers datasource and delegate
-            picker.delegate = self
-            picker.dataSource = self
-            
-            //Add the picker to the alert controller
-            alert.view.addSubview(picker)
-            
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
-                self.difficulty = self.pickerData[picker.selectedRow(inComponent: 0)]
-                self.saveRoute()
-            })
-            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-            
-            alert.addAction(okAction)
-            alert.addAction(cancelAction)
-            
-            present(alert, animated: true, completion: nil)
-            
-        }else if isEditMode{
-            let alert = UIAlertController(title: "更新難度", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: .alert)
-            //Create a frame (placeholder/wrapper) for the picker and then create the picker
-            
-            let pickerFrame = CGRect(x: 15, y: 52, width: 240, height: 150)
-            let picker: UIPickerView = UIPickerView(frame: pickerFrame)
-            
-            //set the pickers datasource and delegate
-            picker.delegate = self
-            picker.dataSource = self
-            
-            //Add the picker to the alert controller
-            alert.view.addSubview(picker)
-            if let difficultyNumber = Int((route?.difficulty.replacingOccurrences(of: "v", with: ""))!){
-                picker.selectRow(difficultyNumber, inComponent: 0, animated: true)
+            if difficulty != nil {
+                let alert = UIAlertController(title: "請選擇暫存或發佈", message: "路線發佈後即無法修改", preferredStyle: .alert)
+                let tempSave = UIAlertAction(title: "暫存", style: .default, handler: { (UIAlertAction) in
+                    
+                })
+                let saveAction = UIAlertAction(title: "發佈", style: .default, handler: { (UIAlertAction) in
+                     self.saveRoute()
+                })
+                alert.addAction(tempSave)
+                alert.addAction(saveAction)
+                
+                present(alert, animated: true, completion: nil)
+                
+            }else {
+                setDiffuculty(sender: self)
             }
             
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
-                self.difficulty = self.pickerData[picker.selectedRow(inComponent: 0)]
-                self.updateRoute()
-                self.dismiss(animated: true, completion: nil)
-            })
-            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-            
-            alert.addAction(okAction)
-            alert.addAction(cancelAction)
-            
-            present(alert, animated: true, completion: nil)
+        }else if isEditMode{
+            if difficulty != nil {
+                saveRoute()
+            }else {
+                setDiffuculty(sender: self)
+            }
         }else {
             
             let finishRef = self.ref.child("FinishedRoute").child(currentUser!.uid)
@@ -165,6 +138,35 @@ class ShowRouteViewController: UIViewController {
             self.showRatingAlert()
         }
     }
+    
+    @IBAction func setDiffuculty(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "設定難度", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: .alert)
+        //Create a frame (placeholder/wrapper) for the picker and then create the picker
+        
+        let pickerFrame = CGRect(x: 15, y: 52, width: 240, height: 150)
+        let picker: UIPickerView = UIPickerView(frame: pickerFrame)
+        
+        //set the pickers datasource and delegate
+        picker.delegate = self
+        picker.dataSource = self
+        
+        //Add the picker to the alert controller
+        alert.view.addSubview(picker)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
+            self.difficulty = self.pickerData[picker.selectedRow(inComponent: 0)]
+            self.setDifficultyBarButton.title = "\(self.difficulty!)    "
+        })
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
     
     func checkHaveRated() {
         
@@ -233,6 +235,19 @@ class ShowRouteViewController: UIViewController {
         var title = ""
         
         if isCreateMode{
+            
+            if targetArray.count < 2 {
+                let alert = UIAlertController(title: "岩點數不足", message: "請新增岩點後在儲存", preferredStyle: .alert)
+                
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                
+                alert.addAction(okAction)
+                
+                present(alert, animated: true, completion: nil)
+                
+                return
+            }
+            
             let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
             title = "儲存此路線"
             

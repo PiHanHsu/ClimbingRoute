@@ -75,7 +75,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Kld-yo-FXF" id="tgY-lF-1E5">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="岩場名稱" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHw-5Q-4nD">
@@ -170,7 +170,7 @@
                                 <rect key="frame" x="0.0" y="77" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ghq-DI-DZj" id="7zI-TG-y01">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gm-oh-IRq">
@@ -291,9 +291,15 @@
                         <outlet property="createButton" destination="QFn-pa-KJZ" id="iJg-FI-Kgr"/>
                         <outlet property="doneBarButton" destination="8g6-o8-ldU" id="OMJ-33-feE"/>
                         <outlet property="editBarButton" destination="knp-Ll-j9M" id="Jb1-9F-KmP"/>
+                        <outlet property="setDifficultyBarButton" destination="ds2-km-h0p" id="01s-zD-fCZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YFv-rV-n60" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <barButtonItem title="設定難度" id="ds2-km-h0p">
+                    <connections>
+                        <action selector="setDiffuculty:" destination="jgU-wy-0LA" id="Iws-3H-XYZ"/>
+                    </connections>
+                </barButtonItem>
                 <barButtonItem title="編輯" id="knp-Ll-j9M">
                     <connections>
                         <action selector="editButtonPressed:" destination="jgU-wy-0LA" id="x4S-BM-qqZ"/>
