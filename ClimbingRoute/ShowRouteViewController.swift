@@ -110,6 +110,16 @@ class ShowRouteViewController: UIViewController {
             if difficulty != nil {
                 let alert = UIAlertController(title: "請選擇暫存或發佈", message: "路線發佈後即無法修改", preferredStyle: .alert)
                 let tempSave = UIAlertAction(title: "暫存", style: .default, handler: { (UIAlertAction) in
+                    let tempRef = self.ref.child("Temp").child(self.currentUser!.uid).child(self.currentField!.fieldId)
+                    var path = [String]()
+                    for target in self.targetArray {
+                        let scaleCenter = DataSource.shareInstance.convertPointToScale(point: target.imageView.center)
+                        let center = NSStringFromCGPoint(scaleCenter)
+                        path.append(center)
+                    }
+                    let tempRoute = ["path": path, "difficulty" : self.difficulty!] as [String : Any]
+                    
+                    tempRef.setValue(tempRoute)
                     
                 })
                 let saveAction = UIAlertAction(title: "發佈", style: .default, handler: { (UIAlertAction) in
