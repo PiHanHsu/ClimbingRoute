@@ -49,12 +49,14 @@ class DataSource: NSObject {
         loadingFinishRouteFromFirebase()
     }
     
-    func loadingRouteFromFirebase(filedId: String) {
+    func loadingRouteFromFirebase(fieldId: String) {
         guard firebaseUser != nil else {
             return
         }
+        
+        loadingTempRouteDataFromFirebase(fieldId: fieldId)
 
-        self.ref.child("Route").child(filedId).observe(.value, with: { (snapshot) in
+        self.ref.child("Route").child(fieldId).observe(.value, with: { (snapshot) in
             if let field = self.selectField {
                 field.routes.removeAll()
                 field.myRoutes.removeAll()
@@ -95,6 +97,27 @@ class DataSource: NSObject {
        NotificationCenter.default.post(name: Notification.Name(rawValue: "FinishLoadingRouteData"), object: nil)
     }
  
+    func loadingTempRouteDataFromFirebase(fieldId: String) {
+        ref.child("Temp").child(firebaseUser!.uid).child(fieldId).observe(.value, with: { snapshot in
+            
+            if let value = snapshot.value as? NSDictionary {
+                let difficulty = value["difficulty"] as! String
+                let path = value["path"] as! [String]
+                var targets = [Target]()
+                for center in path {
+                    let targetCenter = CGPointFromString(center)
+                    let pointCenter = self.convertScaleToPoint(point: targetCenter)
+                    let target = Target(targetCenter: pointCenter)
+                    targets.append(target)
+                }
+                
+                let route = Route(creater: self.firebaseUser!.uid, difficulty: difficulty, targets: targets)
+                self.selectField!.tempRoute = route
+            }
+            
+        })
+    }
+    
     func updateRatingDataToRoute(field: Field, route: Route) {
         var starArray = [Double]()
         

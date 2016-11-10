@@ -28,6 +28,7 @@ class ShowRouteViewController: UIViewController {
     var pickerData = [String]()
     var difficulty: String?
     var haveRated = false
+    var hasTempRoute = false
     
     @IBOutlet var cancelBarButton: UIBarButtonItem!
     @IBOutlet var doneBarButton: UIBarButtonItem!
@@ -51,6 +52,9 @@ class ShowRouteViewController: UIViewController {
             targetArray = route!.targets!
             difficulty = route!.difficulty
             doneBarButton.title = "更新"
+            navigationItem.rightBarButtonItems = [doneBarButton, setDifficultyBarButton]
+            setDifficultyBarButton.title = difficulty
+            
         }else {
             if route?.creater == currentUser?.displayName {
                //navigationItem.rightBarButtonItems = [doneBarButton, editBarButton]
@@ -76,16 +80,16 @@ class ShowRouteViewController: UIViewController {
     
     
     @IBAction func editButtonPressed(_ sender: Any) {
-        isEditMode = true
-        isPlayingMode = false
-        
-        targetArray = route!.targets!
-        
-        self.title = "編輯模式"
-        navigationItem.rightBarButtonItems = [doneBarButton]
-        createButton.isHidden = false
-        cancelBarButton.title = "取消編輯"
-        doneBarButton.title = "更新"
+//        isEditMode = true
+//        isPlayingMode = false
+//        
+//        targetArray = route!.targets!
+//        
+//        self.title = "編輯模式"
+//        navigationItem.rightBarButtonItems = [doneBarButton]
+//        createButton.isHidden = false
+//        cancelBarButton.title = "取消編輯"
+//        doneBarButton.title = "更新"
     }
     
     @IBAction func quitButton(_ sender: AnyObject) {
@@ -106,7 +110,7 @@ class ShowRouteViewController: UIViewController {
     }
     
     @IBAction func doneButtonPressed(_ sender: AnyObject) {
-        if isCreateMode {
+        if isCreateMode || isEditMode {
             if difficulty != nil {
                 let alert = UIAlertController(title: "請選擇暫存或發佈", message: "路線發佈後即無法修改", preferredStyle: .alert)
                 let tempSave = UIAlertAction(title: "暫存", style: .default, handler: { (UIAlertAction) in
@@ -120,7 +124,7 @@ class ShowRouteViewController: UIViewController {
                     let tempRoute = ["path": path, "difficulty" : self.difficulty!] as [String : Any]
                     
                     tempRef.setValue(tempRoute)
-                    
+                    self.hasTempRoute = true
                 })
                 let saveAction = UIAlertAction(title: "發佈", style: .default, handler: { (UIAlertAction) in
                      self.saveRoute()
@@ -244,7 +248,7 @@ class ShowRouteViewController: UIViewController {
     func saveRoute() {
         var title = ""
         
-        if isCreateMode{
+        if isCreateMode || isEditMode {
             
             if targetArray.count < 2 {
                 let alert = UIAlertController(title: "岩點數不足", message: "請新增岩點後在儲存", preferredStyle: .alert)
@@ -331,6 +335,16 @@ class ShowRouteViewController: UIViewController {
                 routeRef.setValue(routeInfo)
             }
         }
+        
+        if hasTempRoute {
+            deleteTempRoute()
+        }
+        
+    }
+    
+    func deleteTempRoute() {
+        let tempRef = ref.child("Temp").child(currentUser!.uid).child(currentField!.fieldId)
+        tempRef.setValue(nil)
     }
     
     @IBAction func createButtonPressed(_ sender: AnyObject) {

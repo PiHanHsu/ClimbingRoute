@@ -16,13 +16,18 @@ class RoutesTableViewController: UITableViewController {
     var finishRoutes = [Route]()
     var unfinishRoutes = [Route]()
     let indicator = UIActivityIndicatorView()
+    var hasTempRoute = false
+    var tempRoute: Route?
 
     @IBOutlet var routeSegmentedControl: UISegmentedControl!
+    @IBOutlet var createNewRouteBarButton: UIBarButtonItem!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DataSource.shareInstance.loadingRouteFromFirebase(filedId: DataSource.shareInstance.fields[index].fieldId)
+        DataSource.shareInstance.loadingRouteFromFirebase(fieldId: DataSource.shareInstance.fields[index].fieldId)
+        createNewRouteBarButton.title = ""
         
         // set up indicator
         indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
@@ -49,7 +54,18 @@ class RoutesTableViewController: UITableViewController {
     }
     
     func reloadData() {
+        
         routes = DataSource.shareInstance.selectField!.routes
+        tempRoute = DataSource.shareInstance.selectField!.tempRoute
+        if tempRoute != nil {
+            hasTempRoute = true
+            createNewRouteBarButton.title = "編輯暫存路線"
+            print("hasTempRoute")
+        }else{
+            createNewRouteBarButton.title = "新增路線"
+            
+            print("doesn't have temp route")
+        }
         myRoutes = DataSource.shareInstance.selectField!.myRoutes
         let finishRoutesArray = DataSource.shareInstance.finishRoutes
         
@@ -192,7 +208,13 @@ class RoutesTableViewController: UITableViewController {
             vc.route = routes[(tableView.indexPathForSelectedRow?.row)!]
             vc.isPlayingMode = true
         }else if segue.identifier == "CreateRoute" {
-            vc.isCreateMode = true
+            if hasTempRoute {
+                vc.isEditMode = true
+                vc.hasTempRoute = hasTempRoute
+                vc.route = tempRoute
+            }else{
+               vc.isCreateMode = true
+            }
         }
     }
     

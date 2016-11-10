@@ -14,6 +14,7 @@ class Field: NSObject {
     var routesCount: Int
     var myRoutes = [Route]()
     var finishRoutes = [Route]()
+    var tempRoute: Route?
     
     var routes = [Route]() {
         willSet(newValue) {

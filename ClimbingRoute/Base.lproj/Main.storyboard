@@ -234,13 +234,14 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="選擇路線" id="aOL-f6-dWt">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="aHN-F0-hWa">
+                        <barButtonItem key="rightBarButtonItem" title="新增路線" id="aHN-F0-hWa">
                             <connections>
                                 <segue destination="If2-57-gSF" kind="show" identifier="CreateRoute" id="tvl-7e-yLV"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="createNewRouteBarButton" destination="aHN-F0-hWa" id="1h1-XL-3vl"/>
                         <outlet property="routeSegmentedControl" destination="rTD-v5-QKJ" id="cuo-rT-Q2P"/>
                     </connections>
                 </tableViewController>
@@ -350,6 +351,6 @@
         <image name="appName" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tvl-7e-yLV"/>
+        <segue reference="UWU-Ud-E8l"/>
     </inferredMetricsTieBreakers>
 </document>
