@@ -113,6 +113,8 @@ class DataSource: NSObject {
                 
                 let route = Route(creater: self.firebaseUser!.uid, difficulty: difficulty, targets: targets)
                 self.selectField!.tempRoute = route
+            }else{
+                self.selectField!.tempRoute = nil
             }
             
         })

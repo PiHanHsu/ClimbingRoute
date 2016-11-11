@@ -33,7 +33,6 @@ class ShowRouteViewController: UIViewController {
     @IBOutlet var cancelBarButton: UIBarButtonItem!
     @IBOutlet var doneBarButton: UIBarButtonItem!
     @IBOutlet var createButton: UIButton!
-    @IBOutlet var editBarButton: UIBarButtonItem!
     @IBOutlet var setDifficultyBarButton: UIBarButtonItem!
     
     override func viewDidLoad() {
@@ -45,28 +44,22 @@ class ShowRouteViewController: UIViewController {
         if isCreateMode {
             createButton.isHidden = false
             doneBarButton.title = "儲存"
-            navigationItem.rightBarButtonItems = [doneBarButton, setDifficultyBarButton]
+            cancelBarButton.title = "取消"
         }else if isEditMode {
             displayRoute()
             createButton.isHidden = false
             targetArray = route!.targets!
             difficulty = route!.difficulty
-            doneBarButton.title = "更新"
-            navigationItem.rightBarButtonItems = [doneBarButton, setDifficultyBarButton]
-            setDifficultyBarButton.title = difficulty
+            doneBarButton.title = "儲存"
+            cancelBarButton.title = "取消"
             
         }else {
-            if route?.creater == currentUser?.displayName {
-               //navigationItem.rightBarButtonItems = [doneBarButton, editBarButton]
-               
-            }
             
             displayRoute()
             checkHaveRated()
             doneBarButton.title = "完攀"
             cancelBarButton.title = "下次再試"
         }
-        
         
         //set pickerData
         pickerData = ["v0","v1","v2","v3","v4","v5","v6","v7","v8","v9","v10","v11","v12","v13","v14","v15"]
@@ -78,31 +71,10 @@ class ShowRouteViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    @IBAction func editButtonPressed(_ sender: Any) {
-//        isEditMode = true
-//        isPlayingMode = false
-//        
-//        targetArray = route!.targets!
-//        
-//        self.title = "編輯模式"
-//        navigationItem.rightBarButtonItems = [doneBarButton]
-//        createButton.isHidden = false
-//        cancelBarButton.title = "取消編輯"
-//        doneBarButton.title = "更新"
-    }
-    
-    @IBAction func quitButton(_ sender: AnyObject) {
+     @IBAction func quitButton(_ sender: AnyObject) {
         
         if isPlayingMode {
             showRatingAlert()
-        }else if isEditMode{
-            isEditMode = false
-            isPlayingMode = true
-            self.title = ""
-            //navigationItem.rightBarButtonItems = [doneBarButton, editBarButton]
-            cancelBarButton.title = "下次再試"
-            doneBarButton.title = "完攀"
         }else {
             self.dismiss(animated: true, completion: nil)
         }
@@ -125,10 +97,14 @@ class ShowRouteViewController: UIViewController {
                     
                     tempRef.setValue(tempRoute)
                     self.hasTempRoute = true
+                    self.dismiss(animated: true, completion: nil)
                 })
-                let saveAction = UIAlertAction(title: "發佈", style: .default, handler: { (UIAlertAction) in
+                let saveAction = UIAlertAction(title: "儲存發佈", style: .default, handler: { (UIAlertAction) in
                      self.saveRoute()
                 })
+                let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+                
+                alert.addAction(cancelAction)
                 alert.addAction(tempSave)
                 alert.addAction(saveAction)
                 
@@ -197,19 +173,7 @@ class ShowRouteViewController: UIViewController {
             //print("not find!!")
         })
         
-        /*
-         let rateRef = ref.child("Rating").child(route!.routeId!)
-         rateRef.queryOrdered(byChild: "name").queryEqual(toValue: currentUser!.uid).observe(.value, with: { (snapshot) in
-         let value = snapshot.value as? NSDictionary
-         if value != nil {
-         print("value: \(value)")
-         print("find!!")
-         return
-         }
-         })
-         print("not find")
-         */
-    }
+}
     
     func showRatingAlert() {
         
@@ -238,8 +202,9 @@ class ShowRouteViewController: UIViewController {
             })
             
             alert.view.addSubview(ratingView)
-            alert.addAction(okAction)
+            
             alert.addAction(cancelAction)
+            alert.addAction(okAction)
             
             present(alert, animated: true, completion: nil)
         }
@@ -286,35 +251,7 @@ class ShowRouteViewController: UIViewController {
             
             present(alert, animated: true, completion: nil)
             
-        }else{
-            let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
-            title = "更新此路線"
-            let okAction = UIAlertAction(title: "儲存完離開", style: .default, handler: { (UIAlertAction) in
-                //self.saveRouteToFireBase()
-                self.dismiss(animated: true, completion: nil)
-            })
-            
-            
-            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-            
-            alert.addAction(okAction)
-            alert.addAction(cancelAction)
-            
-            present(alert, animated: true, completion: nil)
-            
         }
-    }
-    
-    func updateRoute() {
-        var path = [String]()
-        for target in self.targetArray {
-            let scaleCenter = DataSource.shareInstance.convertPointToScale(point: target.imageView.center)
-            let center = NSStringFromCGPoint(scaleCenter)
-            path.append(center)
-        }
-        let routeRef = self.ref.child("Route").child(currentField!.fieldId).child(route!.routeId!)
-        let routeInfo = ["difficulty" : difficulty!, "path" : path,] as [String : Any]
-        routeRef.updateChildValues(routeInfo)
     }
     
     func saveRouteToFireBase() {
@@ -357,18 +294,8 @@ class ShowRouteViewController: UIViewController {
         for target in (route?.targets)! {
             view.addSubview(target.imageView)
         }
+        setDifficultyBarButton.title = "\(route!.difficulty)    "
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }
 

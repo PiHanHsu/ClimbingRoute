@@ -27,7 +27,6 @@ class RoutesTableViewController: UITableViewController {
         super.viewDidLoad()
         
         DataSource.shareInstance.loadingRouteFromFirebase(fieldId: DataSource.shareInstance.fields[index].fieldId)
-        createNewRouteBarButton.title = ""
         
         // set up indicator
         indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
@@ -43,6 +42,8 @@ class RoutesTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        createNewRouteBarButton.title = ""
         reloadData()
         NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: Notification.Name("FinishLoadingRouteData"), object: nil)
 
@@ -60,11 +61,8 @@ class RoutesTableViewController: UITableViewController {
         if tempRoute != nil {
             hasTempRoute = true
             createNewRouteBarButton.title = "編輯暫存路線"
-            print("hasTempRoute")
         }else{
             createNewRouteBarButton.title = "新增路線"
-            
-            print("doesn't have temp route")
         }
         myRoutes = DataSource.shareInstance.selectField!.myRoutes
         let finishRoutesArray = DataSource.shareInstance.finishRoutes
@@ -193,9 +191,6 @@ class RoutesTableViewController: UITableViewController {
     }
     */
 
-    func editButtonPressed(_ sender: AnyObject) {
-        performSegue(withIdentifier: "EditRoute", sender: sender)
-    }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

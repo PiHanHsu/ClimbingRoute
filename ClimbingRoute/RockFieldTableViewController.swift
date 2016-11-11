@@ -79,10 +79,7 @@ class RockFieldTableViewController: UITableViewController {
             
         })
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: {
-            (action : UIAlertAction!) -> Void in
-            
-        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alertController.addTextField { (textField : UITextField!) -> Void in
             textField.placeholder = "輸入岩場名稱"
