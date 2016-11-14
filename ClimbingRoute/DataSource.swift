@@ -147,8 +147,9 @@ class DataSource: NSObject {
         ref.child("FinishedRoute").child(firebaseUser!.uid).observe(.value, with: { snapshot in
             
             let value = snapshot.value as? NSDictionary
-            let finishRoute = value as? Dictionary<String, Any>
-            self.finishRoutes = [String](finishRoute!.keys)
+            if let finishRoute = value as? Dictionary<String, Any> {
+                self.finishRoutes = [String](finishRoute.keys)
+            }
             
         })
     }

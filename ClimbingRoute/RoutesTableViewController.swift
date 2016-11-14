@@ -44,7 +44,7 @@ class RoutesTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         createNewRouteBarButton.title = ""
-        reloadData()
+        //reloadData()
         NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: Notification.Name("FinishLoadingRouteData"), object: nil)
 
     }
