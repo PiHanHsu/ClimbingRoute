@@ -198,7 +198,13 @@ class ShowRouteViewController: UIViewController {
     }
     
     func setRouteName() {
-        routeNameTextField.becomeFirstResponder()
+        let alert = UIAlertController(title: "請輸入路線名稱", message: nil, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: { UIAlertAction in
+            self.routeNameTextField.becomeFirstResponder()
+        })
+        alert.addAction(okAction)
+        
+        present(alert, animated: true, completion: nil)
     }
     
     func checkHaveRated() {
