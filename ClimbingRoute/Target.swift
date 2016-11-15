@@ -11,6 +11,7 @@ import UIKit
 class Target: NSObject, UIGestureRecognizerDelegate {
 
     var imageView: UIImageView!
+    var nameLabel: UILabel!
     var targetCenter: CGPoint?
     let mainView = UIApplication.shared.keyWindow?.superview
     let mainFrame = UIApplication.shared.keyWindow?.bounds
@@ -27,11 +28,15 @@ class Target: NSObject, UIGestureRecognizerDelegate {
         
         imageView = UIImageView(frame: CGRect(x: (self.targetCenter?.x)!, y: (self.targetCenter?.y)!, width: 40, height: 40))
         imageView.isUserInteractionEnabled = true
-        imageView.backgroundColor = UIColor.yellow
-        imageView.layer.cornerRadius = 20
+        imageView.backgroundColor = UIColor.white
+        imageView.layer.cornerRadius = self.imageView.frame.width / 2
         
         let dragBall = UIPanGestureRecognizer(target: self, action: #selector(self.dragTarget(_:)))
         imageView.addGestureRecognizer(dragBall)
+        
+        nameLabel = UILabel(frame: CGRect(x: 0, y: 10, width: self.imageView.frame.width, height: self.imageView.frame.height - 20))
+        nameLabel.textAlignment = .center
+        imageView.addSubview(self.nameLabel)
         
     }
     
@@ -40,7 +45,6 @@ class Target: NSObject, UIGestureRecognizerDelegate {
         imageView.center.x = point.x
         imageView.center.y = point.y
     }
-    
-    
 
 }
+

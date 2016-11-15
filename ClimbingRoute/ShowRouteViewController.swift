@@ -30,6 +30,8 @@ class ShowRouteViewController: UIViewController {
     var haveRated = false
     var hasTempRoute = false
     var routeName: String?
+    var startTarget: Target?
+    var endTarget: Target?
     
     @IBOutlet var createButton: UIButton!
     @IBOutlet var cancelButton: UIButton!
@@ -47,6 +49,17 @@ class ShowRouteViewController: UIViewController {
             createButton.isHidden = false
             doneButton.setTitle("儲存", for: .normal)
             cancelButton.setTitle("取消", for: .normal)
+            startTarget = Target(targetCenter: CGPoint(x: 100, y: 160))
+            endTarget = Target(targetCenter: CGPoint(x: 300, y: 100))
+
+            startTarget?.imageView.backgroundColor = UIColor.green
+            endTarget?.imageView.backgroundColor = UIColor.red
+            
+            startTarget!.nameLabel.text = "起攀"
+            endTarget!.nameLabel.text = "完攀"
+            
+            view.addSubview((startTarget?.imageView)!)
+            view.addSubview((endTarget?.imageView)!)
         }else if isEditMode {
             displayRoute()
             createButton.isHidden = false
@@ -114,7 +127,12 @@ class ShowRouteViewController: UIViewController {
                     let center = NSStringFromCGPoint(scaleCenter)
                     path.append(center)
                 }
-                let tempRoute = ["name" : self.routeName! ,"path" : path, "difficulty" : self.difficulty!] as [String : Any]
+                let startCenter = DataSource.shareInstance.convertPointToScale(point: self.startTarget!.imageView.center)
+                let startPoint = NSStringFromCGPoint(startCenter)
+                let endCenter = DataSource.shareInstance.convertPointToScale(point: self.endTarget!.imageView.center)
+                let endPoint = NSStringFromCGPoint(endCenter)
+                
+                let tempRoute = ["name" : self.routeName! ,"path" : path, "difficulty" : self.difficulty!, "startPoint" : startPoint, "endPoint" : endPoint] as [String : Any]
                 
                 tempRef.setValue(tempRoute)
                 self.hasTempRoute = true
@@ -289,12 +307,16 @@ class ShowRouteViewController: UIViewController {
         }
         
         let fieldId = self.currentField?.fieldId
+        let startCenter = DataSource.shareInstance.convertPointToScale(point: startTarget!.imageView.center)
+        let startPoint = NSStringFromCGPoint(startCenter)
+        let endCenter = DataSource.shareInstance.convertPointToScale(point: endTarget!.imageView.center)
+        let endPoint = NSStringFromCGPoint(endCenter)
         
         let routeRef = self.ref.child("Route").child(fieldId!).childByAutoId()
         
         if let creater = self.currentUser?.displayName {
             if let difficulty = self.difficulty {
-                let routeInfo = ["name" : routeName!, "creater" : creater, "difficulty" : difficulty, "path" : path, "rating" : 0.0] as [String : Any]
+                let routeInfo = ["name" : routeName!, "creater" : creater, "difficulty" : difficulty, "path" : path, "rating" : 0.0, "startPoint" : startPoint, "endPoint" : endPoint] as [String : Any]
                 routeRef.setValue(routeInfo)
             }
         }
@@ -320,6 +342,12 @@ class ShowRouteViewController: UIViewController {
         for target in (route?.targets)! {
             view.addSubview(target.imageView)
         }
+        startTarget = route?.startTarget
+        endTarget = route?.endTarget
+        
+        view.addSubview((route?.startTarget.imageView)!)
+        view.addSubview((route?.endTarget.imageView)!)
+        
         if let difficulty = route?.difficulty {
             setDifficultyButton.setTitle("\(difficulty)    ", for: .normal)
         }

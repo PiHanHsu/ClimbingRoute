@@ -78,8 +78,14 @@ class DataSource: NSObject {
                         targets.append(target)
                     }
                     
-                    let route = Route(name: name, creater: creater, difficulty: difficulty, targets: targets)
+                    let startPoint = value?["startPoint"] as! String
+                    let endPoint = value?["endPoint"] as! String
+                    let startCenter = self.convertScaleToPoint(point: CGPointFromString(startPoint))
+                    let endCenter = self.convertScaleToPoint(point: CGPointFromString(endPoint))
                     
+                    let route = Route(name: name, creater: creater, difficulty: difficulty, targets: targets)
+                    route.startTarget.imageView.center = startCenter
+                    route.endTarget.imageView.center = endCenter
                     route.routeId = routeId
                     route.rating = rating
                     field.routes.append(route)
@@ -113,8 +119,15 @@ class DataSource: NSObject {
                     let target = Target(targetCenter: pointCenter)
                     targets.append(target)
                 }
+                let startPoint = value["startPoint"] as! String
+                let endPoint = value["endPoint"] as! String
+                let startCenter = self.convertScaleToPoint(point: CGPointFromString(startPoint))
+                let endCenter = self.convertScaleToPoint(point: CGPointFromString(endPoint))
                 
                 let route = Route(name: name, creater: self.firebaseUser!.displayName!, difficulty: difficulty, targets: targets)
+                route.startTarget.imageView.center = startCenter
+                route.endTarget.imageView.center = endCenter
+                
                 self.selectField!.tempRoute = route
             }else{
                 self.selectField!.tempRoute = nil
