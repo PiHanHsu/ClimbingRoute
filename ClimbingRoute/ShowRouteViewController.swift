@@ -29,12 +29,13 @@ class ShowRouteViewController: UIViewController {
     var difficulty: String?
     var haveRated = false
     var hasTempRoute = false
+    var routeName: String?
     
     @IBOutlet var createButton: UIButton!
     @IBOutlet var cancelButton: UIButton!
     @IBOutlet var setDifficultyButton: UIButton!
     @IBOutlet var doneButton: UIButton!
-    
+    @IBOutlet var routeNameTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +47,6 @@ class ShowRouteViewController: UIViewController {
             createButton.isHidden = false
             doneButton.setTitle("儲存", for: .normal)
             cancelButton.setTitle("取消", for: .normal)
-            
         }else if isEditMode {
             displayRoute()
             createButton.isHidden = false
@@ -92,36 +92,44 @@ class ShowRouteViewController: UIViewController {
     
     @IBAction func doneButtonPressed(_ sender: AnyObject) {
         if isCreateMode || isEditMode {
-            if difficulty != nil {
-                let alert = UIAlertController(title: "請選擇暫存或發佈", message: "路線發佈後即無法修改", preferredStyle: .alert)
-                let tempSave = UIAlertAction(title: "暫存", style: .default, handler: { (UIAlertAction) in
-                    let tempRef = self.ref.child("Temp").child(self.currentUser!.uid).child(self.currentField!.fieldId)
-                    var path = [String]()
-                    for target in self.targetArray {
-                        let scaleCenter = DataSource.shareInstance.convertPointToScale(point: target.imageView.center)
-                        let center = NSStringFromCGPoint(scaleCenter)
-                        path.append(center)
-                    }
-                    let tempRoute = ["path": path, "difficulty" : self.difficulty!] as [String : Any]
-                    
-                    tempRef.setValue(tempRoute)
-                    self.hasTempRoute = true
-                    self.dismiss(animated: true, completion: nil)
-                })
-                let saveAction = UIAlertAction(title: "儲存發佈", style: .default, handler: { (UIAlertAction) in
-                     self.saveRoute()
-                })
-                let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-                
-                alert.addAction(cancelAction)
-                alert.addAction(tempSave)
-                alert.addAction(saveAction)
-                
-                present(alert, animated: true, completion: nil)
-                
-            }else {
+            
+            guard difficulty != nil else{
                 setDiffuculty(self)
+                return
             }
+            
+            routeName = routeNameTextField.text
+            guard (routeName != nil && (routeName?.characters.count)! > 0) else {
+                setRouteName()
+                print("set route name")
+                return
+            }
+            
+            let alert = UIAlertController(title: "請選擇暫存或發佈", message: "路線發佈後即無法修改", preferredStyle: .alert)
+            let tempSave = UIAlertAction(title: "暫存", style: .default, handler: { (UIAlertAction) in
+                let tempRef = self.ref.child("Temp").child(self.currentUser!.uid).child(self.currentField!.fieldId)
+                var path = [String]()
+                for target in self.targetArray {
+                    let scaleCenter = DataSource.shareInstance.convertPointToScale(point: target.imageView.center)
+                    let center = NSStringFromCGPoint(scaleCenter)
+                    path.append(center)
+                }
+                let tempRoute = ["name" : self.routeName! ,"path" : path, "difficulty" : self.difficulty!] as [String : Any]
+                
+                tempRef.setValue(tempRoute)
+                self.hasTempRoute = true
+                self.dismiss(animated: true, completion: nil)
+            })
+            let saveAction = UIAlertAction(title: "儲存發佈", style: .default, handler: { (UIAlertAction) in
+                self.saveRoute()
+            })
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            
+            alert.addAction(cancelAction)
+            alert.addAction(tempSave)
+            alert.addAction(saveAction)
+            
+            present(alert, animated: true, completion: nil)
             
         }else if isEditMode{
             if difficulty != nil {
@@ -171,6 +179,9 @@ class ShowRouteViewController: UIViewController {
         
     }
     
+    func setRouteName() {
+        routeNameTextField.becomeFirstResponder()
+    }
     
     func checkHaveRated() {
         
@@ -225,7 +236,6 @@ class ShowRouteViewController: UIViewController {
     }
     
     func saveRoute() {
-        
         
         if isCreateMode || isEditMode {
             
@@ -282,9 +292,9 @@ class ShowRouteViewController: UIViewController {
         
         let routeRef = self.ref.child("Route").child(fieldId!).childByAutoId()
         
-        if let name = self.currentUser?.displayName {
+        if let creater = self.currentUser?.displayName {
             if let difficulty = self.difficulty {
-                let routeInfo = ["creater" : name, "difficulty" : difficulty, "path" : path, "rating" : 0.0] as [String : Any]
+                let routeInfo = ["name" : routeName!, "creater" : creater, "difficulty" : difficulty, "path" : path, "rating" : 0.0] as [String : Any]
                 routeRef.setValue(routeInfo)
             }
         }
@@ -313,6 +323,8 @@ class ShowRouteViewController: UIViewController {
         if let difficulty = route?.difficulty {
             setDifficultyButton.setTitle("\(difficulty)    ", for: .normal)
         }
+        routeNameTextField.text = route?.name
+    
     }
     
 }

@@ -114,6 +114,7 @@ class RoutesTableViewController: UITableViewController {
         
         switch routeSegmentedControl.selectedSegmentIndex {
         case 0:
+            cell.nameLabel.text = routes[indexPath.row].name
             cell.createrLabel.text = routes[indexPath.row].creater
             cell.difficultyLabel.text = routes[indexPath.row].difficulty
             cell.ratingView.rating = routes[indexPath.row].rating
@@ -125,6 +126,7 @@ class RoutesTableViewController: UITableViewController {
             }
             
         case 1:
+            cell.nameLabel.text = unfinishRoutes[indexPath.row].name
             cell.createrLabel.text = unfinishRoutes[indexPath.row].creater
             cell.difficultyLabel.text = unfinishRoutes[indexPath.row].difficulty
             cell.ratingView.rating = unfinishRoutes[indexPath.row].rating
@@ -132,6 +134,7 @@ class RoutesTableViewController: UITableViewController {
             checkImageView.image = UIImage(named: "")
             
         case 2:
+            cell.nameLabel.text = finishRoutes[indexPath.row].name
             cell.createrLabel.text = finishRoutes[indexPath.row].creater
             cell.difficultyLabel.text = finishRoutes[indexPath.row].difficulty
             cell.ratingView.rating = finishRoutes[indexPath.row].rating

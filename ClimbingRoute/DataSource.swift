@@ -65,6 +65,7 @@ class DataSource: NSObject {
                     let childSnapshot = snapshot.childSnapshot(forPath: (child as AnyObject).key)
                     let routeId = childSnapshot.key
                     let value = childSnapshot.value as? NSDictionary
+                    let name = value?["name"] as! String
                     let creater = value?["creater"] as! String
                     let difficulty = value?["difficulty"] as! String
                     let path = value?["path"] as! [String]
@@ -77,7 +78,8 @@ class DataSource: NSObject {
                         targets.append(target)
                     }
                     
-                    let route = Route(creater: creater, difficulty: difficulty, targets: targets)
+                    let route = Route(name: name, creater: creater, difficulty: difficulty, targets: targets)
+                    
                     route.routeId = routeId
                     route.rating = rating
                     field.routes.append(route)
@@ -102,6 +104,7 @@ class DataSource: NSObject {
             
             if let value = snapshot.value as? NSDictionary {
                 let difficulty = value["difficulty"] as! String
+                let name = value["name"] as! String
                 let path = value["path"] as! [String]
                 var targets = [Target]()
                 for center in path {
@@ -111,7 +114,7 @@ class DataSource: NSObject {
                     targets.append(target)
                 }
                 
-                let route = Route(creater: self.firebaseUser!.uid, difficulty: difficulty, targets: targets)
+                let route = Route(name: name, creater: self.firebaseUser!.displayName!, difficulty: difficulty, targets: targets)
                 self.selectField!.tempRoute = route
             }else{
                 self.selectField!.tempRoute = nil

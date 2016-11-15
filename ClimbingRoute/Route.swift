@@ -16,8 +16,10 @@ class Route: NSObject {
     var rating: Double
     var targets: [Target]?
     var finished = false
+    var name: String
     
-    init(creater: String, difficulty: String, targets: [Target]?) {
+    init(name: String, creater: String, difficulty: String, targets: [Target]?) {
+        self.name = name
         self.creater = creater
         self.difficulty = difficulty
         self.targets = targets
