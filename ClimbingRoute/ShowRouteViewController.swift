@@ -30,10 +30,11 @@ class ShowRouteViewController: UIViewController {
     var haveRated = false
     var hasTempRoute = false
     
-    @IBOutlet var cancelBarButton: UIBarButtonItem!
-    @IBOutlet var doneBarButton: UIBarButtonItem!
     @IBOutlet var createButton: UIButton!
-    @IBOutlet var setDifficultyBarButton: UIBarButtonItem!
+    @IBOutlet var cancelButton: UIButton!
+    @IBOutlet var setDifficultyButton: UIButton!
+    @IBOutlet var doneButton: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,22 +44,23 @@ class ShowRouteViewController: UIViewController {
         
         if isCreateMode {
             createButton.isHidden = false
-            doneBarButton.title = "儲存"
-            cancelBarButton.title = "取消"
+            doneButton.setTitle("儲存", for: .normal)
+            cancelButton.setTitle("取消", for: .normal)
+            
         }else if isEditMode {
             displayRoute()
             createButton.isHidden = false
             targetArray = route!.targets!
             difficulty = route!.difficulty
-            doneBarButton.title = "儲存"
-            cancelBarButton.title = "取消"
+            doneButton.setTitle("儲存", for: .normal)
+            cancelButton.setTitle("取消", for: .normal)
             
         }else {
             
             displayRoute()
             checkHaveRated()
-            doneBarButton.title = "完攀"
-            cancelBarButton.title = "下次再試"
+            doneButton.setTitle("完攀", for: .normal)
+            cancelButton.setTitle("下次再試", for: .normal)
         }
         
         //set pickerData
@@ -66,9 +68,16 @@ class ShowRouteViewController: UIViewController {
         
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Hide the navigation bar on the this view controller
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // Show the navigation bar on other view controllers
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
      @IBAction func quitButton(_ sender: AnyObject) {
@@ -111,14 +120,14 @@ class ShowRouteViewController: UIViewController {
                 present(alert, animated: true, completion: nil)
                 
             }else {
-                setDiffuculty(sender: self)
+                setDiffuculty(self)
             }
             
         }else if isEditMode{
             if difficulty != nil {
                 saveRoute()
             }else {
-                setDiffuculty(sender: self)
+                setDiffuculty(self)
             }
         }else {
             
@@ -129,7 +138,7 @@ class ShowRouteViewController: UIViewController {
         }
     }
     
-    @IBAction func setDiffuculty(_ sender: Any) {
+    @IBAction func setDiffuculty(_ sender: AnyObject) {
         
         guard !isPlayingMode else {
             return
@@ -150,7 +159,8 @@ class ShowRouteViewController: UIViewController {
         
         let okAction = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
             self.difficulty = self.pickerData[picker.selectedRow(inComponent: 0)]
-            self.setDifficultyBarButton.title = "\(self.difficulty!)    "
+            self.setDifficultyButton.setTitle("\(self.difficulty!)    ", for: .normal)
+            
         })
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         
@@ -215,7 +225,7 @@ class ShowRouteViewController: UIViewController {
     }
     
     func saveRoute() {
-        var title = ""
+        
         
         if isCreateMode || isEditMode {
             
@@ -300,7 +310,7 @@ class ShowRouteViewController: UIViewController {
         for target in (route?.targets)! {
             view.addSubview(target.imageView)
         }
-        setDifficultyBarButton.title = "\(route!.difficulty)    "
+        self.setDifficultyButton.setTitle("\(self.difficulty!)    ", for: .normal)
     }
     
 }
