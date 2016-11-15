@@ -44,7 +44,7 @@ class RoutesTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         createNewRouteBarButton.title = ""
-        //reloadData()
+        reloadData()
         NotificationCenter.default.addObserver(self, selector: #selector(self.reloadData), name: Notification.Name("FinishLoadingRouteData"), object: nil)
 
     }
@@ -62,6 +62,7 @@ class RoutesTableViewController: UITableViewController {
             hasTempRoute = true
             createNewRouteBarButton.title = "編輯暫存路線"
         }else{
+            hasTempRoute = false
             createNewRouteBarButton.title = "新增路線"
         }
         myRoutes = DataSource.shareInstance.selectField!.myRoutes

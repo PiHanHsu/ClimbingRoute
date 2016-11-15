@@ -116,7 +116,7 @@ class DataSource: NSObject {
             }else{
                 self.selectField!.tempRoute = nil
             }
-            
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "FinishLoadingRouteData"), object: nil)
         })
     }
     
@@ -150,7 +150,7 @@ class DataSource: NSObject {
             if let finishRoute = value as? Dictionary<String, Any> {
                 self.finishRoutes = [String](finishRoute.keys)
             }
-            
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "FinishLoadingRouteData"), object: nil)
         })
     }
     

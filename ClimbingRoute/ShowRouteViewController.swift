@@ -131,6 +131,10 @@ class ShowRouteViewController: UIViewController {
     
     @IBAction func setDiffuculty(_ sender: Any) {
         
+        guard !isPlayingMode else {
+            return
+        }
+        
         let alert = UIAlertController(title: "設定難度", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: .alert)
         //Create a frame (placeholder/wrapper) for the picker and then create the picker
         
@@ -226,30 +230,32 @@ class ShowRouteViewController: UIViewController {
                 
                 return
             }
+            saveRouteToFireBase()
+            dismiss(animated: true, completion: nil)
             
-            let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
-            title = "儲存此路線"
-            
-            let okAction = UIAlertAction(title: "儲存完離開", style: .default, handler: { (UIAlertAction) in
-                self.saveRouteToFireBase()
-                self.dismiss(animated: true, completion: nil)
-            })
-            
-            let continueAction = UIAlertAction(title: "儲存完繼續新增路線", style: .default, handler: { (UIAlertAction) in
-                self.saveRouteToFireBase()
-                for target in self.targetArray{
-                    target.imageView.removeFromSuperview()
-                }
-                self.targetArray.removeAll()
-            })
-            
-            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-            
-            alert.addAction(okAction)
-            alert.addAction(continueAction)
-            alert.addAction(cancelAction)
-            
-            present(alert, animated: true, completion: nil)
+//            let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+//            title = "儲存此路線"
+//            
+//            let okAction = UIAlertAction(title: "儲存完離開", style: .default, handler: { (UIAlertAction) in
+//                self.saveRouteToFireBase()
+//                self.dismiss(animated: true, completion: nil)
+//            })
+//            
+//            let continueAction = UIAlertAction(title: "儲存完繼續新增路線", style: .default, handler: { (UIAlertAction) in
+//                self.saveRouteToFireBase()
+//                for target in self.targetArray{
+//                    target.imageView.removeFromSuperview()
+//                }
+//                self.targetArray.removeAll()
+//            })
+//            
+//            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+//            
+//            alert.addAction(okAction)
+//            alert.addAction(continueAction)
+//            alert.addAction(cancelAction)
+//            
+//            present(alert, animated: true, completion: nil)
             
         }
     }
