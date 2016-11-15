@@ -263,37 +263,47 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i8i-i4-HJi">
                                 <rect key="frame" x="16" y="0.0" width="31" height="30"/>
-                                <state key="normal" title="離開"/>
+                                <state key="normal" title="離開">
+                                    <color key="titleColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="quitButton:" destination="jgU-wy-0LA" eventType="touchUpInside" id="PzT-h9-KyX"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LS1-RX-iXt">
                                 <rect key="frame" x="246" y="0.0" width="62" height="30"/>
-                                <state key="normal" title="設定難度"/>
+                                <state key="normal" title="設定難度">
+                                    <color key="titleColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="setDiffuculty:" destination="jgU-wy-0LA" eventType="touchUpInside" id="Cdl-Bg-3WA"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVV-eJ-HNZ">
                                 <rect key="frame" x="328" y="0.0" width="31" height="30"/>
-                                <state key="normal" title="完成"/>
+                                <state key="normal" title="完成">
+                                    <color key="titleColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="doneButtonPressed:" destination="jgU-wy-0LA" eventType="touchUpInside" id="6Tb-UX-9Sa"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="路線名稱" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="K3w-JJ-wGC">
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="路線名稱" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="K3w-JJ-wGC">
                                 <rect key="frame" x="87.5" y="0.0" width="200" height="30"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="28K-ld-E8Y"/>
+                                    <constraint firstAttribute="height" constant="30" id="o30-m1-Fkg"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QFn-pa-KJZ">
-                                <rect key="frame" x="297" y="50" width="62" height="30"/>
-                                <state key="normal" title="新增岩點"/>
+                                <rect key="frame" x="297" y="40" width="62" height="30"/>
+                                <state key="normal" title="新增岩點">
+                                    <color key="titleColor" red="1" green="0.83529411760000005" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="createButtonPressed:" destination="jgU-wy-0LA" eventType="touchUpInside" id="QKv-aw-UaS"/>
                                 </connections>
@@ -302,7 +312,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="K3w-JJ-wGC" firstAttribute="top" secondItem="qM2-F3-C87" secondAttribute="bottom" id="7hu-77-64R"/>
-                            <constraint firstItem="QFn-pa-KJZ" firstAttribute="top" secondItem="YVV-eJ-HNZ" secondAttribute="bottom" constant="20" id="E67-OZ-se4"/>
+                            <constraint firstItem="QFn-pa-KJZ" firstAttribute="top" secondItem="YVV-eJ-HNZ" secondAttribute="bottom" constant="10" id="E67-OZ-se4"/>
                             <constraint firstItem="YVV-eJ-HNZ" firstAttribute="top" secondItem="qM2-F3-C87" secondAttribute="bottom" id="GUp-dX-DnP"/>
                             <constraint firstItem="i8i-i4-HJi" firstAttribute="top" secondItem="qM2-F3-C87" secondAttribute="bottom" id="Sqs-rL-EG3"/>
                             <constraint firstItem="i8i-i4-HJi" firstAttribute="leading" secondItem="n2U-Vu-g7B" secondAttribute="leadingMargin" id="aSo-pz-Ey2"/>

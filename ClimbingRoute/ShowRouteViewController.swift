@@ -310,7 +310,9 @@ class ShowRouteViewController: UIViewController {
         for target in (route?.targets)! {
             view.addSubview(target.imageView)
         }
-        self.setDifficultyButton.setTitle("\(self.difficulty!)    ", for: .normal)
+        if let difficulty = route?.difficulty {
+            setDifficultyButton.setTitle("\(difficulty)    ", for: .normal)
+        }
     }
     
 }
