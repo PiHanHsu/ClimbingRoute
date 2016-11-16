@@ -49,3 +49,66 @@ class Target: NSObject, UIGestureRecognizerDelegate {
 
 }
 
+class TargetPoint: UIImageView, UIGestureRecognizerDelegate {
+    var nameLabel: UILabel!
+    var targetCenter: CGPoint
+    var type: TargetType
+    let mainView = UIApplication.shared.keyWindow?.superview
+    
+    
+    init(targetCenter: CGPoint, isUserInteractionEnabled: Bool, type: TargetType) {
+        
+        self.targetCenter = targetCenter
+        self.type = type
+        
+        super.init(frame: CGRect(x: targetCenter.x, y: targetCenter.y, width: 40, height: 40))
+        self.isUserInteractionEnabled = isUserInteractionEnabled
+        
+        self.layer.cornerRadius = self.frame.width / 2
+        
+        let drag = UIPanGestureRecognizer(target: self, action: #selector(self.dragTarget(_:)))
+        self.addGestureRecognizer(drag)
+        
+        let delete = UILongPressGestureRecognizer(target: self, action: #selector(self.deleteTarget(_:)))
+        
+        nameLabel = UILabel(frame: CGRect(x: 0, y: 10, width: self.frame.width, height: self.frame.height - 20))
+        nameLabel.textAlignment = .center
+        nameLabel.font = nameLabel.font.withSize(14)
+        
+        switch type {
+        case .normal:
+            self.backgroundColor = UIColor.white
+            self.addGestureRecognizer(delete)
+        case .start:
+            self.backgroundColor = UIColor.green
+            self.nameLabel.text = "起攀"
+        case .end:
+            self.backgroundColor = UIColor.red
+            self.nameLabel.text = "完攀"
+        }
+        
+        self.addSubview(self.nameLabel)
+        
+    }
+    
+    
+    func dragTarget(_ recognizer: UIPanGestureRecognizer) {
+        let point = recognizer.location(in: mainView)
+        self.center.x = point.x
+        self.center.y = point.y
+    }
+    
+    func deleteTarget(_ recognizer: UILongPressGestureRecognizer) {
+        self.removeFromSuperview()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+enum TargetType {
+    case normal
+    case start
+    case end
+}
