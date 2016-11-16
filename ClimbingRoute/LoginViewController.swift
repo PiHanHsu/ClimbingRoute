@@ -73,37 +73,4 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
 
     }
     
- 
-//    func createFakeData() {
-//        //create Fake Data for testing
-//        let field1 = Field(name: "紅石")
-//        let field2 = Field(name: "攀岩小館")
-//        let fieldsArray = [field1, field2]
-//        let route1 = Route(creater: "PiHan", difficulty: "V0-1", targets: [Target]())
-//        let route2 = Route(creater: "PiHan", difficulty: "V0-2", targets: [Target]())
-//        let route3 = Route(creater: "PiHan", difficulty: "V0-3", targets: [Target]())
-//        field1.routes = [route1, route2, route3]
-//        field2.routes = [route1, route2, route3]
-//        
-//        for i in 0...17 {
-//            let randomNumX:UInt32 = arc4random_uniform(80) + 1
-//            let randomNumY:UInt32 = arc4random_uniform(70) + 1
-//            
-//            let target = Target()
-//            let x: CGFloat = (CGFloat(randomNumX)/100 + 0.1) * 667
-//            let y: CGFloat = (CGFloat(randomNumY)/100 + 0.2) * 375
-//            
-//            target.imageView.center = CGPoint(x: x, y: y)
-//            if i % 3 == 0 {
-//               route1.targets?.append(target)
-//            }else if i % 3 == 1 {
-//               route2.targets?.append(target)
-//            }else {
-//               route3.targets?.append(target)
-//            }
-//        }
-//        
-//        
-//        DataSource.shareInstance.fields = fieldsArray
-//    }
-}
+ }

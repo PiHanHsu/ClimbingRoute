@@ -60,6 +60,7 @@ class ShowRouteViewController: UIViewController {
             
             view.addSubview((startTarget?.imageView)!)
             view.addSubview((endTarget?.imageView)!)
+            
         }else if isEditMode {
             displayRoute()
             createButton.isHidden = false
@@ -74,6 +75,8 @@ class ShowRouteViewController: UIViewController {
             checkHaveRated()
             doneButton.setTitle("完攀", for: .normal)
             cancelButton.setTitle("下次再試", for: .normal)
+            setDifficultyButton.isEnabled = false
+            routeNameTextField.isEnabled = false
         }
         
         //set pickerData
@@ -135,7 +138,6 @@ class ShowRouteViewController: UIViewController {
             routeName = routeNameTextField.text
             guard (routeName != nil && (routeName?.characters.count)! > 0) else {
                 setRouteName()
-                print("set route name")
                 return
             }
             
@@ -403,13 +405,3 @@ extension ShowRouteViewController: UIPickerViewDelegate, UIPickerViewDataSource 
     
 }
 
-extension UITextField{
-    @IBInspectable var placeHolderColor: UIColor? {
-        get {
-            return self.placeHolderColor
-        }
-        set {
-            self.attributedPlaceholder = NSAttributedString(string:self.placeholder != nil ? self.placeholder! : "", attributes:[NSForegroundColorAttributeName: newValue!])
-        }
-    }
-}

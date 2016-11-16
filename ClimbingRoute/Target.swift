@@ -36,6 +36,7 @@ class Target: NSObject, UIGestureRecognizerDelegate {
         
         nameLabel = UILabel(frame: CGRect(x: 0, y: 10, width: self.imageView.frame.width, height: self.imageView.frame.height - 20))
         nameLabel.textAlignment = .center
+        nameLabel.font = nameLabel.font.withSize(14)
         imageView.addSubview(self.nameLabel)
         
     }
