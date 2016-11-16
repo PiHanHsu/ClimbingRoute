@@ -49,17 +49,12 @@ class ShowRouteViewController: UIViewController {
             createButton.isHidden = false
             doneButton.setTitle("儲存", for: .normal)
             cancelButton.setTitle("取消", for: .normal)
-            startTarget = Target(targetCenter: CGPoint(x: 100, y: 200))
-            endTarget = Target(targetCenter: CGPoint(x: 500, y: 100))
-
-            startTarget?.imageView.backgroundColor = UIColor.green
-            endTarget?.imageView.backgroundColor = UIColor.red
             
-            startTarget!.nameLabel.text = "起攀"
-            endTarget!.nameLabel.text = "完攀"
+            startTarget = Target(targetCenter: CGPoint(x: 100, y: 200), isUserInteractionEnabled: true, type: .start)
+            endTarget = Target(targetCenter: CGPoint(x: 500, y: 100), isUserInteractionEnabled: true, type: .end)
             
-            view.addSubview((startTarget?.imageView)!)
-            view.addSubview((endTarget?.imageView)!)
+            view.addSubview(startTarget!)
+            view.addSubview(endTarget!)
             
         }else if isEditMode {
             displayRoute()
@@ -68,6 +63,7 @@ class ShowRouteViewController: UIViewController {
             difficulty = route!.difficulty
             doneButton.setTitle("儲存", for: .normal)
             cancelButton.setTitle("取消", for: .normal)
+            
             
         }else {
             
@@ -146,13 +142,13 @@ class ShowRouteViewController: UIViewController {
                 let tempRef = self.ref.child("Temp").child(self.currentUser!.uid).child(self.currentField!.fieldId)
                 var path = [String]()
                 for target in self.targetArray {
-                    let scaleCenter = DataSource.shareInstance.convertPointToScale(point: target.imageView.center)
+                    let scaleCenter = DataSource.shareInstance.convertPointToScale(point: target.center)
                     let center = NSStringFromCGPoint(scaleCenter)
                     path.append(center)
                 }
-                let startCenter = DataSource.shareInstance.convertPointToScale(point: self.startTarget!.imageView.center)
+                let startCenter = DataSource.shareInstance.convertPointToScale(point: self.startTarget!.center)
                 let startPoint = NSStringFromCGPoint(startCenter)
-                let endCenter = DataSource.shareInstance.convertPointToScale(point: self.endTarget!.imageView.center)
+                let endCenter = DataSource.shareInstance.convertPointToScale(point: self.endTarget!.center)
                 let endPoint = NSStringFromCGPoint(endCenter)
                 
                 let tempRoute = ["name" : self.routeName! ,"path" : path, "difficulty" : self.difficulty!, "startPoint" : startPoint, "endPoint" : endPoint] as [String : Any]
@@ -330,15 +326,15 @@ class ShowRouteViewController: UIViewController {
     func saveRouteToFireBase() {
         var path = [String]()
         for target in self.targetArray {
-            let scaleCenter = DataSource.shareInstance.convertPointToScale(point: target.imageView.center)
+            let scaleCenter = DataSource.shareInstance.convertPointToScale(point: target.center)
             let center = NSStringFromCGPoint(scaleCenter)
             path.append(center)
         }
         
         let fieldId = self.currentField?.fieldId
-        let startCenter = DataSource.shareInstance.convertPointToScale(point: startTarget!.imageView.center)
+        let startCenter = DataSource.shareInstance.convertPointToScale(point: startTarget!.center)
         let startPoint = NSStringFromCGPoint(startCenter)
-        let endCenter = DataSource.shareInstance.convertPointToScale(point: endTarget!.imageView.center)
+        let endCenter = DataSource.shareInstance.convertPointToScale(point: endTarget!.center)
         let endPoint = NSStringFromCGPoint(endCenter)
         
         let routeRef = self.ref.child("Route").child(fieldId!).childByAutoId()
@@ -362,20 +358,21 @@ class ShowRouteViewController: UIViewController {
     }
     
     @IBAction func createButtonPressed(_ sender: AnyObject) {
-        let target = Target(targetCenter: nil)
+        let target = Target(targetCenter: CGPoint(x: 120, y: 60), isUserInteractionEnabled: true, type: .normal)
         targetArray.append(target)
-        view.addSubview(target.imageView)
+        view.addSubview(target)
     }
     
     func displayRoute() {
         for target in (route?.targets)! {
-            view.addSubview(target.imageView)
+            if target.type == .start {
+                startTarget = target
+            }else if target.type == .end {
+                endTarget = target
+            }
+            
+            view.addSubview(target)
         }
-        startTarget = route?.startTarget
-        endTarget = route?.endTarget
-        
-        view.addSubview((route?.startTarget.imageView)!)
-        view.addSubview((route?.endTarget.imageView)!)
         
         if let difficulty = route?.difficulty {
             setDifficultyButton.setTitle("\(difficulty)", for: .normal)

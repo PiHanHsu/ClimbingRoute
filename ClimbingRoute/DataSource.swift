@@ -74,7 +74,7 @@ class DataSource: NSObject {
                     for center in path {
                         let targetCenter = CGPointFromString(center)
                         let pointCenter = self.convertScaleToPoint(point: targetCenter)
-                        let target = Target(targetCenter: pointCenter)
+                        let target = Target(targetCenter: pointCenter, isUserInteractionEnabled: false, type: .normal)
                         targets.append(target)
                     }
                     
@@ -83,9 +83,14 @@ class DataSource: NSObject {
                     let startCenter = self.convertScaleToPoint(point: CGPointFromString(startPoint))
                     let endCenter = self.convertScaleToPoint(point: CGPointFromString(endPoint))
                     
+                    let startTarget = Target(targetCenter: startCenter, isUserInteractionEnabled: false, type: .start)
+                    let endTarget = Target(targetCenter: endCenter, isUserInteractionEnabled: false, type: .end)
+                    
+                    targets.append(startTarget)
+                    targets.append(endTarget)
+
                     let route = Route(name: name, creater: creater, difficulty: difficulty, targets: targets)
-                    route.startTarget.imageView.center = startCenter
-                    route.endTarget.imageView.center = endCenter
+                    
                     route.routeId = routeId
                     route.rating = rating
                     field.routes.append(route)
@@ -116,7 +121,7 @@ class DataSource: NSObject {
                 for center in path {
                     let targetCenter = CGPointFromString(center)
                     let pointCenter = self.convertScaleToPoint(point: targetCenter)
-                    let target = Target(targetCenter: pointCenter)
+                    let target = Target(targetCenter: pointCenter, isUserInteractionEnabled: false, type: .normal)
                     targets.append(target)
                 }
                 let startPoint = value["startPoint"] as! String
@@ -124,10 +129,13 @@ class DataSource: NSObject {
                 let startCenter = self.convertScaleToPoint(point: CGPointFromString(startPoint))
                 let endCenter = self.convertScaleToPoint(point: CGPointFromString(endPoint))
                 
-                let route = Route(name: name, creater: self.firebaseUser!.displayName!, difficulty: difficulty, targets: targets)
-                route.startTarget.imageView.center = startCenter
-                route.endTarget.imageView.center = endCenter
+                let startTarget = Target(targetCenter: startCenter, isUserInteractionEnabled: false, type: .start)
+                let endTarget = Target(targetCenter: endCenter, isUserInteractionEnabled: false, type: .end)
                 
+                targets.append(startTarget)
+                targets.append(endTarget)
+                
+                let route = Route(name: name, creater: self.firebaseUser!.displayName!, difficulty: difficulty, targets: targets)
                 self.selectField!.tempRoute = route
             }else{
                 self.selectField!.tempRoute = nil
