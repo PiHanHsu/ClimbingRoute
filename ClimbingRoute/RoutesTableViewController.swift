@@ -108,9 +108,15 @@ class RoutesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RouteTableViewCell", for: indexPath) as! RouteTableViewCell
         
-        cell.accessoryView = UIView(frame: CGRect(x: 0, y: 0, width: 24, height: cell.frame.height))
         let checkImageView = UIImageView(frame: CGRect(x: 4, y: (cell.frame.height - 16) / 2, width: 16, height: 16))
-        cell.accessoryView?.addSubview(checkImageView)
+        
+        if finishRoutes.count > 0 {
+            cell.accessoryView = UIView(frame: CGRect(x: 0, y: 0, width: 24, height: cell.frame.height))
+            cell.accessoryView?.addSubview(checkImageView)
+        }else {
+            cell.accessoryView = UIView(frame: CGRect.zero)
+        }
+        
         
         switch routeSegmentedControl.selectedSegmentIndex {
         case 0:
@@ -149,10 +155,9 @@ class RoutesTableViewController: UITableViewController {
     }
     
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //DataSource.shareInstance.selectRoute = routes?[indexPath.row]
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 56
     }
-    
     
     @IBAction func selectRouteSegement(_ sender: AnyObject) {
         

@@ -49,8 +49,8 @@ class ShowRouteViewController: UIViewController {
             createButton.isHidden = false
             doneButton.setTitle("儲存", for: .normal)
             cancelButton.setTitle("取消", for: .normal)
-            startTarget = Target(targetCenter: CGPoint(x: 100, y: 160))
-            endTarget = Target(targetCenter: CGPoint(x: 300, y: 100))
+            startTarget = Target(targetCenter: CGPoint(x: 100, y: 200))
+            endTarget = Target(targetCenter: CGPoint(x: 500, y: 100))
 
             startTarget?.imageView.backgroundColor = UIColor.green
             endTarget?.imageView.backgroundColor = UIColor.red
@@ -84,6 +84,7 @@ class ShowRouteViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Hide the navigation bar on the this view controller
+        setUpButtonLayout()
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
@@ -91,6 +92,26 @@ class ShowRouteViewController: UIViewController {
         super.viewWillDisappear(animated)
         // Show the navigation bar on other view controllers
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    func setUpButtonLayout() {
+        cancelButton.layer.borderWidth = 1
+        cancelButton.layer.borderColor = UIColor.cyan.cgColor
+        cancelButton.layer.cornerRadius = 15
+        
+        setDifficultyButton.layer.borderWidth = 1
+        setDifficultyButton.layer.borderColor = UIColor.cyan.cgColor
+        setDifficultyButton.layer.cornerRadius = 15
+        
+        doneButton.layer.borderWidth = 1
+        doneButton.layer.borderColor = UIColor.cyan.cgColor
+        doneButton.layer.cornerRadius = 15
+        
+        createButton.layer.borderWidth = 1
+        createButton.layer.borderColor = UIColor.yellow.cgColor
+        createButton.layer.cornerRadius = 15
+        
+        routeNameTextField.layer.cornerRadius = 5
     }
     
      @IBAction func quitButton(_ sender: AnyObject) {
@@ -185,7 +206,7 @@ class ShowRouteViewController: UIViewController {
         
         let okAction = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
             self.difficulty = self.pickerData[picker.selectedRow(inComponent: 0)]
-            self.setDifficultyButton.setTitle("\(self.difficulty!)    ", for: .normal)
+            self.setDifficultyButton.setTitle("\(self.difficulty!)", for: .normal)
             
         })
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
@@ -355,7 +376,7 @@ class ShowRouteViewController: UIViewController {
         view.addSubview((route?.endTarget.imageView)!)
         
         if let difficulty = route?.difficulty {
-            setDifficultyButton.setTitle("\(difficulty)    ", for: .normal)
+            setDifficultyButton.setTitle("\(difficulty)", for: .normal)
         }
         routeNameTextField.text = route?.name
     
@@ -380,4 +401,15 @@ extension ShowRouteViewController: UIPickerViewDelegate, UIPickerViewDataSource 
         
     }
     
+}
+
+extension UITextField{
+    @IBInspectable var placeHolderColor: UIColor? {
+        get {
+            return self.placeHolderColor
+        }
+        set {
+            self.attributedPlaceholder = NSAttributedString(string:self.placeholder != nil ? self.placeholder! : "", attributes:[NSForegroundColorAttributeName: newValue!])
+        }
+    }
 }
