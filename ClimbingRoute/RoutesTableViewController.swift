@@ -210,14 +210,14 @@ class RoutesTableViewController: UITableViewController {
     
         if segue.identifier == "StartClimbing" {
             vc.route = routes[(tableView.indexPathForSelectedRow?.row)!]
-            vc.isPlayingMode = true
+            vc.routeMode = .playing
         }else if segue.identifier == "CreateRoute" {
             if hasTempRoute {
-                vc.isEditMode = true
+                vc.routeMode = .edit
                 vc.hasTempRoute = hasTempRoute
                 vc.route = tempRoute
             }else{
-               vc.isCreateMode = true
+               vc.routeMode = .create
             }
         }
     }
