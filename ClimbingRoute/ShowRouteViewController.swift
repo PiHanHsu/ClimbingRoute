@@ -55,14 +55,14 @@ class ShowRouteViewController: UIViewController {
                 
                 view.addSubview(startTarget!)
                 view.addSubview(endTarget!)
-
+                
             case .edit:
                 displayRoute()
                 createButton.isHidden = false
                 targetArray = route!.targets!
                 difficulty = route!.difficulty
                 doneButton.setTitle("儲存", for: .normal)
-                cancelButton.setTitle("取消", for: .normal)
+                cancelButton.setTitle("取消/刪除", for: .normal)
             case .playing:
                 displayRoute()
                 checkHaveRated()
@@ -70,7 +70,7 @@ class ShowRouteViewController: UIViewController {
                 cancelButton.setTitle("下次再試", for: .normal)
                 setDifficultyButton.isEnabled = false
                 routeNameTextField.isEnabled = false
-        
+                
             }
         }
         
@@ -112,14 +112,40 @@ class ShowRouteViewController: UIViewController {
         routeNameTextField.layer.cornerRadius = 5
     }
     
-     @IBAction func quitButton(_ sender: AnyObject) {
+    @IBAction func quitButton(_ sender: AnyObject) {
         
         if let mode = routeMode {
-            if mode == .playing {
+            switch mode {
+            case .create:
+                self.dismiss(animated: true, completion: nil)
+            case .edit:
+                
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                let cancel = UIAlertAction(title: "取消修改", style: .default, handler: { (UIAlertAction) in
+                    self.dismiss(animated: true, completion: nil)
+                })
+                
+                let deleteTemp = UIAlertAction(title: "刪除路線", style: .default, handler: { (UIAlertAction) in
+                    self.deleteTempRoute()
+                    self.dismiss(animated: true, completion: nil)
+                })
+                
+                alert.addAction(cancel)
+                alert.addAction(deleteTemp)
+                
+                if let popoverController = alert.popoverPresentationController {
+                    popoverController.sourceView = cancelButton
+                    popoverController.sourceRect = cancelButton.bounds
+                }
+                
+                present(alert, animated: true, completion: nil)
+                
+                
+            case .playing:
                 showRatingAlert()
-            }else{
-               self.dismiss(animated: true, completion: nil)
+                
             }
+            
         }
         
     }
@@ -128,6 +154,18 @@ class ShowRouteViewController: UIViewController {
         
         if let mode = routeMode {
             if mode == .create || mode == .edit {
+                
+                guard targetArray.count > 0 else {
+                    
+                    let alert = UIAlertController(title: "岩點數不足", message: "請新增岩點後再儲存", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    
+                    alert.addAction(okAction)
+                    present(alert, animated: true, completion: nil)
+                    
+                    return
+                }
+                
                 guard difficulty != nil else{
                     setDiffuculty(self)
                     return
@@ -174,7 +212,8 @@ class ShowRouteViewController: UIViewController {
             self.dismiss(animated: true, completion: nil)
         })
         let saveAction = UIAlertAction(title: "儲存發佈", style: .default, handler: { (UIAlertAction) in
-            self.saveRoute()
+            self.saveRouteToFireBase()
+            self.dismiss(animated: true, completion: nil)
         })
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         
@@ -234,7 +273,7 @@ class ShowRouteViewController: UIViewController {
             }
         })
         
-}
+    }
     
     func showRatingAlert() {
         
@@ -271,23 +310,6 @@ class ShowRouteViewController: UIViewController {
         }
     }
     
-    func saveRoute() {
-        
-        guard targetArray.count > 2 else {
-            
-            let alert = UIAlertController(title: "岩點數不足", message: "請新增岩點後在儲存", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-            
-            alert.addAction(okAction)
-            present(alert, animated: true, completion: nil)
-            
-            return
-        }
-        
-        saveRouteToFireBase()
-        dismiss(animated: true, completion: nil)
-        
-    }
     
     func saveRouteToFireBase() {
         var path = [String]()
@@ -344,7 +366,7 @@ class ShowRouteViewController: UIViewController {
             setDifficultyButton.setTitle("\(difficulty)", for: .normal)
         }
         routeNameTextField.text = route?.name
-    
+        
     }
     
 }
