@@ -121,7 +121,7 @@ class DataSource: NSObject {
                 for center in path {
                     let targetCenter = CGPointFromString(center)
                     let pointCenter = self.convertScaleToPoint(point: targetCenter)
-                    let target = Target(targetCenter: pointCenter, isUserInteractionEnabled: false, type: .normal)
+                    let target = Target(targetCenter: pointCenter, isUserInteractionEnabled:  true, type: .normal)
                     targets.append(target)
                 }
                 let startPoint = value["startPoint"] as! String
@@ -129,8 +129,8 @@ class DataSource: NSObject {
                 let startCenter = self.convertScaleToPoint(point: CGPointFromString(startPoint))
                 let endCenter = self.convertScaleToPoint(point: CGPointFromString(endPoint))
                 
-                let startTarget = Target(targetCenter: startCenter, isUserInteractionEnabled: false, type: .start)
-                let endTarget = Target(targetCenter: endCenter, isUserInteractionEnabled: false, type: .end)
+                let startTarget = Target(targetCenter: startCenter, isUserInteractionEnabled: true, type: .start)
+                let endTarget = Target(targetCenter: endCenter, isUserInteractionEnabled: true, type: .end)
                 
                 targets.append(startTarget)
                 targets.append(endTarget)
@@ -179,12 +179,10 @@ class DataSource: NSObject {
     }
     
     func convertPointToScale(point: CGPoint) -> CGPoint {
-        
         return CGPoint(x: point.x / mainHeight, y: point.y / mainWidth)
     }
     
     func convertScaleToPoint(point: CGPoint) -> CGPoint {
-       
         return CGPoint(x: point.x * mainHeight, y: point.y * mainWidth)
     }
     

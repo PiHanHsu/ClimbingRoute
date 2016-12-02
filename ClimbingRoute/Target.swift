@@ -13,14 +13,17 @@ class Target: UIImageView, UIGestureRecognizerDelegate {
     var targetCenter: CGPoint
     var type: TargetType
     let mainView = UIApplication.shared.keyWindow?.superview
-    
+    var targetSize:CGFloat = 40
     
     init(targetCenter: CGPoint, isUserInteractionEnabled: Bool, type: TargetType) {
         
         self.targetCenter = targetCenter
         self.type = type
         
-        super.init(frame: CGRect(x: targetCenter.x, y: targetCenter.y, width: 40, height: 40))
+        let x = targetCenter.x - targetSize / 2
+        let y = targetCenter.y - targetSize / 2
+        
+        super.init(frame: CGRect(x: x, y: y, width: targetSize, height: targetSize))
         self.isUserInteractionEnabled = isUserInteractionEnabled
         
         self.layer.cornerRadius = self.frame.width / 2
