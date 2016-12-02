@@ -8,5 +8,6 @@ target 'ClimbingRoute' do
   pod 'Firebase/Database'
   pod 'FBSDKLoginKit'
   pod 'FBSDKShareKit'
+  pod 'KCFloatingActionButton'
  
 end
