@@ -26,7 +26,6 @@ class Target: UIImageView, UIGestureRecognizerDelegate {
         super.init(frame: CGRect(x: x, y: y, width: targetSize, height: targetSize))
         self.isUserInteractionEnabled = isUserInteractionEnabled
         
-        self.layer.cornerRadius = self.frame.width / 2
         
         let drag = UIPanGestureRecognizer(target: self, action: #selector(self.dragTarget(_:)))
         self.addGestureRecognizer(drag)
@@ -40,13 +39,16 @@ class Target: UIImageView, UIGestureRecognizerDelegate {
         switch type {
         case .normal:
             self.backgroundColor = UIColor.white
+            self.layer.cornerRadius = self.frame.width / 2
             self.addGestureRecognizer(delete)
         case .start:
-            self.backgroundColor = UIColor.green
-            self.nameLabel.text = "起攀"
+            //self.backgroundColor = UIColor.clear
+            self.image = UIImage(named: "start")
+            //self.nameLabel.text = "起攀"
         case .end:
-            self.backgroundColor = UIColor.red
-            self.nameLabel.text = "完攀"
+            //self.backgroundColor = UIColor.clear
+            self.image = UIImage(named: "finish")
+            //self.nameLabel.text = "完攀"
         }
         
         self.addSubview(self.nameLabel)
