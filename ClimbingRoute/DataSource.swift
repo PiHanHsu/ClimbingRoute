@@ -20,6 +20,7 @@ class DataSource: NSObject {
     var firebaseUser: FIRUser?
     let mainWidth = UIScreen.main.bounds.width
     let mainHeight = UIScreen.main.bounds.height
+    var currentTargetArray = [Target]()
     
     let ref = FIRDatabase.database().reference()
     

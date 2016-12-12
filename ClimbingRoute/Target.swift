@@ -8,12 +8,19 @@
 
 import UIKit
 
+protocol TargetDelegate {
+    func tapTarget(tapTarget: Target)
+}
+
 class Target: UIImageView, UIGestureRecognizerDelegate {
     var nameLabel: UILabel!
     var targetCenter: CGPoint
     var type: TargetType
     let mainView = UIApplication.shared.keyWindow?.superview
     var targetSize:CGFloat = 40
+    var isSelected = false
+    var delegate: TargetDelegate?
+    
     
     init(targetCenter: CGPoint, isUserInteractionEnabled: Bool, type: TargetType) {
         
@@ -32,6 +39,8 @@ class Target: UIImageView, UIGestureRecognizerDelegate {
         
         let delete = UILongPressGestureRecognizer(target: self, action: #selector(self.deleteTarget(_:)))
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapTarget(_:)))
+        
         nameLabel = UILabel(frame: CGRect(x: 0, y: 10, width: self.frame.width, height: self.frame.height - 20))
         nameLabel.textAlignment = .center
         nameLabel.font = nameLabel.font.withSize(14)
@@ -41,6 +50,8 @@ class Target: UIImageView, UIGestureRecognizerDelegate {
             self.backgroundColor = UIColor.white
             self.layer.cornerRadius = self.frame.width / 2
             self.addGestureRecognizer(delete)
+            self.addGestureRecognizer(tap)
+            
         case .start:
             //self.backgroundColor = UIColor.clear
             self.image = UIImage(named: "start")
@@ -65,6 +76,14 @@ class Target: UIImageView, UIGestureRecognizerDelegate {
     func deleteTarget(_ recognizer: UILongPressGestureRecognizer) {
         self.removeFromSuperview()
     }
+    
+    func tapTarget(_ recognizer: UITapGestureRecognizer) {
+        
+        self.delegate?.tapTarget(tapTarget: self)
+        
+    }
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

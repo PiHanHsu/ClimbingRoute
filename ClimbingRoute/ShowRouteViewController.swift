@@ -53,11 +53,12 @@ class ShowRouteViewController: UIViewController {
             switch mode {
             case .create:
                 createButton.isHidden = false
-                //doneButton.setTitle("儲存", for: .normal)
-                //cancelButton.setTitle("取消", for: .normal)
                 
                 startTarget = Target(targetCenter: CGPoint(x: 100, y: 200), isUserInteractionEnabled: true, type: .start)
                 endTarget = Target(targetCenter: CGPoint(x: 500, y: 100), isUserInteractionEnabled: true, type: .end)
+                
+                targetArray.append(startTarget!)
+                targetArray.append(endTarget!)
                 
                 view.addSubview(startTarget!)
                 view.addSubview(endTarget!)
@@ -67,16 +68,11 @@ class ShowRouteViewController: UIViewController {
                 createButton.isHidden = false
                 targetArray = route!.targets!
                 difficulty = route!.difficulty
-                //doneButton.setTitle("儲存", for: .normal)
-                //cancelButton.setTitle("取消/刪除", for: .normal)
+                
             case .playing:
                 displayRoute()
                 checkHaveRated()
-                //doneButton.setTitle("完攀", for: .normal)
-                //cancelButton.setTitle("下次再試", for: .normal)
-                //setDifficultyButton.isEnabled = false
-                //routeNameTextField.isEnabled = false
-                
+                                
             }
         }
         
@@ -105,6 +101,7 @@ class ShowRouteViewController: UIViewController {
         createButton.layer.cornerRadius = 15
         
     }
+    
     @IBAction func menuButton(_ sender: Any) {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
@@ -160,50 +157,10 @@ class ShowRouteViewController: UIViewController {
 
     }
     
-    
-//    @IBAction func doneButtonPressed(_ sender: AnyObject) {
-//        
-//        if let mode = routeMode {
-//            if mode == .create || mode == .edit {
-//                
-//                guard targetArray.count > 0 else {
-//                    
-//                    let alert = UIAlertController(title: "岩點數不足", message: "請新增岩點後再儲存", preferredStyle: .alert)
-//                    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-//                    
-//                    alert.addAction(okAction)
-//                    present(alert, animated: true, completion: nil)
-//                    
-//                    return
-//                }
-//                
-//                guard difficulty != nil else{
-//                    setDiffuculty(self)
-//                    return
-//                }
-//                
-//                routeName = routeNameTextField.text
-//                guard (routeName != nil && (routeName?.characters.count)! > 0) else {
-//                    setRouteName()
-//                    return
-//                }
-//                
-//                showSaveOpiton()
-//            }else if mode == .playing {
-//                
-//                let finishRef = self.ref.child("FinishedRoute").child(currentUser!.uid)
-//                let routeFinised = [route!.routeId! : true] as [String : Any]
-//                finishRef.updateChildValues(routeFinised)
-//                showRatingAlert()
-//            }
-//        }
-//        
-//    }
-    
     func saveTempRouteToFirebase() {
         let tempRef = self.ref.child("Temp").child(self.currentUser!.uid).child(self.currentField!.fieldId)
         var path = [String]()
-        for target in self.targetArray {
+        for target in targetArray {
             if target.type == .normal {
                 let scaleCenter = DataSource.shareInstance.convertPointToScale(point: target.center)
                 let center = NSStringFromCGPoint(scaleCenter)
@@ -222,24 +179,6 @@ class ShowRouteViewController: UIViewController {
         self.hasTempRoute = true
         self.dismiss(animated: true, completion: nil)
     }
-    
-//    func showSaveOpiton() {
-//        
-//        let alert = UIAlertController(title: "請選擇暫存或發佈", message: "路線發佈後即無法修改", preferredStyle: .alert)
-//        let tempSave = UIAlertAction(title: "暫存", style: .default, handler: { (UIAlertAction) in
-//                    })
-//        let saveAction = UIAlertAction(title: "儲存發佈", style: .default, handler: { (UIAlertAction) in
-//            self.saveRouteToFireBase()
-//            self.dismiss(animated: true, completion: nil)
-//        })
-//        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-//        
-//        alert.addAction(cancelAction)
-//        alert.addAction(tempSave)
-//        alert.addAction(saveAction)
-//        
-//        present(alert, animated: true, completion: nil)
-//    }
     
     func setDiffucultyAndRouteName() {
         
@@ -263,6 +202,7 @@ class ShowRouteViewController: UIViewController {
             self.routeName = textField.text
         
             self.saveRouteToFireBase()
+            self.dismiss(animated: true, completion: nil)
         })
         let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         
@@ -272,16 +212,6 @@ class ShowRouteViewController: UIViewController {
         present(alert, animated: true, completion: nil)
         
     }
-    
-//    func setRouteName() {
-//        let alert = UIAlertController(title: "請輸入路線名稱", message: nil, preferredStyle: .alert)
-//        let okAction = UIAlertAction(title: "OK", style: .default, handler: { UIAlertAction in
-//            self.routeNameTextField.becomeFirstResponder()
-//        })
-//        alert.addAction(okAction)
-//        
-//        present(alert, animated: true, completion: nil)
-//    }
     
     func checkHaveRated() {
         
@@ -336,7 +266,7 @@ class ShowRouteViewController: UIViewController {
     
     func saveRouteToFireBase() {
         var path = [String]()
-        for target in self.targetArray {
+        for target in targetArray {
             if target.type == .normal {
                 let scaleCenter = DataSource.shareInstance.convertPointToScale(point: target.center)
                 let center = NSStringFromCGPoint(scaleCenter)
@@ -375,6 +305,7 @@ class ShowRouteViewController: UIViewController {
     
     @IBAction func createButtonPressed(_ sender: AnyObject) {
         let target = Target(targetCenter: CGPoint(x: 120, y: 60), isUserInteractionEnabled: true, type: .normal)
+        target.delegate = self
         targetArray.append(target)
         view.addSubview(target)
     }
@@ -387,11 +318,55 @@ class ShowRouteViewController: UIViewController {
                 endTarget = target
             }
             
+            if target.isSelected {
+                target.layer.borderWidth = 2.0
+                target.layer.borderColor = UIColor.red.cgColor
+            }else {
+                target.layer.borderWidth = 0
+
+            }
             view.addSubview(target)
         }
         
     }
     
+    
+    
+}
+
+extension ShowRouteViewController: TargetDelegate {
+    func tapTarget(tapTarget: Target) {
+        print("tap")
+        for target in targetArray {
+            target.isSelected = false
+        }
+        
+        tapTarget.isSelected = true
+        refresh()
+    }
+    
+    func refresh() {
+        for target in targetArray {
+            target.removeFromSuperview()
+        }
+        
+        for target in targetArray {
+            if target.type == .start {
+                startTarget = target
+            }else if target.type == .end {
+                endTarget = target
+            }
+            
+            if target.isSelected {
+                target.layer.borderWidth = 2.0
+                target.layer.borderColor = UIColor.red.cgColor
+            }else {
+                target.layer.borderWidth = 0
+                
+            }
+            view.addSubview(target)
+        }
+    }
 }
 
 
