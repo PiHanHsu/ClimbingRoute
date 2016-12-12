@@ -114,16 +114,17 @@ class DataSource: NSObject {
         ref.child("Temp").child(firebaseUser!.uid).child(fieldId).observe(.value, with: { snapshot in
             
             if let value = snapshot.value as? NSDictionary {
-                let difficulty = value["difficulty"] as! String
-                let name = value["name"] as! String
-                let path = value["path"] as! [String]
+               
                 var targets = [Target]()
-                for center in path {
-                    let targetCenter = CGPointFromString(center)
-                    let pointCenter = self.convertScaleToPoint(point: targetCenter)
-                    let target = Target(targetCenter: pointCenter, isUserInteractionEnabled:  true, type: .normal)
-                    targets.append(target)
+                if let path = value["path"] as? [String] {
+                    for center in path {
+                        let targetCenter = CGPointFromString(center)
+                        let pointCenter = self.convertScaleToPoint(point: targetCenter)
+                        let target = Target(targetCenter: pointCenter, isUserInteractionEnabled:  true, type: .normal)
+                        targets.append(target)
+                    }
                 }
+                
                 let startPoint = value["startPoint"] as! String
                 let endPoint = value["endPoint"] as! String
                 let startCenter = self.convertScaleToPoint(point: CGPointFromString(startPoint))
@@ -135,7 +136,7 @@ class DataSource: NSObject {
                 targets.append(startTarget)
                 targets.append(endTarget)
                 
-                let route = Route(name: name, creater: self.firebaseUser!.displayName!, difficulty: difficulty, targets: targets)
+                let route = Route(name: "", creater: self.firebaseUser!.displayName!, difficulty: "", targets: targets)
                 self.selectField!.tempRoute = route
             }else{
                 self.selectField!.tempRoute = nil

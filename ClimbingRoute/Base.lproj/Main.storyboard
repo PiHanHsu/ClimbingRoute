@@ -24,7 +24,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="er0-48-8KL">
-                                <rect key="frame" x="169" y="381.5" width="37" height="37"/>
+                                <rect key="frame" x="169" y="382" width="37" height="37"/>
                                 <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appName" translatesAutoresizingMaskIntoConstraints="NO" id="ILU-2u-Gtt">
@@ -34,7 +34,7 @@
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appIcon" translatesAutoresizingMaskIntoConstraints="NO" id="AON-fF-b6L">
-                                <rect key="frame" x="131.5" y="110.5" width="112.5" height="112.5"/>
+                                <rect key="frame" x="132" y="111" width="112" height="112"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="AON-fF-b6L" secondAttribute="height" multiplier="1:1" id="SPO-yZ-6Zc"/>
                                 </constraints>
@@ -79,7 +79,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="岩場名稱" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHw-5Q-4nD">
-                                            <rect key="frame" x="15" y="12" width="184" height="20.5"/>
+                                            <rect key="frame" x="15" y="12" width="184" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="184" id="XeR-zP-CXA"/>
                                             </constraints>
@@ -88,7 +88,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XX 條路線" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0D-Zk-j4J">
-                                            <rect key="frame" x="232" y="12" width="127" height="20.5"/>
+                                            <rect key="frame" x="232" y="12" width="127" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="127" id="CJ3-vA-Dh2"/>
                                             </constraints>
@@ -146,7 +146,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rTD-v5-QKJ">
-                                    <rect key="frame" x="8" y="10.5" width="359" height="29"/>
+                                    <rect key="frame" x="8" y="11" width="359" height="29"/>
                                     <segments>
                                         <segment title="所有路線"/>
                                         <segment title="未完攀"/>
@@ -174,7 +174,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="V0-1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="msr-pR-pbr">
-                                            <rect key="frame" x="287" y="12" width="80" height="20.5"/>
+                                            <rect key="frame" x="287" y="12" width="80" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="80" id="po8-Y3-v6z"/>
                                             </constraints>
@@ -183,7 +183,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g9L-K7-uJa" customClass="CosmosView" customModule="ClimbingRoute" customModuleProvider="target">
-                                            <rect key="frame" x="287" y="37.5" width="80" height="12"/>
+                                            <rect key="frame" x="287" y="38" width="80" height="12"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="12" id="RNM-fM-ORC"/>
@@ -204,13 +204,13 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sao-Ov-c5E">
-                                            <rect key="frame" x="15" y="11.5" width="42" height="21"/>
+                                            <rect key="frame" x="15" y="12" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gm-oh-IRq">
-                                            <rect key="frame" x="15" y="37.5" width="31" height="14.5"/>
+                                            <rect key="frame" x="15" y="38" width="31" height="15"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -261,103 +261,48 @@
         <!--Show Route View Controller-->
         <scene sceneID="alj-79-qAW">
             <objects>
-                <viewController id="jgU-wy-0LA" customClass="ShowRouteViewController" customModule="ClimbingRoute" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShowRouteViewController" id="jgU-wy-0LA" customClass="ShowRouteViewController" customModule="ClimbingRoute" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qM2-F3-C87"/>
                         <viewControllerLayoutGuide type="bottom" id="3SA-ee-xkv"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="n2U-Vu-g7B">
+                    <view key="view" contentMode="scaleToFill" misplaced="YES" id="n2U-Vu-g7B">
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i8i-i4-HJi">
-                                <rect key="frame" x="16" y="10" width="75" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="75" id="j6C-bF-ndm"/>
-                                </constraints>
-                                <state key="normal" title="離開">
-                                    <color key="titleColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="quitButton:" destination="jgU-wy-0LA" eventType="touchUpInside" id="PzT-h9-KyX"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LS1-RX-iXt">
-                                <rect key="frame" x="194" y="10" width="75" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="75" id="kV5-lJ-aW1"/>
-                                </constraints>
-                                <state key="normal" title="設定難度">
-                                    <color key="titleColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="setDiffuculty:" destination="jgU-wy-0LA" eventType="touchUpInside" id="Cdl-Bg-3WA"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVV-eJ-HNZ">
-                                <rect key="frame" x="284" y="10" width="75" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="75" id="aKZ-3s-4RY"/>
-                                </constraints>
-                                <state key="normal" title="完成">
-                                    <color key="titleColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="doneButtonPressed:" destination="jgU-wy-0LA" eventType="touchUpInside" id="6Tb-UX-9Sa"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="輸入路線名稱" textAlignment="center" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="K3w-JJ-wGC">
-                                <rect key="frame" x="97.5" y="10" width="180" height="30"/>
-                                <color key="backgroundColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="180" id="28K-ld-E8Y"/>
-                                    <constraint firstAttribute="height" constant="30" id="o30-m1-Fkg"/>
-                                </constraints>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </textField>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QFn-pa-KJZ">
-                                <rect key="frame" x="284" y="50" width="75" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="75" id="6xD-Bb-RTe"/>
-                                </constraints>
-                                <state key="normal" title="新增岩點">
+                                <rect key="frame" x="339" y="10" width="30" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="+">
                                     <color key="titleColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="createButtonPressed:" destination="jgU-wy-0LA" eventType="touchUpInside" id="QKv-aw-UaS"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wX7-Uo-IZH">
+                                <rect key="frame" x="26" y="10" width="46" height="34"/>
+                                <state key="normal" title="Menu">
+                                    <color key="titleColor" red="0.015686274510000001" green="0.74509803919999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="menuButton:" destination="jgU-wy-0LA" eventType="touchUpInside" id="X0f-Tr-1c7"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="YVV-eJ-HNZ" firstAttribute="centerY" secondItem="i8i-i4-HJi" secondAttribute="centerY" id="0dY-yK-qqk"/>
-                            <constraint firstItem="LS1-RX-iXt" firstAttribute="centerY" secondItem="i8i-i4-HJi" secondAttribute="centerY" id="D5V-AV-EOw"/>
-                            <constraint firstItem="QFn-pa-KJZ" firstAttribute="top" secondItem="YVV-eJ-HNZ" secondAttribute="bottom" constant="10" id="E67-OZ-se4"/>
-                            <constraint firstItem="i8i-i4-HJi" firstAttribute="top" secondItem="qM2-F3-C87" secondAttribute="bottom" constant="10" id="Sqs-rL-EG3"/>
-                            <constraint firstItem="i8i-i4-HJi" firstAttribute="leading" secondItem="n2U-Vu-g7B" secondAttribute="leadingMargin" id="aSo-pz-Ey2"/>
-                            <constraint firstItem="K3w-JJ-wGC" firstAttribute="centerY" secondItem="i8i-i4-HJi" secondAttribute="centerY" id="hLz-qO-eQ1"/>
-                            <constraint firstItem="YVV-eJ-HNZ" firstAttribute="leading" secondItem="LS1-RX-iXt" secondAttribute="trailing" constant="15" id="orw-zK-ZjI"/>
-                            <constraint firstItem="YVV-eJ-HNZ" firstAttribute="trailing" secondItem="n2U-Vu-g7B" secondAttribute="trailingMargin" id="pSz-Ok-dFW"/>
-                            <constraint firstItem="K3w-JJ-wGC" firstAttribute="centerX" secondItem="n2U-Vu-g7B" secondAttribute="centerX" id="rNy-xU-qi6"/>
-                            <constraint firstItem="QFn-pa-KJZ" firstAttribute="trailing" secondItem="n2U-Vu-g7B" secondAttribute="trailingMargin" id="tu9-1D-aN0"/>
+                            <constraint firstItem="wX7-Uo-IZH" firstAttribute="leading" secondItem="n2U-Vu-g7B" secondAttribute="leadingMargin" constant="10" id="1Gf-fd-ASI"/>
+                            <constraint firstItem="QFn-pa-KJZ" firstAttribute="trailing" secondItem="n2U-Vu-g7B" secondAttribute="trailingMargin" constant="10" id="Fhh-Hs-gDD"/>
+                            <constraint firstItem="wX7-Uo-IZH" firstAttribute="top" secondItem="qM2-F3-C87" secondAttribute="bottom" constant="10" id="KYX-a8-dmj"/>
+                            <constraint firstItem="QFn-pa-KJZ" firstAttribute="top" secondItem="qM2-F3-C87" secondAttribute="bottom" constant="10" id="gfW-vT-KsU"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="gcZ-tc-MBR"/>
                     <connections>
-                        <outlet property="cancelButton" destination="i8i-i4-HJi" id="KeD-t5-hzG"/>
                         <outlet property="createButton" destination="QFn-pa-KJZ" id="iJg-FI-Kgr"/>
-                        <outlet property="doneButton" destination="YVV-eJ-HNZ" id="aBH-rk-x7F"/>
-                        <outlet property="routeNameTextField" destination="K3w-JJ-wGC" id="d3l-mT-xI5"/>
-                        <outlet property="setDifficultyButton" destination="LS1-RX-iXt" id="fTM-bF-ZXH"/>
+                        <outlet property="menuButton" destination="wX7-Uo-IZH" id="DFq-RE-IpZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YFv-rV-n60" userLabel="First Responder" sceneMemberID="firstResponder"/>
