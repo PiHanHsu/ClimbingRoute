@@ -17,9 +17,23 @@ class Target: UIImageView, UIGestureRecognizerDelegate {
     var targetCenter: CGPoint
     var type: TargetType
     let mainView = UIApplication.shared.keyWindow?.superview
-    var targetSize:CGFloat = 40
+    var targetSize:CGFloat = 40 {
+        willSet(newValue) {
+            
+            let x = self.center.x - newValue / 2
+            let y = self.center.y - newValue / 2
+            self.frame = CGRect(x: x, y: y, width: newValue, height: newValue)
+           
+            self.layer.cornerRadius = self.frame.width / 2
+        }
+    }
     var isSelected = false
     var delegate: TargetDelegate?
+    var ratio = 1.0 {
+        willSet(newValue) {
+            self.targetSize = CGFloat(40.0 * newValue)
+        }
+    }
     
     
     init(targetCenter: CGPoint, isUserInteractionEnabled: Bool, type: TargetType) {
@@ -83,7 +97,9 @@ class Target: UIImageView, UIGestureRecognizerDelegate {
         
     }
     
-    
+    func updateSize(ratio: Double) {
+        
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

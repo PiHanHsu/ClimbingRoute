@@ -293,13 +293,16 @@
                                     <action selector="menuButton:" destination="jgU-wy-0LA" eventType="touchUpInside" id="X0f-Tr-1c7"/>
                                 </connections>
                             </button>
-                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="30" maximumValue="100" stepValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="nvA-sL-grU">
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" continuous="NO" value="1" minimumValue="0.5" maximumValue="1.5" stepValue="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="nvA-sL-grU">
                                 <rect key="frame" x="265" y="554" width="94" height="29"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29" id="6kD-7g-OVo"/>
                                     <constraint firstAttribute="width" constant="94" id="J5P-Ih-2Zd"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="stepperPressed:" destination="jgU-wy-0LA" eventType="valueChanged" id="kXH-Ba-EBQ"/>
+                                </connections>
                             </stepper>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -317,6 +320,7 @@
                     <connections>
                         <outlet property="createButton" destination="QFn-pa-KJZ" id="iJg-FI-Kgr"/>
                         <outlet property="menuButton" destination="wX7-Uo-IZH" id="DFq-RE-IpZ"/>
+                        <outlet property="ratioStepper" destination="nvA-sL-grU" id="iHB-Qz-01P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YFv-rV-n60" userLabel="First Responder" sceneMemberID="firstResponder"/>

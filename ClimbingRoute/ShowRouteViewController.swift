@@ -30,14 +30,15 @@ class ShowRouteViewController: UIViewController {
     var routeName: String?
     var startTarget: Target?
     var endTarget: Target?
+    var selectedTarget: Target?
     
     @IBOutlet var createButton: UIButton!
     @IBOutlet var menuButton: UIButton!
     
-    @IBOutlet var cancelButton: UIButton!
-    @IBOutlet var setDifficultyButton: UIButton!
-    @IBOutlet var doneButton: UIButton!
-    @IBOutlet var routeNameTextField: UITextField!
+    @IBOutlet var ratioStepper: UIStepper!
+
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -157,14 +158,25 @@ class ShowRouteViewController: UIViewController {
 
     }
     
+    @IBAction func stepperPressed(_ sender: Any) {
+        if let target = selectedTarget {
+            target.ratio = ratioStepper.value
+            refresh()
+        }
+        
+    }
+    
+    
     func saveTempRouteToFirebase() {
         let tempRef = self.ref.child("Temp").child(self.currentUser!.uid).child(self.currentField!.fieldId)
-        var path = [String]()
+        
+        var path = [[String: Any]]()
         for target in targetArray {
             if target.type == .normal {
                 let scaleCenter = DataSource.shareInstance.convertPointToScale(point: target.center)
                 let center = NSStringFromCGPoint(scaleCenter)
-                path.append(center)
+                let targetInfo = ["position" : center, "ratio" : target.ratio] as [String: Any]
+                path.append(targetInfo)
             }
             
         }
@@ -265,14 +277,14 @@ class ShowRouteViewController: UIViewController {
     
     
     func saveRouteToFireBase() {
-        var path = [String]()
+        var path = [[String: Any]]()
         for target in targetArray {
             if target.type == .normal {
                 let scaleCenter = DataSource.shareInstance.convertPointToScale(point: target.center)
                 let center = NSStringFromCGPoint(scaleCenter)
-                path.append(center)
+                let targetInfo = ["position" : center, "ratio" : target.ratio] as [String: Any]
+                path.append(targetInfo)
             }
-            
         }
         
         let fieldId = self.currentField?.fieldId
@@ -312,6 +324,7 @@ class ShowRouteViewController: UIViewController {
     
     func displayRoute() {
         for target in (route?.targets)! {
+            target.delegate = self
             if target.type == .start {
                 startTarget = target
             }else if target.type == .end {
@@ -336,12 +349,14 @@ class ShowRouteViewController: UIViewController {
 
 extension ShowRouteViewController: TargetDelegate {
     func tapTarget(tapTarget: Target) {
-        print("tap")
+        
         for target in targetArray {
             target.isSelected = false
         }
         
         tapTarget.isSelected = true
+        selectedTarget = tapTarget
+        ratioStepper.value = selectedTarget!.ratio
         refresh()
     }
     
