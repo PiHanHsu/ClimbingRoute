@@ -50,6 +50,8 @@ class ShowRouteViewController: UIViewController {
         currentUser = DataSource.shareInstance.firebaseUser
         currentField = DataSource.shareInstance.selectField
         
+        let tapScreen = UITapGestureRecognizer(target: self, action: #selector(self.tapScreen(_:)))
+        
         if let mode = routeMode {
             switch mode {
             case .create:
@@ -63,12 +65,16 @@ class ShowRouteViewController: UIViewController {
                 
                 view.addSubview(startTarget!)
                 view.addSubview(endTarget!)
+                view.isUserInteractionEnabled = true
+                view.addGestureRecognizer(tapScreen)
                 
             case .edit:
                 displayRoute()
                 createButton.isHidden = false
                 targetArray = route!.targets!
                 difficulty = route!.difficulty
+                view.isUserInteractionEnabled = true
+                view.addGestureRecognizer(tapScreen)
                 
             case .playing:
                 displayRoute()
@@ -80,6 +86,14 @@ class ShowRouteViewController: UIViewController {
         //set pickerData
         pickerData = ["v0","v1","v2","v3","v4","v5","v6","v7","v8","v9","v10","v11","v12","v13","v14","v15"]
         
+    }
+    
+    func tapScreen(_ recognizer: UITapGestureRecognizer) {
+        
+        for target in targetArray {
+            target.isSelected = false
+        }
+        refresh()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -360,6 +374,11 @@ extension ShowRouteViewController: TargetDelegate {
         refresh()
     }
     
+    func deleteTarget(deleteTarget: Target) {
+        deleteTarget.removeFromSuperview()
+        targetArray.remove(object: deleteTarget)
+    }
+    
     func refresh() {
         for target in targetArray {
             target.removeFromSuperview()
@@ -384,6 +403,9 @@ extension ShowRouteViewController: TargetDelegate {
     }
 }
 
+extension ShowRouteViewController: UIGestureRecognizerDelegate {
+    
+}
 
 extension ShowRouteViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

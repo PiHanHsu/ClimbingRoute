@@ -9,6 +9,7 @@
 import UIKit
 
 protocol TargetDelegate {
+    func deleteTarget(deleteTarget: Target)
     func tapTarget(tapTarget: Target)
 }
 
@@ -88,7 +89,8 @@ class Target: UIImageView, UIGestureRecognizerDelegate {
     }
     
     func deleteTarget(_ recognizer: UILongPressGestureRecognizer) {
-        self.removeFromSuperview()
+        self.delegate?.deleteTarget(deleteTarget: self)
+        //self.removeFromSuperview()
     }
     
     func tapTarget(_ recognizer: UITapGestureRecognizer) {
