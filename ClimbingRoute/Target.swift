@@ -9,11 +9,10 @@
 import UIKit
 
 protocol TargetDelegate {
-    func deleteTarget(deleteTarget: Target)
     func tapTarget(tapTarget: Target)
 }
 
-class Target: UIImageView, UIGestureRecognizerDelegate {
+class Target: UIImageView {
     var nameLabel: UILabel!
     var targetCenter: CGPoint
     var type: TargetType
@@ -52,8 +51,6 @@ class Target: UIImageView, UIGestureRecognizerDelegate {
         let drag = UIPanGestureRecognizer(target: self, action: #selector(self.dragTarget(_:)))
         self.addGestureRecognizer(drag)
         
-        let delete = UILongPressGestureRecognizer(target: self, action: #selector(self.deleteTarget(_:)))
-        
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapTarget(_:)))
         
         nameLabel = UILabel(frame: CGRect(x: 0, y: 10, width: self.frame.width, height: self.frame.height - 20))
@@ -64,23 +61,17 @@ class Target: UIImageView, UIGestureRecognizerDelegate {
         case .normal:
             self.backgroundColor = UIColor.white
             self.layer.cornerRadius = self.frame.width / 2
-            self.addGestureRecognizer(delete)
             self.addGestureRecognizer(tap)
             
         case .start:
-            //self.backgroundColor = UIColor.clear
             self.image = UIImage(named: "start")
-            //self.nameLabel.text = "起攀"
         case .end:
-            //self.backgroundColor = UIColor.clear
             self.image = UIImage(named: "finish")
-            //self.nameLabel.text = "完攀"
         }
         
         self.addSubview(self.nameLabel)
         
     }
-    
     
     func dragTarget(_ recognizer: UIPanGestureRecognizer) {
         let point = recognizer.location(in: mainView)
@@ -88,19 +79,8 @@ class Target: UIImageView, UIGestureRecognizerDelegate {
         self.center.y = point.y
     }
     
-    func deleteTarget(_ recognizer: UILongPressGestureRecognizer) {
-        self.delegate?.deleteTarget(deleteTarget: self)
-        //self.removeFromSuperview()
-    }
-    
     func tapTarget(_ recognizer: UITapGestureRecognizer) {
-        
         self.delegate?.tapTarget(tapTarget: self)
-        
-    }
-    
-    func updateSize(ratio: Double) {
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

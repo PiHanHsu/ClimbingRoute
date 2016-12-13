@@ -304,10 +304,19 @@
                                     <action selector="stepperPressed:" destination="jgU-wy-0LA" eventType="valueChanged" id="kXH-Ba-EBQ"/>
                                 </connections>
                             </stepper>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryJ-VR-vSS">
+                                <rect key="frame" x="16" y="553" width="45" height="30"/>
+                                <state key="normal" title="Delete"/>
+                                <connections>
+                                    <action selector="deleteButtonPressed:" destination="jgU-wy-0LA" eventType="touchUpInside" id="yk1-w4-maU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="wX7-Uo-IZH" firstAttribute="leading" secondItem="n2U-Vu-g7B" secondAttribute="leadingMargin" constant="10" id="1Gf-fd-ASI"/>
+                            <constraint firstItem="ryJ-VR-vSS" firstAttribute="leading" secondItem="n2U-Vu-g7B" secondAttribute="leadingMargin" id="4Xg-ZL-UWN"/>
+                            <constraint firstItem="3SA-ee-xkv" firstAttribute="top" secondItem="ryJ-VR-vSS" secondAttribute="bottom" constant="20" id="6i0-YA-5EN"/>
                             <constraint firstItem="QFn-pa-KJZ" firstAttribute="trailing" secondItem="n2U-Vu-g7B" secondAttribute="trailingMargin" constant="10" id="Fhh-Hs-gDD"/>
                             <constraint firstItem="wX7-Uo-IZH" firstAttribute="top" secondItem="qM2-F3-C87" secondAttribute="bottom" constant="10" id="KYX-a8-dmj"/>
                             <constraint firstItem="nvA-sL-grU" firstAttribute="trailing" secondItem="n2U-Vu-g7B" secondAttribute="trailingMargin" id="cZu-LR-71m"/>
@@ -319,6 +328,7 @@
                     <navigationItem key="navigationItem" id="gcZ-tc-MBR"/>
                     <connections>
                         <outlet property="createButton" destination="QFn-pa-KJZ" id="iJg-FI-Kgr"/>
+                        <outlet property="deleteButton" destination="ryJ-VR-vSS" id="n8O-q6-uvY"/>
                         <outlet property="menuButton" destination="wX7-Uo-IZH" id="DFq-RE-IpZ"/>
                         <outlet property="ratioStepper" destination="nvA-sL-grU" id="iHB-Qz-01P"/>
                     </connections>

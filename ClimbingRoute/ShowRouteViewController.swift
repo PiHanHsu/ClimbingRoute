@@ -36,8 +36,7 @@ class ShowRouteViewController: UIViewController {
     @IBOutlet var menuButton: UIButton!
     
     @IBOutlet var ratioStepper: UIStepper!
-
-    
+    @IBOutlet var deleteButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -46,10 +45,14 @@ class ShowRouteViewController: UIViewController {
         //disable sleep mode
         UIApplication.shared.isIdleTimerDisabled = true
         
-        view.backgroundColor = UIColor.black
+        //data
         currentUser = DataSource.shareInstance.firebaseUser
         currentField = DataSource.shareInstance.selectField
         
+        //set up view
+        view.backgroundColor = UIColor.black
+        ratioStepper.isHidden = true
+        deleteButton.isHidden = true
         let tapScreen = UITapGestureRecognizer(target: self, action: #selector(self.tapScreen(_:)))
         
         if let mode = routeMode {
@@ -88,14 +91,6 @@ class ShowRouteViewController: UIViewController {
         
     }
     
-    func tapScreen(_ recognizer: UITapGestureRecognizer) {
-        
-        for target in targetArray {
-            target.isSelected = false
-        }
-        refresh()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -109,6 +104,8 @@ class ShowRouteViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
+    // MARK: Setup view
+    
     func setUpButtonLayout() {
                 
         createButton.layer.borderWidth = 1
@@ -117,6 +114,29 @@ class ShowRouteViewController: UIViewController {
         
     }
     
+    func displayRoute() {
+        for target in (route?.targets)! {
+            target.delegate = self
+            if target.type == .start {
+                startTarget = target
+            }else if target.type == .end {
+                endTarget = target
+            }
+            
+            if target.isSelected {
+                target.layer.borderWidth = 2.0
+                target.layer.borderColor = UIColor.red.cgColor
+            }else {
+                target.layer.borderWidth = 0
+                
+            }
+            view.addSubview(target)
+        }
+        
+    }
+
+    //MARK: IBAction
+
     @IBAction func menuButton(_ sender: Any) {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
@@ -135,8 +155,6 @@ class ShowRouteViewController: UIViewController {
         })
         let save = UIAlertAction(title: "儲存發佈", style: .default, handler: { UIAlertAction in
             self.setDiffucultyAndRouteName()
-            //self.saveRouteToFireBase()
-            //self.dismiss(animated: true, completion: nil)
         })
         let cancel = UIAlertAction(title: "取消", style: .default, handler: {  UIAlertAction in
             self.dismiss(animated: true, completion: nil)
@@ -146,6 +164,20 @@ class ShowRouteViewController: UIViewController {
             self.deleteTempRoute()
             self.dismiss(animated: true, completion: nil)
         })
+        
+        let finishRoute = UIAlertAction(title: "完攀", style: .default, handler: {  UIAlertAction in
+            
+            let finishRef = self.ref.child("FinishedRoute").child(self.currentUser!.uid)
+            let routeFinised = [self.route!.routeId! : true] as [String : Any]
+            finishRef.updateChildValues(routeFinised)
+            self.showRatingAlert()
+        })
+        
+        let tryNextTime = UIAlertAction(title: "下次再嘗試", style: .default, handler: {  UIAlertAction in
+            self.showRatingAlert()
+            self.dismiss(animated: true, completion: nil)
+        })
+
         
         if let mode = routeMode {
             switch mode {
@@ -166,7 +198,10 @@ class ShowRouteViewController: UIViewController {
                 self.present(alert, animated: true, completion: nil)
                 
             case .playing:
-                showRatingAlert()
+                alert.addAction(finishRoute)
+                alert.addAction(tryNextTime)
+                
+                self.present(alert, animated: true, completion: nil)
             }
         }
 
@@ -180,31 +215,34 @@ class ShowRouteViewController: UIViewController {
         
     }
     
-    
-    func saveTempRouteToFirebase() {
-        let tempRef = self.ref.child("Temp").child(self.currentUser!.uid).child(self.currentField!.fieldId)
-        
-        var path = [[String: Any]]()
-        for target in targetArray {
-            if target.type == .normal {
-                let scaleCenter = DataSource.shareInstance.convertPointToScale(point: target.center)
-                let center = NSStringFromCGPoint(scaleCenter)
-                let targetInfo = ["position" : center, "ratio" : target.ratio] as [String: Any]
-                path.append(targetInfo)
-            }
-            
+    @IBAction func deleteButtonPressed(_ sender: Any) {
+        if let target = selectedTarget {
+            target.removeFromSuperview()
+            targetArray.remove(object: target)
         }
-        let startCenter = DataSource.shareInstance.convertPointToScale(point: self.startTarget!.center)
-        let startPoint = NSStringFromCGPoint(startCenter)
-        let endCenter = DataSource.shareInstance.convertPointToScale(point: self.endTarget!.center)
-        let endPoint = NSStringFromCGPoint(endCenter)
-        
-        let tempRoute = [ "path" : path, "startPoint" : startPoint, "endPoint" : endPoint] as [String : Any]
-        
-        tempRef.setValue(tempRoute)
-        self.hasTempRoute = true
-        self.dismiss(animated: true, completion: nil)
+        ratioStepper.isHidden = true
+        deleteButton.isHidden = true
     }
+    
+    @IBAction func createButtonPressed(_ sender: AnyObject) {
+        let target = Target(targetCenter: CGPoint(x: 120, y: 60), isUserInteractionEnabled: true, type: .normal)
+        target.delegate = self
+        targetArray.append(target)
+        view.addSubview(target)
+    }
+    
+    func tapScreen(_ recognizer: UITapGestureRecognizer) {
+        
+        ratioStepper.isHidden = true
+        deleteButton.isHidden = true
+        
+        for target in targetArray {
+            target.isSelected = false
+        }
+        refresh()
+    }
+    
+    //MARK: prepare to Save
     
     func setDiffucultyAndRouteName() {
         
@@ -226,7 +264,7 @@ class ShowRouteViewController: UIViewController {
             self.difficulty = self.pickerData[picker.selectedRow(inComponent: 0)]
             let textField = alert.textFields![0] as UITextField
             self.routeName = textField.text
-        
+            
             self.saveRouteToFireBase()
             self.dismiss(animated: true, completion: nil)
         })
@@ -289,6 +327,32 @@ class ShowRouteViewController: UIViewController {
         }
     }
     
+    //MARK: Save to Firebase
+    
+    func saveTempRouteToFirebase() {
+        let tempRef = self.ref.child("Temp").child(self.currentUser!.uid).child(self.currentField!.fieldId)
+        
+        var path = [[String: Any]]()
+        for target in targetArray {
+            if target.type == .normal {
+                let scaleCenter = DataSource.shareInstance.convertPointToScale(point: target.center)
+                let center = NSStringFromCGPoint(scaleCenter)
+                let targetInfo = ["position" : center, "ratio" : target.ratio] as [String: Any]
+                path.append(targetInfo)
+            }
+            
+        }
+        let startCenter = DataSource.shareInstance.convertPointToScale(point: self.startTarget!.center)
+        let startPoint = NSStringFromCGPoint(startCenter)
+        let endCenter = DataSource.shareInstance.convertPointToScale(point: self.endTarget!.center)
+        let endPoint = NSStringFromCGPoint(endCenter)
+        
+        let tempRoute = [ "path" : path, "startPoint" : startPoint, "endPoint" : endPoint] as [String : Any]
+        
+        tempRef.setValue(tempRoute)
+        self.hasTempRoute = true
+        self.dismiss(animated: true, completion: nil)
+    }
     
     func saveRouteToFireBase() {
         var path = [[String: Any]]()
@@ -326,43 +390,15 @@ class ShowRouteViewController: UIViewController {
         let tempRef = ref.child("Temp").child(currentUser!.uid).child(currentField!.fieldId)
         tempRef.setValue(nil)
         dismiss(animated: true, completion: nil)
-
-    }
-    
-    @IBAction func createButtonPressed(_ sender: AnyObject) {
-        let target = Target(targetCenter: CGPoint(x: 120, y: 60), isUserInteractionEnabled: true, type: .normal)
-        target.delegate = self
-        targetArray.append(target)
-        view.addSubview(target)
-    }
-    
-    func displayRoute() {
-        for target in (route?.targets)! {
-            target.delegate = self
-            if target.type == .start {
-                startTarget = target
-            }else if target.type == .end {
-                endTarget = target
-            }
-            
-            if target.isSelected {
-                target.layer.borderWidth = 2.0
-                target.layer.borderColor = UIColor.red.cgColor
-            }else {
-                target.layer.borderWidth = 0
-
-            }
-            view.addSubview(target)
-        }
         
     }
-    
-    
-    
 }
 
 extension ShowRouteViewController: TargetDelegate {
     func tapTarget(tapTarget: Target) {
+        
+        ratioStepper.isHidden = false
+        deleteButton.isHidden = false
         
         for target in targetArray {
             target.isSelected = false
@@ -372,11 +408,6 @@ extension ShowRouteViewController: TargetDelegate {
         selectedTarget = tapTarget
         ratioStepper.value = selectedTarget!.ratio
         refresh()
-    }
-    
-    func deleteTarget(deleteTarget: Target) {
-        deleteTarget.removeFromSuperview()
-        targetArray.remove(object: deleteTarget)
     }
     
     func refresh() {
@@ -401,10 +432,6 @@ extension ShowRouteViewController: TargetDelegate {
             view.addSubview(target)
         }
     }
-}
-
-extension ShowRouteViewController: UIGestureRecognizerDelegate {
-    
 }
 
 extension ShowRouteViewController: UIPickerViewDelegate, UIPickerViewDataSource {
