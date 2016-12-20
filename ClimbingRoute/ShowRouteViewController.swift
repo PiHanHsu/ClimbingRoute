@@ -31,6 +31,7 @@ class ShowRouteViewController: UIViewController {
     var startTarget: Target?
     var endTarget: Target?
     var selectedTarget: Target?
+    weak var actionToEnable : UIAlertAction?
     
     @IBOutlet var createButton: UIButton!
     @IBOutlet var menuButton: UIButton!
@@ -154,7 +155,7 @@ class ShowRouteViewController: UIViewController {
             self.dismiss(animated: true, completion: nil)
         })
         let save = UIAlertAction(title: "儲存發佈", style: .default, handler: { UIAlertAction in
-            self.setDiffucultyAndRouteName()
+            self.setRouteName()
         })
         let cancel = UIAlertAction(title: "取消", style: .default, handler: {  UIAlertAction in
             self.dismiss(animated: true, completion: nil)
@@ -243,9 +244,38 @@ class ShowRouteViewController: UIViewController {
     
     //MARK: prepare to Save
     
-    func setDiffucultyAndRouteName() {
+    func setRouteName() {
+        let alert = UIAlertController(title: "設定路線名稱", message: nil, preferredStyle: .alert)
         
-        let alert = UIAlertController(title: "設定難度以及路線名稱", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: .alert)
+        alert.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "輸入路線名稱"
+            textField.addTarget(self, action: #selector(self.textChanged(_:)), for: .editingChanged)
+
+        }
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
+                let textField = alert.textFields![0] as UITextField
+                self.routeName = textField.text
+                
+                self.setDifficulty()
+            })
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+        
+            self.actionToEnable = okAction
+            okAction.isEnabled = false
+        
+            present(alert, animated: true, completion: nil)
+    }
+    
+    func textChanged(_ sender:UITextField) {
+        self.actionToEnable?.isEnabled  = (sender.text!.characters.count >= 1 )
+    }
+    
+    func setDifficulty() {
+        
+        let alert = UIAlertController(title: "設定難度", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: .alert)
         
         let pickerFrame = CGRect(x: 15, y: 52, width: 240, height: 150)
         let picker: UIPickerView = UIPickerView(frame: pickerFrame)
@@ -254,15 +284,9 @@ class ShowRouteViewController: UIViewController {
         picker.dataSource = self
         
         alert.view.addSubview(picker)
-        alert.addTextField { (textField : UITextField!) -> Void in
-            textField.placeholder = "輸入路線名稱"
-        }
-        
         
         let okAction = UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
             self.difficulty = self.pickerData[picker.selectedRow(inComponent: 0)]
-            let textField = alert.textFields![0] as UITextField
-            self.routeName = textField.text
             
             self.saveRouteToFireBase()
             self.dismiss(animated: true, completion: nil)
@@ -273,7 +297,7 @@ class ShowRouteViewController: UIViewController {
         alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
-        
+
     }
     
     func checkHaveRated() {
