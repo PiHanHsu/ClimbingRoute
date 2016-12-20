@@ -175,7 +175,6 @@ class ShowRouteViewController: UIViewController {
         
         let tryNextTime = UIAlertAction(title: "下次再嘗試", style: .default, handler: {  UIAlertAction in
             self.showRatingAlert()
-            self.dismiss(animated: true, completion: nil)
         })
 
         
