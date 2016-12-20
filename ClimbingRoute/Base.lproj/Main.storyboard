@@ -182,7 +182,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g9L-K7-uJa" customClass="CosmosView" customModule="ClimbingRoute" customModuleProvider="target">
+                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g9L-K7-uJa" customClass="CosmosView" customModule="ClimbingRoute" customModuleProvider="target">
                                             <rect key="frame" x="287" y="38" width="80" height="12"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
@@ -266,7 +266,7 @@
                         <viewControllerLayoutGuide type="top" id="qM2-F3-C87"/>
                         <viewControllerLayoutGuide type="bottom" id="3SA-ee-xkv"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" misplaced="YES" id="n2U-Vu-g7B">
+                    <view key="view" contentMode="scaleToFill" id="n2U-Vu-g7B">
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
