@@ -69,18 +69,20 @@ class DataSource: NSObject {
                     let name = value?["name"] as! String
                     let creater = value?["creater"] as! String
                     let difficulty = value?["difficulty"] as! String
-                    let path = value?["path"] as! [[String:Any]]
                     let rating = value?["rating"] as! Double
                     var targets = [Target]()
-                    for targetInfo in path {
-                        let center = targetInfo["position"] as! String
-                        let ratio = targetInfo["ratio"] as! Double
-                        let targetCenter = CGPointFromString(center)
-                        let pointCenter = self.convertScaleToPoint(point: targetCenter)
-                        let target = Target(targetCenter: pointCenter, isUserInteractionEnabled: false, type: .normal)
-                        target.ratio = ratio
-                        targets.append(target)
+                    if let path = value?["path"] as? [[String:Any]] {
+                        for targetInfo in path {
+                            let center = targetInfo["position"] as! String
+                            let ratio = targetInfo["ratio"] as! Double
+                            let targetCenter = CGPointFromString(center)
+                            let pointCenter = self.convertScaleToPoint(point: targetCenter)
+                            let target = Target(targetCenter: pointCenter, isUserInteractionEnabled: false, type: .normal)
+                            target.ratio = ratio
+                            targets.append(target)
+                        }
                     }
+                    
                     
                     let startPoint = value?["startPoint"] as! String
                     let endPoint = value?["endPoint"] as! String
@@ -120,16 +122,18 @@ class DataSource: NSObject {
             if let value = snapshot.value as? NSDictionary {
                
                 var targets = [Target]()
-                let path = value["path"] as! [[String:Any]]
-                for targetInfo in path {
-                    let center = targetInfo["position"] as! String
-                    let ratio = targetInfo["ratio"] as! Double
-                    let targetCenter = CGPointFromString(center)
-                    let pointCenter = self.convertScaleToPoint(point: targetCenter)
-                    let target = Target(targetCenter: pointCenter, isUserInteractionEnabled: true, type: .normal)
-                    target.ratio = ratio
-                    targets.append(target)
+                if let path = value["paht"] as? [[String:Any]] {
+                    for targetInfo in path {
+                        let center = targetInfo["position"] as! String
+                        let ratio = targetInfo["ratio"] as! Double
+                        let targetCenter = CGPointFromString(center)
+                        let pointCenter = self.convertScaleToPoint(point: targetCenter)
+                        let target = Target(targetCenter: pointCenter, isUserInteractionEnabled: true, type: .normal)
+                        target.ratio = ratio
+                        targets.append(target)
+                    }
                 }
+                
                 let startPoint = value["startPoint"] as! String
                 let endPoint = value["endPoint"] as! String
                 let startCenter = self.convertScaleToPoint(point: CGPointFromString(startPoint))
