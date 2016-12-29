@@ -59,8 +59,9 @@ class Target: UIImageView {
         
         switch type {
         case .normal:
-            self.backgroundColor = UIColor.white
-            self.layer.cornerRadius = self.frame.width / 2
+            self.image = UIImage(named: "target")
+            //self.backgroundColor = UIColor.white
+            //self.layer.cornerRadius = self.frame.width / 2
             self.addGestureRecognizer(tap)
             
         case .start:
